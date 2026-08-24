@@ -1,0 +1,70 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "content/uploads"
+public_folder: "/content/uploads"
+
+collections:
+  - name: "site_settings"
+    label: "Site Photos & Phone Number"
+    files:
+      - file: "content/settings.json"
+        label: "Homepage Settings"
+        name: "settings"
+        fields:
+          - { label: "Phone Number", name: "phone", widget: "string", required: false, hint: "e.g. 07788 123456" }
+          - { label: "Hero Photo (right side of homepage)", name: "heroImage", widget: "image", required: false }
+          - { label: "Van Photo (in the black 'Why Choose DEC' section)", name: "vanImage", widget: "image", required: false }
+
+  - name: "blog"
+    label: "Blog Posts"
+    files:
+      - file: "content/posts.json"
+        label: "All Blog Posts"
+        name: "posts"
+        fields:
+          - label: "Posts"
+            name: "blog"
+            widget: "list"
+            summary: "{{title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "D MMM YYYY" }
+              - { label: "Read time (e.g. '5 min read')", name: "readtime", widget: "string", default: "5 min read" }
+              - { label: "Short excerpt (shown on the blog list)", name: "excerpt", widget: "text" }
+              - { label: "Cover image (optional)", name: "image", widget: "image", required: false }
+              - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "gallery"
+    label: "Before & After Gallery"
+    files:
+      - file: "content/gallery.json"
+        label: "Gallery Items"
+        name: "gallery"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            summary: "{{caption}}"
+            fields:
+              - { label: "Before Photo", name: "before_image", widget: "image" }
+              - { label: "After Photo", name: "after_image", widget: "image" }
+              - { label: "Caption (e.g. 'Semi-detached, Sovereign Park')", name: "caption", widget: "string", required: false }
+
+  - name: "testimonials"
+    label: "Reviews / Testimonials"
+    files:
+      - file: "content/testimonials.json"
+        label: "Reviews"
+        name: "testimonials"
+        fields:
+          - label: "Reviews"
+            name: "items"
+            widget: "list"
+            summary: "{{name}} — {{quote}}"
+            fields:
+              - { label: "Quote", name: "quote", widget: "text" }
+              - { label: "Customer name", name: "name", widget: "string" }
+              - { label: "Area (e.g. 'Market Drayton')", name: "location", widget: "string", required: false }
+              - { label: "Star rating (1-5)", name: "rating", widget: "number", default: 5, min: 1, max: 5 }

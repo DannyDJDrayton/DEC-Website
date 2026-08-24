@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEC — Drayton Exterior Cleaning | Market Drayton</title>
+<meta name="description" content="Professional window and exterior cleaning in Market Drayton. Fully insured, reliable local service, free quotes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<style>
+  :root{
+    --black:#14171A; --black-soft:#1D2124;
+    --white:#FFFFFF; --offwhite:#F7F8F6;
+    --green:#4CAF3C; --green-dark:#3A8A2E; --green-tint:#EAF6E7;
+    --grey:#4A4A4A; --line:rgba(20,23,26,0.12);
+    --display:'Space Grotesk',sans-serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+    --radius:12px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--white); color:var(--grey); font-family:var(--body); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:var(--display); margin:0; color:var(--black); letter-spacing:-0.01em;}
+  p{margin:0;} a{color:inherit; text-decoration:none;} img,svg{display:block; max-width:100%;}
+  .wrap{max-width:1160px; margin:0 auto; padding:0 28px;}
+  @media (max-width:640px){.wrap{padding:0 20px;}}
+  .eyebrow{font-family:var(--mono); font-size:0.76rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--green-dark); font-weight:600; margin-bottom:12px;}
+
+  /* Buttons */
+  .btn{display:inline-flex; align-items:center; gap:8px; font-family:var(--body); font-weight:700; font-size:0.94rem; padding:13px 24px; border-radius:8px; border:2px solid transparent; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease;}
+  .btn-green{background:var(--green); color:#fff; box-shadow:0 6px 16px rgba(76,175,60,0.3);}
+  .btn-green:hover{background:var(--green-dark); transform:translateY(-1px);}
+  .btn-outline-dark{background:transparent; border-color:var(--black); color:var(--black);}
+  .btn-outline-dark:hover{background:var(--black); color:#fff;}
+  .btn-outline-white{background:transparent; border-color:rgba(255,255,255,0.4); color:#fff;}
+  .btn-outline-white:hover{border-color:#fff;}
+
+  /* Header */
+  header{position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:20px;}
+  .brand{display:flex; flex-direction:column; line-height:1;}
+  .brand .mark{font-family:var(--display); font-weight:800; font-size:1.7rem; color:var(--black); letter-spacing:-0.02em;}
+  .brand .mark span{color:var(--green);}
+  .brand .sub{font-family:var(--mono); font-size:0.6rem; letter-spacing:0.14em; color:var(--grey); margin-top:2px;}
+  nav.links{display:flex; align-items:center; gap:26px;}
+  nav.links a{font-size:0.92rem; font-weight:600; color:var(--black); opacity:0.8;}
+  nav.links a:hover{opacity:1; color:var(--green-dark);}
+  .header-ctas{display:flex; align-items:center; gap:10px;}
+  @media (max-width:980px){ nav.links{display:none;} .header-ctas .btn{padding:10px 14px; font-size:0.82rem;} }
+  @media (max-width:560px){ .header-ctas{flex-direction:column; align-items:flex-end; gap:6px;} }
+
+  /* Hero */
+  .hero{padding:56px 0 64px;}
+  .hero-inner{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;}
+  @media (max-width:900px){ .hero-inner{grid-template-columns:1fr;} }
+  .hero h1{font-size:clamp(2.1rem,4.2vw,3.1rem); font-weight:800; line-height:1.08;}
+  .hero h1 .accent{color:var(--green);}
+  .hero .sub{margin-top:16px; font-size:1.05rem; opacity:0.85; max-width:460px;}
+  .trust-row{display:flex; gap:22px; margin-top:26px; flex-wrap:wrap;}
+  .trust-item{display:flex; align-items:center; gap:8px; font-size:0.86rem; font-weight:600; color:var(--black);}
+  .trust-item svg{width:18px; height:18px; stroke:var(--green); fill:none; stroke-width:2;}
+  .hero .cta-row{display:flex; gap:14px; margin-top:28px; flex-wrap:wrap;}
+  .hero-photo{
+    aspect-ratio:4/3.4; border-radius:16px; overflow:hidden; position:relative;
+    background:linear-gradient(155deg, var(--black) 0%, var(--black-soft) 60%, var(--green-dark) 140%);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+  }
+  .hero-photo .ph-label{color:rgba(255,255,255,0.55); font-family:var(--mono); font-size:0.78rem; padding:0 30px; line-height:1.6;}
+
+  /* Services */
+  section{padding:76px 0;}
+  .section-head{max-width:600px; margin:0 auto 42px; text-align:center;}
+  .section-head h2{font-size:clamp(1.7rem,3vw,2.2rem); font-weight:800;}
+  .section-head p{margin-top:12px; opacity:0.75;}
+  .services-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  @media (max-width:900px){ .services-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .services-grid{grid-template-columns:1fr;} }
+  .service-card{border:1px solid var(--line); border-radius:var(--radius); padding:26px 22px; text-align:center; transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;}
+  .service-card:hover{transform:translateY(-3px); box-shadow:0 14px 30px rgba(20,23,26,0.08); border-color:var(--green);}
+  .service-icon{width:48px; height:48px; margin:0 auto 14px; border-radius:10px; background:var(--green-tint); display:flex; align-items:center; justify-content:center;}
+  .service-icon svg{width:24px; height:24px; stroke:var(--green-dark); fill:none; stroke-width:1.7;}
+  .service-card h3{font-size:1.02rem; font-weight:700;}
+  .service-card p{margin-top:8px; font-size:0.88rem; opacity:0.68;}
+
+  /* Why choose band */
+  .why-band{background:var(--black); color:#fff;}
+  .why-inner{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;}
+  @media (max-width:900px){ .why-inner{grid-template-columns:1fr;} }
+  .why-band h2{color:#fff; font-size:clamp(1.5rem,2.6vw,2rem); margin-bottom:22px;}
+  .why-band h2 .accent{color:var(--green);}
+  .checklist{display:flex; flex-direction:column; gap:12px; margin-bottom:26px;}
+  .checklist .item{display:flex; align-items:center; gap:10px; font-size:0.95rem;}
+  .checklist svg{width:18px; height:18px; stroke:var(--green); fill:none; stroke-width:2.4; flex:none;}
+  .stat-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .stat-card{flex:1; min-width:120px; border:1px solid rgba(255,255,255,0.16); border-radius:10px; padding:16px; text-align:center;}
+  .stat-card svg{width:22px; height:22px; stroke:var(--green); fill:none; stroke-width:1.8; margin:0 auto 8px;}
+  .stat-card .label{font-size:0.78rem; font-weight:700;}
+  .why-photo{
+    aspect-ratio:16/10; border-radius:14px; background:linear-gradient(160deg, var(--green-dark), var(--black-soft));
+    display:flex; align-items:center; justify-content:center; text-align:center;
+  }
+  .why-photo .ph-label{color:rgba(255,255,255,0.55); font-family:var(--mono); font-size:0.75rem; padding:0 24px;}
+
+  /* Before/after gallery */
+  .gallery-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  @media (max-width:900px){ .gallery-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:500px){ .gallery-grid{grid-template-columns:1fr;} }
+  .gallery-item{aspect-ratio:1/1; border-radius:10px; border:1.5px dashed var(--line); display:flex; align-items:center; justify-content:center; background:var(--offwhite);}
+  .gallery-item span{font-family:var(--mono); font-size:0.72rem; color:var(--grey); opacity:0.6; text-align:center; padding:0 14px;}
+  .gallery-cta{text-align:center; margin-top:32px;}
+
+  /* Testimonials + CTA */
+  .testi-wrap{display:grid; grid-template-columns:1fr 1fr 1fr 0.9fr; gap:18px;}
+  @media (max-width:980px){ .testi-wrap{grid-template-columns:1fr 1fr;} }
+  @media (max-width:640px){ .testi-wrap{grid-template-columns:1fr;} }
+  .testi-card{border:1px dashed var(--line); border-radius:var(--radius); padding:22px; background:var(--offwhite);}
+  .testi-card .stars{color:var(--green); font-family:var(--mono); letter-spacing:2px; font-size:0.85rem;}
+  .testi-card p.quote{margin-top:10px; font-size:0.86rem; opacity:0.7; font-style:italic;}
+  .testi-card .who{margin-top:12px; font-size:0.82rem; font-weight:700; color:var(--black);}
+  .testi-card .placeholder-tag{font-family:var(--mono); font-size:0.6rem; color:var(--green-dark); background:var(--green-tint); padding:2px 7px; border-radius:999px; display:inline-block; margin-bottom:8px;}
+  .cta-panel{background:var(--black); border-radius:var(--radius); padding:26px 22px; color:#fff; display:flex; flex-direction:column; justify-content:center; gap:14px;}
+  .cta-panel h3{color:#fff; font-size:1.15rem;}
+  .cta-panel h3 .accent{color:var(--green);}
+  .cta-panel .btn{width:100%; justify-content:center;}
+
+  /* Booking */
+  .booking{background:var(--offwhite);}
+  .booking-panel{background:#fff; border:1px solid var(--line); border-radius:16px; padding:32px; box-shadow:0 20px 44px rgba(20,23,26,0.06);}
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:0.82rem; font-weight:700; margin-bottom:6px; color:var(--black);}
+  .field input, .field select, .field textarea{width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); font-family:var(--body); font-size:0.95rem; background:#fff;}
+  .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid var(--green); outline-offset:1px;}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:480px){ .field-row{grid-template-columns:1fr;} }
+  .booking-note{font-family:var(--mono); font-size:0.72rem; opacity:0.55; text-align:center; margin-top:12px;}
+
+  /* Areas */
+  .area-tags{display:flex; flex-wrap:wrap; gap:10px; justify-content:center;}
+  .area-tag{font-family:var(--mono); font-size:0.82rem; padding:9px 16px; border-radius:999px; border:1px solid var(--line); background:#fff;}
+  .area-tag.primary{background:var(--green); color:#fff; border-color:var(--green); font-weight:700;}
+
+  /* Footer */
+  footer{background:var(--black); color:#fff; padding:52px 0 26px;}
+  .footer-top{display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr; gap:36px; padding-bottom:32px; border-bottom:1px solid rgba(255,255,255,0.14);}
+  @media (max-width:760px){ .footer-top{grid-template-columns:1fr 1fr; gap:26px;} }
+  .footer-brand .mark{font-family:var(--display); font-weight:800; font-size:1.4rem;}
+  .footer-brand .mark span{color:var(--green);}
+  .footer-brand p{margin-top:10px; opacity:0.6; font-size:0.86rem; max-width:220px;}
+  .footer-col h4{font-size:0.74rem; text-transform:uppercase; letter-spacing:0.06em; opacity:0.5; font-weight:700; margin-bottom:12px;}
+  .footer-col a, .footer-col p{display:block; font-size:0.88rem; opacity:0.82; margin-bottom:9px;}
+  .social-row{display:flex; gap:10px; margin-top:4px;}
+  .social-row a{width:32px; height:32px; border-radius:50%; border:1px solid rgba(255,255,255,0.25); display:flex; align-items:center; justify-content:center; font-size:0.75rem;}
+  .footer-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:20px; flex-wrap:wrap; gap:10px;}
+  .legal-line{font-family:var(--mono); font-size:0.7rem; opacity:0.45; max-width:600px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <span class="mark">DEC<span>.</span></span>
+      <span class="sub">DRAYTON EXTERIOR CLEANING</span>
+    </a>
+    <nav class="links">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#booking">Contact</a>
+      <a href="blog.html">Blog</a>
+    </nav>
+    <div class="header-ctas">
+      <a class="btn btn-green" href="#booking">Get a Free Quote</a>
+      <a class="btn btn-outline-dark tel-link" href="tel:+44">Call Now</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div>
+        <div class="eyebrow">Market Drayton &amp; surrounding villages</div>
+        <h1>Professional Window &amp; Exterior Cleaning <span class="accent">in Your Area</span></h1>
+        <p class="sub">We deliver a spotless finish every time with expert window and exterior cleaning services you can rely on.</p>
+        <div class="trust-row">
+          <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg> Fully Insured</div>
+          <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a5 5 0 0110-1 5 5 0 0110 1c0 5.5-7 10-7 10z"/></svg> Reliable Local Service</div>
+          <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M7 7h13M7 12h13M7 17h13M3 7h.01M3 12h.01M3 17h.01"/></svg> Free Quotes</div>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-green" href="#booking">Get a Free Quote →</a>
+          <a class="btn btn-outline-dark tel-link" href="tel:+44">📞 Call Now</a>
+        </div>
+      </div>
+      <div class="hero-photo" id="heroPhoto">
+        <div class="ph-label">[ Photo placeholder — add one in the dashboard: Site Photos &amp; Phone Number → Hero Photo ]</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" style="text-align:center;">Our Services</div>
+        <h2>Everything Your Exterior Needs</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 3v18M3 12h18"/></svg></div>
+          <h3>Window Cleaning</h3>
+          <p>Streak-free windows inside &amp; out using pure water technology.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v6H4zM6 10v10M18 10v10M6 20h12"/></svg></div>
+          <h3>Gutter Cleaning</h3>
+          <p>Clear gutters, free-flowing downpipes &amp; peace of mind.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 20l6-16h6l6 16M7 14h10"/></svg></div>
+          <h3>Pressure Washing</h3>
+          <p>Powerful cleaning for driveways, patios, paths &amp; more.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 3l8 6v12H4V9z"/></svg></div>
+          <h3>Conservatory Cleaning</h3>
+          <p>Roof, glass &amp; frames left sparkling clean.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 15h18M5 15V9a2 2 0 012-2h10a2 2 0 012 2v6"/></svg></div>
+          <h3>Fascias &amp; Soffits</h3>
+          <p>Restore the look of your fascias, soffits &amp; cladding.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg></div>
+          <h3>Exterior Property Cleaning</h3>
+          <p>Full exterior cleans to enhance your property's appearance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE -->
+  <section id="about" class="why-band">
+    <div class="wrap why-inner">
+      <div>
+        <h2>Why Choose <span class="accent">DEC Drayton?</span></h2>
+        <div class="checklist">
+          <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Local, trusted &amp; fully insured</div>
+          <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Reliable, friendly &amp; punctual</div>
+          <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Modern equipment &amp; safe methods</div>
+          <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Attention to detail &amp; quality guaranteed</div>
+          <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Locally reviewed by happy customers</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-card"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg><div class="label">FULLY INSURED<br><span style="font-weight:400; opacity:0.6;">Your property in safe hands</span></div></div>
+          <div class="stat-card"><svg viewBox="0 0 24 24"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><div class="label">5-STAR RATED<br><span style="font-weight:400; opacity:0.6;">Coming soon — building our reviews</span></div></div>
+          <div class="stat-card"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a5 5 0 0110-1 5 5 0 0110 1c0 5.5-7 10-7 10z"/></svg><div class="label">LOCAL EXPERTS<br><span style="font-weight:400; opacity:0.6;">Proudly serving Market Drayton</span></div></div>
+        </div>
+      </div>
+      <div class="why-photo" id="vanPhoto">
+        <div class="ph-label">[ Van photo placeholder — add once your vehicle is signwritten, via the dashboard ]</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" style="text-align:center;">Our Results</div>
+        <h2>See the Difference</h2>
+        <p>Before/after photos go here once real jobs are done — left empty rather than faked.</p>
+      </div>
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="gallery-item"><span>Before / After<br>coming soon</span></div>
+        <div class="gallery-item"><span>Before / After<br>coming soon</span></div>
+        <div class="gallery-item"><span>Before / After<br>coming soon</span></div>
+        <div class="gallery-item"><span>Before / After<br>coming soon</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS + CTA -->
+  <section id="reviews">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" style="text-align:center;">What Our Customers Say</div>
+        <h2>Real Feedback, Real Results</h2>
+      </div>
+      <div class="testi-wrap" id="testiWrap">
+        <div class="testi-card" data-example="true">
+          <span class="placeholder-tag">Example</span>
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Brilliant service from start to finish. Windows, gutters and patio look fantastic. Highly recommend!"</p>
+          <div class="who">— Placeholder name</div>
+        </div>
+        <div class="testi-card" data-example="true">
+          <span class="placeholder-tag">Example</span>
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Professional, reliable and reasonably priced. Our go-to for all exterior cleaning."</p>
+          <div class="who">— Placeholder name</div>
+        </div>
+        <div class="testi-card" data-example="true">
+          <span class="placeholder-tag">Example</span>
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Great communication and outstanding results. Will definitely use again."</p>
+          <div class="who">— Placeholder name</div>
+        </div>
+        <div class="cta-panel">
+          <h3>Ready for a <span class="accent">Spotless Finish?</span></h3>
+          <a class="btn btn-green" href="#booking">Get a Free Quote →</a>
+          <a class="btn btn-outline-white tel-link" href="tel:+44">📞 Call Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section id="booking" class="booking">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" style="text-align:center;">Get In Touch</div>
+        <h2>Book Your Cleaning Service</h2>
+        <p>Send your enquiry below and we'll be in touch within one working day.</p>
+      </div>
+      <div class="booking-panel" style="max-width:640px; margin:0 auto;">
+        <form id="quoteForm" name="quote-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="quote-request">
+          <p style="position:absolute; left:-9999px;"><label>Leave this field blank: <input name="bot-field"></label></p>
+          <div class="field-row">
+            <div class="field"><label for="name">Name *</label><input id="name" name="Name" type="text" required placeholder="Your full name"></div>
+            <div class="field"><label for="email">Email *</label><input id="email" name="Email" type="email" required placeholder="you@example.com"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="phone">Phone *</label><input id="phone" name="Phone" type="tel" required placeholder="07xxx xxxxxx"></div>
+            <div class="field">
+              <label for="service">Service Needed</label>
+              <select id="service" name="Service">
+                <option>Window Cleaning</option>
+                <option>Gutter Cleaning</option>
+                <option>Pressure Washing</option>
+                <option>Conservatory Cleaning</option>
+                <option>Fascias &amp; Soffits</option>
+                <option>Exterior Property Cleaning</option>
+                <option>Not sure / multiple</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label for="message">Message</label><textarea id="message" name="Message" rows="3" placeholder="Tell us about your property or any specific requirements..."></textarea></div>
+          <button class="btn btn-green" type="submit" id="quoteSubmitBtn" style="width:100%; justify-content:center;">Send Booking Enquiry →</button>
+          <p class="booking-note" id="quoteFormNote">Submits directly to us — no live calendar yet. Consider adding Wix Bookings-style calendar via a free tool like Calendly if you want real-time availability shown here.</p>
+          <div id="quoteSuccess" style="display:none; text-align:center; padding:16px 0;">
+            <p style="font-weight:700; color:var(--green-dark);">Thanks — that's with us.</p>
+            <p style="margin-top:6px; opacity:0.7; font-size:0.9rem;">We'll be in touch within one working day.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- AREAS -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" style="text-align:center;">Where We Work</div>
+        <h2>Proudly Serving Your Area</h2>
+      </div>
+      <div class="area-tags">
+        <span class="area-tag primary">Market Drayton</span>
+        <span class="area-tag">Sambrook</span>
+        <span class="area-tag">Hinstock</span>
+        <span class="area-tag">Norton-in-Hales</span>
+        <span class="area-tag">Moreton Say</span>
+        <span class="area-tag">Loggerheads</span>
+        <span class="area-tag">Sutton-upon-Tern</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="mark">DEC<span>.</span></span>
+        <p>Professional window &amp; exterior cleaning services you can rely on — quality &amp; reliability, every time.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <a href="tel:+44" class="tel-link" id="footerPhoneText">📞 [ your number ]</a>
+        <a href="mailto:hello@draytonclean.co.uk">✉ hello@draytonclean.co.uk</a>
+        <p>📍 Market Drayton, Shropshire</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#booking">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Follow Us</h4>
+        <div class="social-row">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">ig</a>
+          <a href="#" aria-label="Google">G</a>
+          <a href="#" aria-label="WhatsApp">wa</a>
+        </div>
+        <a class="btn btn-green" href="#booking" style="margin-top:14px; padding:9px 16px; font-size:0.82rem;">Get a Free Quote</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="legal-line">Drayton Exterior Cleaning (DEC) is a trading name of Prime Event &amp; Media Solutions Ltd. Registered in England &amp; Wales No. 16904317.</p>
+      <p style="font-size:0.78rem; opacity:0.4;">© <span id="year"></span> DEC Drayton Exterior Cleaning</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on('init', function(user) {
+      if (!user) {
+        window.netlifyIdentity.on('login', function() {
+          document.location.href = '/admin/';
+        });
+      }
+    });
+  }
+
+
+  // Site settings — phone number, hero photo, van photo
+  fetch('content/settings.json').then(function(r){ return r.json(); }).then(function(s){
+    if (s.phone) {
+      document.querySelectorAll('.tel-link').forEach(function(a){
+        a.href = 'tel:' + s.phone.replace(/\s+/g, '');
+        if (a.id === 'footerPhoneText') a.textContent = '📞 ' + s.phone;
+      });
+    }
+    if (s.heroImage) {
+      var hero = document.getElementById('heroPhoto');
+      hero.style.backgroundImage = 'url(' + s.heroImage + ')';
+      hero.style.backgroundSize = 'cover';
+      hero.style.backgroundPosition = 'center';
+      hero.innerHTML = '';
+    }
+    if (s.vanImage) {
+      var van = document.getElementById('vanPhoto');
+      van.style.backgroundImage = 'url(' + s.vanImage + ')';
+      van.style.backgroundSize = 'cover';
+      van.style.backgroundPosition = 'center';
+      van.innerHTML = '';
+    }
+  }).catch(function(){});
+
+  // Gallery — replace placeholders only if real items exist
+  fetch('content/gallery.json').then(function(r){ return r.json(); }).then(function(d){
+    var items = d.items || [];
+    if (!items.length) return;
+    var grid = document.getElementById('galleryGrid');
+    grid.innerHTML = items.map(function(it){
+      return '<div class="gallery-item" style="border-style:solid; padding:0; overflow:hidden; position:relative;">' +
+        '<img src="' + it.after_image + '" style="width:100%; height:100%; object-fit:cover;" alt="' + (it.caption || 'After clean') + '">' +
+        (it.caption ? '<span style="position:absolute; bottom:6px; left:6px; right:6px; background:rgba(20,23,26,0.75); color:#fff; font-size:0.68rem; padding:4px 8px; border-radius:6px;">' + it.caption + '</span>' : '') +
+      '</div>';
+    }).join('');
+  }).catch(function(){});
+
+  // Testimonials — replace example cards only if real reviews exist
+  fetch('content/testimonials.json').then(function(r){ return r.json(); }).then(function(d){
+    var items = d.items || [];
+    if (!items.length) return;
+    var wrap = document.getElementById('testiWrap');
+    wrap.querySelectorAll('[data-example="true"]').forEach(function(el){ el.remove(); });
+    var html = items.map(function(t){
+      var stars = '★★★★★'.slice(0, t.rating || 5);
+      return '<div class="testi-card">' +
+        '<div class="stars">' + stars + '</div>' +
+        '<p class="quote">"' + t.quote + '"</p>' +
+        '<div class="who">— ' + t.name + (t.location ? ', ' + t.location : '') + '</div>' +
+      '</div>';
+    }).join('');
+    wrap.insertAdjacentHTML('afterbegin', html);
+  }).catch(function(){});
+
+
+  var quoteForm = document.getElementById('quoteForm');
+  if (quoteForm) {
+    quoteForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var btn = document.getElementById('quoteSubmitBtn');
+      var note = document.getElementById('quoteFormNote');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      var data = new FormData(quoteForm);
+      var params = new URLSearchParams();
+      data.forEach(function(value, key){ params.append(key, value); });
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+      })
+      .then(function(response){
+        if (response.ok) {
+          quoteForm.querySelectorAll('.field-row, .field, button').forEach(function(el){ el.style.display = 'none'; });
+          note.style.display = 'none';
+          document.getElementById('quoteSuccess').style.display = 'block';
+        } else { throw new Error('Submission failed'); }
+      })
+      .catch(function(){
+        btn.disabled = false;
+        btn.textContent = 'Send Booking Enquiry →';
+        note.textContent = 'Something went wrong — please email hello@draytonclean.co.uk directly.';
+        note.style.color = '#B3261E';
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

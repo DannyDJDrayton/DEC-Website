@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog | DEC — Drayton Exterior Cleaning</title>
+<meta name="description" content="Tips and guides on window cleaning, gutters and exterior care for homes in Market Drayton and Shropshire.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+  :root{
+    --black:#14171A; --green:#4CAF3C; --green-dark:#3A8A2E; --green-tint:#EAF6E7;
+    --grey:#4A4A4A; --line:rgba(20,23,26,0.12); --offwhite:#F7F8F6;
+    --display:'Space Grotesk',sans-serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:#fff; color:var(--grey); font-family:var(--body); font-size:16px; line-height:1.65;}
+  h1,h2{font-family:var(--display); margin:0; color:var(--black);}
+  p{margin:0;} a{color:inherit; text-decoration:none;}
+  .wrap{max-width:760px; margin:0 auto; padding:0 28px;}
+  @media (max-width:640px){.wrap{padding:0 20px;}}
+  header{position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  .nav{max-width:1160px; margin:0 auto; padding:14px 28px; display:flex; align-items:center; justify-content:space-between;}
+  .brand{display:flex; flex-direction:column; line-height:1;}
+  .brand .mark{font-family:var(--display); font-weight:800; font-size:1.5rem; color:var(--black);}
+  .brand .mark span{color:var(--green);}
+  .btn{display:inline-flex; align-items:center; font-family:var(--body); font-weight:700; font-size:0.88rem; padding:11px 20px; border-radius:8px; background:var(--green); color:#fff;}
+  .eyebrow{font-family:var(--mono); font-size:0.74rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--green-dark); font-weight:600; margin-bottom:12px;}
+  .blog-hero{padding:56px 0 36px;}
+  .blog-hero h1{font-size:clamp(1.9rem,4vw,2.6rem); font-weight:800;}
+  .blog-hero p{margin-top:14px; opacity:0.72; font-size:1.02rem;}
+  #postList{padding:12px 0 88px; display:flex; flex-direction:column; gap:18px;}
+  .post-card{background:#fff; border:1px solid var(--line); border-radius:12px; padding:26px; cursor:pointer; transition:box-shadow .15s ease, transform .15s ease;}
+  .post-card:hover{box-shadow:0 14px 30px rgba(20,23,26,0.08); transform:translateY(-2px); border-color:var(--green);}
+  .post-meta{font-family:var(--mono); font-size:0.7rem; color:var(--green-dark);}
+  .post-card h2{margin-top:8px; font-size:1.2rem; font-weight:700;}
+  .post-card .excerpt{margin-top:8px; font-size:0.92rem; opacity:0.7;}
+  .read-more{margin-top:12px; font-size:0.82rem; font-weight:700; color:var(--green-dark);}
+  #postDetail{display:none; padding:56px 0 88px;}
+  #postDetail h1{font-size:clamp(1.7rem,3.4vw,2.3rem); margin-bottom:22px;}
+  #postDetail .body p{margin-bottom:16px; font-size:1rem;}
+  #postDetail .body h2{font-size:1.2rem; margin:28px 0 10px;}
+  #postDetail .body ul{margin:0 0 16px; padding-left:20px;}
+  #postDetail .body li{margin-bottom:6px;}
+  .back-link{display:inline-block; margin-bottom:20px; font-size:0.88rem; font-weight:700; color:var(--green-dark);}
+  #emptyState{padding:20px 0; opacity:0.6; font-size:0.92rem;}
+  footer{background:var(--black); color:#fff; padding:36px 0; margin-top:10px;}
+  .footer-inner{max-width:1160px; margin:0 auto; padding:0 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  .legal-line{font-family:var(--mono); font-size:0.7rem; opacity:0.5; max-width:600px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="index.html"><span class="mark">DEC<span>.</span></span></a>
+    <a class="btn" href="index.html#booking">Get a Free Quote</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="blog-hero">
+    <div class="eyebrow">The DEC Blog</div>
+    <h1>Windows, gutters and exterior care — explained plainly.</h1>
+    <p>Practical guides for homeowners in Market Drayton and the surrounding villages.</p>
+  </section>
+
+  <section id="postList"></section>
+  <p id="emptyState" style="display:none;">No posts yet — check back soon.</p>
+
+  <article id="postDetail">
+    <a class="back-link" href="#" id="backLink">← Back to the blog</a>
+    <div class="post-meta" id="detailMeta"></div>
+    <h1 id="detailTitle"></h1>
+    <div class="body" id="detailBody"></div>
+  </article>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <p class="legal-line">Drayton Exterior Cleaning (DEC) is a trading name of Prime Event &amp; Media Solutions Ltd. Registered in England &amp; Wales No. 16904317.</p>
+  </div>
+</footer>
+
+<script>
+  var posts = [];
+
+  function slugify(title){
+    return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  }
+
+  function renderList(){
+    var listEl = document.getElementById('postList');
+    var emptyEl = document.getElementById('emptyState');
+    if (!posts.length){ emptyEl.style.display = 'block'; return; }
+    var sorted = posts.slice().sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
+    listEl.innerHTML = sorted.map(function(p){
+      var slug = slugify(p.title);
+      return '<div class="post-card" onclick="location.hash=\'' + slug + '\'">' +
+        '<div class="post-meta">' + (p.readtime || '') + '</div>' +
+        '<h2>' + p.title + '</h2>' +
+        '<p class="excerpt">' + p.excerpt + '</p>' +
+        '<div class="read-more">Read the guide →</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function renderDetail(slug){
+    var post = posts.find(function(p){ return slugify(p.title) === slug; });
+    if (!post) { location.hash = ''; return; }
+    document.getElementById('postList').style.display = 'none';
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('postDetail').style.display = 'block';
+    document.getElementById('detailMeta').textContent = (post.readtime || '') + (post.date ? ' · ' + new Date(post.date).toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}) : '');
+    document.getElementById('detailTitle').textContent = post.title;
+    document.getElementById('detailBody').innerHTML = window.marked ? window.marked.parse(post.body || '') : (post.body || '');
+  }
+
+  function route(){
+    var slug = location.hash.replace('#', '');
+    if (slug){
+      renderDetail(slug);
+    } else {
+      document.getElementById('postDetail').style.display = 'none';
+      document.getElementById('postList').style.display = 'flex';
+      if (posts.length) document.getElementById('emptyState').style.display = 'none';
+    }
+  }
+
+  document.getElementById('backLink').addEventListener('click', function(e){ e.preventDefault(); location.hash = ''; });
+  window.addEventListener('hashchange', route);
+
+  fetch('content/posts.json')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      posts = data.blog || [];
+      renderList();
+      route();
+    })
+    .catch(function(){
+      document.getElementById('emptyState').style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
