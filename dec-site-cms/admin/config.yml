@@ -2,14 +2,14 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "content/uploads"
+media_folder: "dec-site-cms/content/uploads"
 public_folder: "/content/uploads"
 
 collections:
   - name: "site_settings"
     label: "Site Photos & Phone Number"
     files:
-      - file: "content/settings.json"
+      - file: "dec-site-cms/content/settings.json"
         label: "Homepage Settings"
         name: "settings"
         fields:
@@ -20,7 +20,7 @@ collections:
   - name: "blog"
     label: "Blog Posts"
     files:
-      - file: "content/posts.json"
+      - file: "dec-site-cms/content/posts.json"
         label: "All Blog Posts"
         name: "posts"
         fields:
@@ -39,7 +39,7 @@ collections:
   - name: "gallery"
     label: "Before & After Gallery"
     files:
-      - file: "content/gallery.json"
+      - file: "dec-site-cms/content/gallery.json"
         label: "Gallery Items"
         name: "gallery"
         fields:
@@ -55,7 +55,7 @@ collections:
   - name: "testimonials"
     label: "Reviews / Testimonials"
     files:
-      - file: "content/testimonials.json"
+      - file: "dec-site-cms/content/testimonials.json"
         label: "Reviews"
         name: "testimonials"
         fields:
@@ -68,3 +68,4 @@ collections:
               - { label: "Customer name", name: "name", widget: "string" }
               - { label: "Area (e.g. 'Market Drayton')", name: "location", widget: "string", required: false }
               - { label: "Star rating (1-5)", name: "rating", widget: "number", default: 5, min: 1, max: 5 }
+Fix CMS content paths'
