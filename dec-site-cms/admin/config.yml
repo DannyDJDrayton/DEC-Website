@@ -68,4 +68,3 @@ collections:
               - { label: "Customer name", name: "name", widget: "string" }
               - { label: "Area (e.g. 'Market Drayton')", name: "location", widget: "string", required: false }
               - { label: "Star rating (1-5)", name: "rating", widget: "number", default: 5, min: 1, max: 5 }
-Fix CMS content paths'
