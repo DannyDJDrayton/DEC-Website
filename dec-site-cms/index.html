@@ -345,6 +345,11 @@
             </div>
           </div>
           <div class="field"><label for="message">Message</label><textarea id="message" name="Message" rows="3" placeholder="Tell us about your property or any specific requirements..."></textarea></div>
+          <div class="field">
+            <label for="photos">Photos (optional)</label>
+            <input id="photos" name="Photos" type="file" accept="image/*" multiple>
+            <p style="font-size:0.78rem; opacity:0.6; margin-top:6px;">Attach a few photos of the area — helps us quote more accurately.</p>
+          </div>
           <button class="btn btn-green" type="submit" id="quoteSubmitBtn" style="width:100%; justify-content:center;">Send Booking Enquiry →</button>
           <p class="booking-note" id="quoteFormNote">Submits directly to us — no live calendar yet. Consider adding Wix Bookings-style calendar via a free tool like Calendly if you want real-time availability shown here.</p>
           <div id="quoteSuccess" style="display:none; text-align:center; padding:16px 0;">
@@ -491,12 +496,9 @@
       btn.disabled = true;
       btn.textContent = 'Sending…';
       var data = new FormData(quoteForm);
-      var params = new URLSearchParams();
-      data.forEach(function(value, key){ params.append(key, value); });
       fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params.toString()
+        body: data
       })
       .then(function(response){
         if (response.ok) {
