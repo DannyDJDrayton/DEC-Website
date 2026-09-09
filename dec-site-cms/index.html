@@ -45,7 +45,17 @@
   nav.links a{font-size:0.92rem; font-weight:600; color:var(--black); opacity:0.8;}
   nav.links a:hover{opacity:1; color:var(--green-dark);}
   .header-ctas{display:flex; align-items:center; gap:10px;}
-      @media (max-width:980px){ nav.links{display:none;} .header-ctas .btn{padding:10px 14px; font-size:0.82rem;} }
+  .burger-btn{display:none; width:40px; height:40px; border:1px solid var(--line); border-radius:8px; background:#fff; align-items:center; justify-content:center; cursor:pointer; flex:none;}
+  .burger-btn svg{width:20px; height:20px; stroke:var(--black); fill:none; stroke-width:2;}
+  .mobile-menu{display:none; flex-direction:column; padding:8px 20px 16px; border-top:1px solid var(--line); background:#fff;}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{padding:12px 0; font-size:0.98rem; font-weight:600; color:var(--black); border-bottom:1px solid var(--line);}
+  .mobile-menu a:last-child{border-bottom:none;}
+  @media (max-width:980px){
+    nav.links{display:none;}
+    .burger-btn{display:flex;}
+    .header-ctas .btn{padding:10px 14px; font-size:0.82rem;}
+  }
   @media (max-width:560px){
     .nav{flex-direction:column; align-items:stretch; gap:14px; padding:16px 20px;}
     .brand{width:100%;}
@@ -53,7 +63,7 @@
     .header-ctas{flex-direction:row; width:100%; gap:10px;}
     .header-ctas .btn{flex:1; justify-content:center; padding:12px 14px; font-size:0.85rem;}
   }
-    @media (max-width:400px){
+  @media (max-width:400px){
     .header-ctas .btn{padding:10px 12px; font-size:0.8rem;}
   }
   @media (max-width:560px){
@@ -180,6 +190,17 @@
       <a class="btn btn-green" href="#booking">Get a Free Quote</a>
       <a class="btn btn-outline-dark tel-link" href="tel:+44">Call Now</a>
     </div>
+    <button class="burger-btn" id="burgerBtn" aria-label="Open menu">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#booking">Contact</a>
+    <a href="blog.html">Blog</a>
   </div>
 </header>
 <main id="top">
@@ -430,6 +451,16 @@
 </footer>
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+  var burgerBtn = document.getElementById('burgerBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (burgerBtn && mobileMenu) {
+    burgerBtn.addEventListener('click', function(){
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
+    });
+  }
   if (window.netlifyIdentity) {
     window.netlifyIdentity.on('init', function(user) {
       if (!user) {
