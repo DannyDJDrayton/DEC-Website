@@ -46,29 +46,25 @@
   .back-link{display:inline-block; margin-bottom:20px; font-size:0.88rem; font-weight:700; color:var(--green-dark);}
   #emptyState{padding:20px 0; opacity:0.6; font-size:0.92rem;}
   footer{background:var(--black); color:#fff; padding:36px 0; margin-top:10px;}
-  .footer-inner{max-width:1160px; margin:0 auto; padding:0 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  .footer-inner{max-width:1160px; margin:0 auto; padding:0 28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:18px;}
   .legal-line{font-family:var(--mono); font-size:0.7rem; opacity:0.5; max-width:600px;}
 </style>
 </head>
 <body>
-
 <header>
   <div class="nav">
-    <a class="brand" href="index.html"><span class="mark">DEC<span>.</span></span></a>
+    <a class="brand" href="index.html"><img src="content/uploads/dec-logo.png" alt="Drayton Exterior Cleaning" style="height:40px;width:auto;"></a>
     <a class="btn" href="index.html#booking">Get a Free Quote</a>
   </div>
 </header>
-
 <main class="wrap">
   <section class="blog-hero">
     <div class="eyebrow">The DEC Blog</div>
     <h1>Windows, gutters and exterior care — explained plainly.</h1>
     <p>Practical guides for homeowners in Market Drayton and the surrounding villages.</p>
   </section>
-
   <section id="postList"></section>
   <p id="emptyState" style="display:none;">No posts yet — check back soon.</p>
-
   <article id="postDetail">
     <a class="back-link" href="#" id="backLink">← Back to the blog</a>
     <div class="post-meta" id="detailMeta"></div>
@@ -76,20 +72,17 @@
     <div class="body" id="detailBody"></div>
   </article>
 </main>
-
 <footer>
   <div class="footer-inner">
+    <img src="content/uploads/dec-logo-dark.png" alt="Drayton Exterior Cleaning" style="height:36px;width:auto;">
     <p class="legal-line">Drayton Exterior Cleaning (DEC) is a trading name of Prime Event &amp; Media Solutions Ltd. Registered in England &amp; Wales No. 16904317.</p>
   </div>
 </footer>
-
 <script>
   var posts = [];
-
   function slugify(title){
     return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   }
-
   function renderList(){
     var listEl = document.getElementById('postList');
     var emptyEl = document.getElementById('emptyState');
@@ -105,7 +98,6 @@
       '</div>';
     }).join('');
   }
-
   function renderDetail(slug){
     var post = posts.find(function(p){ return slugify(p.title) === slug; });
     if (!post) { location.hash = ''; return; }
@@ -116,7 +108,6 @@
     document.getElementById('detailTitle').textContent = post.title;
     document.getElementById('detailBody').innerHTML = window.marked ? window.marked.parse(post.body || '') : (post.body || '');
   }
-
   function route(){
     var slug = location.hash.replace('#', '');
     if (slug){
@@ -127,10 +118,8 @@
       if (posts.length) document.getElementById('emptyState').style.display = 'none';
     }
   }
-
   document.getElementById('backLink').addEventListener('click', function(e){ e.preventDefault(); location.hash = ''; });
   window.addEventListener('hashchange', route);
-
   fetch('content/posts.json')
     .then(function(r){ return r.json(); })
     .then(function(data){
@@ -142,6 +131,5 @@
       document.getElementById('emptyState').style.display = 'block';
     });
 </script>
-
 </body>
 </html>
