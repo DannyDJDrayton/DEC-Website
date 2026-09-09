@@ -528,9 +528,9 @@
       }
     });
   }
-  // Site settings — phone number, hero photo, van photo
+    // Site settings — phone number, hero photo, van photo
   fetch('content/settings.json').then(function(r){ return r.json(); }).then(function(s){
-        if (s.phone) {
+    if (s.phone) {
       document.querySelectorAll('.tel-link').forEach(function(a){
         a.href = 'tel:' + s.phone.replace(/\s+/g, '');
         if (a.id === 'footerPhoneText') a.textContent = '📞 ' + s.phone;
@@ -541,9 +541,6 @@
       document.querySelectorAll('.whatsapp-link').forEach(function(a){
         a.href = 'https://wa.me/' + waNumber;
       });
-    };
-      var heroNum = document.getElementById('heroPhoneNumber');
-      if (heroNum) heroNum.textContent = s.phone;
     }
     if (s.heroImage) {
       var hero = document.getElementById('heroPhoto');
