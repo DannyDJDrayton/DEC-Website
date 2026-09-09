@@ -1,1 +1,13 @@
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  ...
 
+/
+  Content-Security-Policy: ...
+
+/index.html
+  Content-Security-Policy: ...
+
+/blog.html
+  Content-Security-Policy: ...
