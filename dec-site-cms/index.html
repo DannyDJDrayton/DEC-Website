@@ -26,7 +26,6 @@
   .wrap{max-width:1160px; margin:0 auto; padding:0 28px;}
   @media (max-width:640px){.wrap{padding:0 20px;}}
   .eyebrow{font-family:var(--mono); font-size:0.76rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--green-dark); font-weight:600; margin-bottom:12px;}
-
   /* Buttons */
   .btn{display:inline-flex; align-items:center; gap:8px; font-family:var(--body); font-weight:700; font-size:0.94rem; padding:13px 24px; border-radius:8px; border:2px solid transparent; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease;}
   .btn-green{background:var(--green); color:#fff; box-shadow:0 6px 16px rgba(76,175,60,0.3);}
@@ -35,7 +34,6 @@
   .btn-outline-dark:hover{background:var(--black); color:#fff;}
   .btn-outline-white{background:transparent; border-color:rgba(255,255,255,0.4); color:#fff;}
   .btn-outline-white:hover{border-color:#fff;}
-
   /* Header */
   header{position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
   .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:20px;}
@@ -49,7 +47,6 @@
   .header-ctas{display:flex; align-items:center; gap:10px;}
   @media (max-width:980px){ nav.links{display:none;} .header-ctas .btn{padding:10px 14px; font-size:0.82rem;} }
   @media (max-width:560px){ .header-ctas{flex-direction:column; align-items:flex-end; gap:6px;} }
-
   /* Hero */
   .hero{padding:56px 0 64px;}
   .hero-inner{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;}
@@ -67,7 +64,6 @@
     display:flex; align-items:center; justify-content:center; text-align:center;
   }
   .hero-photo .ph-label{color:rgba(255,255,255,0.55); font-family:var(--mono); font-size:0.78rem; padding:0 30px; line-height:1.6;}
-
   /* Services */
   section{padding:76px 0;}
   .section-head{max-width:600px; margin:0 auto 42px; text-align:center;}
@@ -82,7 +78,6 @@
   .service-icon svg{width:24px; height:24px; stroke:var(--green-dark); fill:none; stroke-width:1.7;}
   .service-card h3{font-size:1.02rem; font-weight:700;}
   .service-card p{margin-top:8px; font-size:0.88rem; opacity:0.68;}
-
   /* Why choose band */
   .why-band{background:var(--black); color:#fff;}
   .why-inner{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;}
@@ -101,15 +96,11 @@
     display:flex; align-items:center; justify-content:center; text-align:center;
   }
   .why-photo .ph-label{color:rgba(255,255,255,0.55); font-family:var(--mono); font-size:0.75rem; padding:0 24px;}
-
   /* Before/after gallery */
-  .gallery-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
-  @media (max-width:900px){ .gallery-grid{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:500px){ .gallery-grid{grid-template-columns:1fr;} }
+  .gallery-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;}
   .gallery-item{aspect-ratio:1/1; border-radius:10px; border:1.5px dashed var(--line); display:flex; align-items:center; justify-content:center; background:var(--offwhite);}
   .gallery-item span{font-family:var(--mono); font-size:0.72rem; color:var(--grey); opacity:0.6; text-align:center; padding:0 14px;}
   .gallery-cta{text-align:center; margin-top:32px;}
-
   /* Testimonials + CTA */
   .testi-wrap{display:grid; grid-template-columns:1fr 1fr 1fr 0.9fr; gap:18px;}
   @media (max-width:980px){ .testi-wrap{grid-template-columns:1fr 1fr;} }
@@ -123,7 +114,6 @@
   .cta-panel h3{color:#fff; font-size:1.15rem;}
   .cta-panel h3 .accent{color:var(--green);}
   .cta-panel .btn{width:100%; justify-content:center;}
-
   /* Booking */
   .booking{background:var(--offwhite);}
   .booking-panel{background:#fff; border:1px solid var(--line); border-radius:16px; padding:32px; box-shadow:0 20px 44px rgba(20,23,26,0.06);}
@@ -134,12 +124,10 @@
   .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
   @media (max-width:480px){ .field-row{grid-template-columns:1fr;} }
   .booking-note{font-family:var(--mono); font-size:0.72rem; opacity:0.55; text-align:center; margin-top:12px;}
-
   /* Areas */
   .area-tags{display:flex; flex-wrap:wrap; gap:10px; justify-content:center;}
   .area-tag{font-family:var(--mono); font-size:0.82rem; padding:9px 16px; border-radius:999px; border:1px solid var(--line); background:#fff;}
   .area-tag.primary{background:var(--green); color:#fff; border-color:var(--green); font-weight:700;}
-
   /* Footer */
   footer{background:var(--black); color:#fff; padding:52px 0 26px;}
   .footer-top{display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr; gap:36px; padding-bottom:32px; border-bottom:1px solid rgba(255,255,255,0.14);}
@@ -156,7 +144,6 @@
 </style>
 </head>
 <body>
-
 <header>
   <div class="wrap nav">
         <a class="brand" href="#top">
@@ -176,9 +163,7 @@
     </div>
   </div>
 </header>
-
 <main id="top">
-
   <!-- HERO -->
   <section class="hero">
     <div class="wrap hero-inner">
@@ -201,7 +186,6 @@
       </div>
     </div>
   </section>
-
   <!-- SERVICES -->
   <section id="services">
     <div class="wrap">
@@ -243,7 +227,6 @@
       </div>
     </div>
   </section>
-
   <!-- WHY CHOOSE -->
   <section id="about" class="why-band">
     <div class="wrap why-inner">
@@ -267,7 +250,6 @@
       </div>
     </div>
   </section>
-
   <!-- GALLERY -->
   <section id="gallery">
     <div class="wrap">
@@ -284,7 +266,6 @@
       </div>
     </div>
   </section>
-
   <!-- TESTIMONIALS + CTA -->
   <section id="reviews">
     <div class="wrap">
@@ -319,7 +300,6 @@
       </div>
     </div>
   </section>
-
   <!-- BOOKING -->
   <section id="booking" class="booking">
     <div class="wrap">
@@ -362,7 +342,6 @@
       </div>
     </div>
   </section>
-
   <!-- AREAS -->
   <section>
     <div class="wrap">
@@ -381,9 +360,7 @@
       </div>
     </div>
   </section>
-
 </main>
-
 <footer>
   <div class="wrap">
     <div class="footer-top">
@@ -421,10 +398,8 @@
     </div>
   </div>
 </footer>
-
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
-
   if (window.netlifyIdentity) {
     window.netlifyIdentity.on('init', function(user) {
       if (!user) {
@@ -434,8 +409,6 @@
       }
     });
   }
-
-
   // Site settings — phone number, hero photo, van photo
   fetch('content/settings.json').then(function(r){ return r.json(); }).then(function(s){
     if (s.phone) {
@@ -459,7 +432,6 @@
       van.innerHTML = '';
     }
   }).catch(function(){});
-
   // Gallery — replace placeholders only if real items exist
     fetch('content/gallery.json').then(function(r){ return r.json(); }).then(function(d){
     var items = d.items || [];
@@ -479,7 +451,6 @@
       '</div>';
     }).join('');
   }).catch(function(){});
-
   // Testimonials — replace example cards only if real reviews exist
   fetch('content/testimonials.json').then(function(r){ return r.json(); }).then(function(d){
     var items = d.items || [];
@@ -496,8 +467,6 @@
     }).join('');
     wrap.insertAdjacentHTML('afterbegin', html);
   }).catch(function(){});
-
-
   var quoteForm = document.getElementById('quoteForm');
   if (quoteForm) {
     quoteForm.addEventListener('submit', function(e){
@@ -530,6 +499,5 @@
     });
   }
 </script>
-
 </body>
 </html>
