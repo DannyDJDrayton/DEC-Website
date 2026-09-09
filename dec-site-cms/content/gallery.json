@@ -3,10 +3,6 @@
     {
       "before_image": "/content/uploads/before.jpg",
       "after_image": "/content/uploads/after.jpg"
-    },
-    {
-      "before_image": "/content/uploads/after.jpg",
-      "after_image": "/content/uploads/after.jpg"
     }
   ]
 }
