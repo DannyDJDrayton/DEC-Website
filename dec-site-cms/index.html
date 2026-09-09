@@ -111,12 +111,11 @@
     .burger-btn{display:flex;}
     .header-ctas .btn{padding:10px 14px; font-size:0.82rem;}
   }
-  @media (max-width:560px){
-    .nav{flex-direction:column; align-items:stretch; gap:14px; padding:16px 20px;}
-    .brand{width:100%;}
-        .brand img{width:60% !important; height:auto !important; margin:0 auto;}
-    .header-ctas{flex-direction:row; width:100%; gap:10px;}
-    .header-ctas .btn{flex:1; justify-content:center; padding:12px 14px; font-size:0.85rem;}
+    @media (max-width:560px){
+    .nav{flex-direction:row; align-items:center; justify-content:space-between; gap:10px; padding:14px 20px;}
+    .brand{width:auto;}
+    .brand img{width:auto !important; height:36px !important; margin:0;}
+    .header-ctas{display:none;}
   }
   @media (max-width:400px){
     .header-ctas .btn{padding:10px 12px; font-size:0.8rem;}
