@@ -58,6 +58,13 @@
   .trust-item{display:flex; align-items:center; gap:8px; font-size:0.86rem; font-weight:600; color:var(--black);}
   .trust-item svg{width:18px; height:18px; stroke:var(--green); fill:none; stroke-width:2;}
   .hero .cta-row{display:flex; gap:14px; margin-top:28px; flex-wrap:wrap;}
+  .hero-phone-cta{display:inline-flex; align-items:center; gap:14px; background:var(--black); color:#fff; padding:14px 22px; border-radius:12px; margin-top:16px; box-shadow:0 10px 24px rgba(20,23,26,0.18); transition:transform .15s ease;}
+  .hero-phone-cta:hover{transform:translateY(-1px);}
+  .hero-phone-icon{width:42px; height:42px; border-radius:50%; background:var(--green); display:flex; align-items:center; justify-content:center; font-size:1.25rem; flex:none;}
+  .hero-phone-text{display:flex; flex-direction:column; line-height:1.2;}
+  .hero-phone-label{font-family:var(--mono); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.06em; opacity:0.65;}
+  .hero-phone-number{font-family:var(--display); font-weight:800; font-size:1.4rem; letter-spacing:-0.01em;}
+  @media (max-width:480px){ .hero-phone-number{font-size:1.2rem;} }
   .hero-photo{
     aspect-ratio:4/3.4; border-radius:16px; overflow:hidden; position:relative;
     background:linear-gradient(155deg, var(--black) 0%, var(--black-soft) 60%, var(--green-dark) 140%);
@@ -178,8 +185,14 @@
         </div>
         <div class="cta-row">
           <a class="btn btn-green" href="#booking">Get a Free Quote →</a>
-          <a class="btn btn-outline-dark tel-link" href="tel:+44">📞 Call Now</a>
         </div>
+        <a href="tel:+44" class="tel-link hero-phone-cta">
+          <span class="hero-phone-icon">📞</span>
+          <span class="hero-phone-text">
+            <span class="hero-phone-label">Call us now</span>
+            <span class="hero-phone-number" id="heroPhoneNumber">[ your number ]</span>
+          </span>
+        </a>
       </div>
       <div class="hero-photo" id="heroPhoto">
         <div class="ph-label">[ Photo placeholder — add one in the dashboard: Site Photos &amp; Phone Number → Hero Photo ]</div>
@@ -416,6 +429,8 @@
         a.href = 'tel:' + s.phone.replace(/\s+/g, '');
         if (a.id === 'footerPhoneText') a.textContent = '📞 ' + s.phone;
       });
+      var heroNum = document.getElementById('heroPhoneNumber');
+      if (heroNum) heroNum.textContent = s.phone;
     }
     if (s.heroImage) {
       var hero = document.getElementById('heroPhoto');
@@ -433,18 +448,18 @@
     }
   }).catch(function(){});
   // Gallery — replace placeholders only if real items exist
-    fetch('content/gallery.json').then(function(r){ return r.json(); }).then(function(d){
+  fetch('content/gallery.json').then(function(r){ return r.json(); }).then(function(d){
     var items = d.items || [];
     if (!items.length) return;
     var grid = document.getElementById('galleryGrid');
     grid.innerHTML = items.map(function(it){
       return '<div class="gallery-item" style="border-style:solid; padding:0; overflow:hidden; position:relative; display:flex; flex-direction:column;">' +
         '<div style="position:relative; flex:1; overflow:hidden;">' +
-          '<img src="' + it.before_image + '" style="width:100%; height:100%; object-fit:cover; display:block;" alt="Before">' +
+          '<img src="' + it.before_image + '" style="width:100%; height:100%; object-fit:cover; display:block; cursor:zoom-in;" alt="Before" onclick="openLightbox(\'' + it.before_image + '\')">' +
           '<span style="position:absolute; top:6px; left:6px; background:rgba(20,23,26,0.75); color:#fff; font-size:0.6rem; padding:2px 8px; border-radius:6px; text-transform:uppercase; letter-spacing:0.04em;">Before</span>' +
         '</div>' +
         '<div style="position:relative; flex:1; overflow:hidden; border-top:2px solid #fff;">' +
-          '<img src="' + it.after_image + '" style="width:100%; height:100%; object-fit:cover; display:block;" alt="After">' +
+          '<img src="' + it.after_image + '" style="width:100%; height:100%; object-fit:cover; display:block; cursor:zoom-in;" alt="After" onclick="openLightbox(\'' + it.after_image + '\')">' +
           '<span style="position:absolute; top:6px; left:6px; background:rgba(76,175,60,0.9); color:#fff; font-size:0.6rem; padding:2px 8px; border-radius:6px; text-transform:uppercase; letter-spacing:0.04em;">After</span>' +
         '</div>' +
         (it.caption ? '<span style="position:absolute; bottom:6px; left:6px; right:6px; background:rgba(20,23,26,0.75); color:#fff; font-size:0.68rem; padding:4px 8px; border-radius:6px;">' + it.caption + '</span>' : '') +
@@ -497,6 +512,15 @@
         note.style.color = '#B3261E';
       });
     });
+  }
+</script>
+<div id="lightbox" style="display:none; position:fixed; inset:0; background:rgba(20,23,26,0.92); z-index:999; align-items:center; justify-content:center; padding:24px; cursor:zoom-out;" onclick="this.style.display='none';">
+  <img id="lightboxImg" src="" style="max-width:90vw; max-height:90vh; border-radius:8px; object-fit:contain;">
+</div>
+<script>
+  function openLightbox(src){
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').style.display = 'flex';
   }
 </script>
 </body>
