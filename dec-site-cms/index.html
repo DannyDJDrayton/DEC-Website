@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-PENXMTE224"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-PENXMTE224'); </script>
 <title>DEC — Drayton Exterior Cleaning | Market Drayton</title>
 <meta name="description" content="Professional window and exterior cleaning in Market Drayton. Fully insured, reliable local service, free quotes.">
 <link rel="canonical" href="https://draytonclean.co.uk/">
@@ -16,6 +15,14 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="DEC — Drayton Exterior Cleaning | Market Drayton">
 <meta name="twitter:description" content="Professional window and exterior cleaning in Market Drayton. Fully insured, reliable local service, free quotes.">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PENXMTE224"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-PENXMTE224');
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -48,8 +55,6 @@
   ],
   "makesOffer": [
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Window Cleaning" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Gutter Cleaning" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pressure Washing" } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Conservatory Cleaning" } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fascias & Soffits Cleaning" } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Exterior Property Cleaning" } }
@@ -112,14 +117,11 @@
     .burger-btn{display:flex;}
     .header-ctas .btn{padding:10px 14px; font-size:0.82rem;}
   }
-    @media (max-width:560px){
+  @media (max-width:560px){
     .nav{flex-direction:row; align-items:center; justify-content:space-between; gap:10px; padding:14px 20px;}
     .brand{width:auto;}
     .brand img{width:auto !important; height:36px !important; margin:0;}
     .header-ctas{display:none;}
-  }
-  @media (max-width:400px){
-    .header-ctas .btn{padding:10px 12px; font-size:0.8rem;}
   }
   @media (max-width:560px){
     header{position:static;}
@@ -140,7 +142,7 @@
   .hero-phone-icon{width:42px; height:42px; border-radius:50%; background:var(--green); display:flex; align-items:center; justify-content:center; font-size:1.25rem; flex:none;}
   .hero-phone-text{display:flex; flex-direction:column; line-height:1.2;}
   .hero-phone-label{font-family:var(--mono); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.06em; opacity:0.65;}
-    .hero-phone-number{font-family:var(--display); font-weight:800; font-size:1.4rem; letter-spacing:-0.01em;}
+  .hero-phone-number{font-family:var(--display); font-weight:800; font-size:1.4rem; letter-spacing:-0.01em;}
   @media (max-width:480px){ .hero-phone-number{font-size:1.2rem;} }
   .hero-whatsapp-cta{display:flex; width:fit-content; align-items:center; gap:14px; background:#25D366; color:#fff; padding:14px 22px; border-radius:12px; margin-top:12px; box-shadow:0 10px 24px rgba(37,211,102,0.28); transition:transform .15s ease;}
   .hero-whatsapp-cta:hover{transform:translateY(-1px);}
@@ -149,7 +151,7 @@
   .hero-whatsapp-label{font-family:var(--mono); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.06em; opacity:0.85;}
   .hero-whatsapp-number{font-family:var(--display); font-weight:800; font-size:1.4rem; letter-spacing:-0.01em;}
   @media (max-width:480px){ .hero-whatsapp-number{font-size:1.2rem;} }
-    .hero-photo{
+  .hero-photo{
     aspect-ratio:4/3.4; border-radius:16px; overflow:hidden; position:relative;
     background:var(--black);
     display:flex; align-items:center; justify-content:center; text-align:center;
@@ -169,6 +171,8 @@
   .service-icon svg{width:24px; height:24px; stroke:var(--green-dark); fill:none; stroke-width:1.7;}
   .service-card h3{font-size:1.02rem; font-weight:700;}
   .service-card p{margin-top:8px; font-size:0.88rem; opacity:0.68;}
+  .service-card.coming-soon{opacity:0.6;}
+  .coming-soon-tag{font-family:var(--mono); font-size:0.6rem; color:var(--green-dark); background:var(--green-tint); padding:3px 9px; border-radius:999px; display:inline-block; margin-top:10px; text-transform:uppercase; letter-spacing:0.04em; font-weight:700;}
   /* Why choose band */
   .why-band{background:var(--black); color:#fff;}
   .why-inner{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;}
@@ -248,7 +252,7 @@
       <a href="#booking">Contact</a>
       <a href="blog.html">Blog</a>
     </nav>
-        <div class="header-ctas">
+    <div class="header-ctas">
       <a class="btn btn-green" href="#booking">Get a Free Quote</a>
       <a class="btn btn-outline-dark tel-link" href="tel:+44">Call Now</a>
       <a class="btn btn-outline-dark whatsapp-link" href="https://wa.me/44" target="_blank" rel="noopener">WhatsApp</a>
@@ -282,14 +286,14 @@
         <div class="cta-row">
           <a class="btn btn-green" href="#booking">Get a Free Quote →</a>
         </div>
-                <a href="tel:+44" class="tel-link hero-phone-cta">
+        <a href="tel:+44" class="tel-link hero-phone-cta">
           <span class="hero-phone-icon">📞</span>
           <span class="hero-phone-text">
             <span class="hero-phone-label">Call us now</span>
             <span class="hero-phone-number" id="heroPhoneNumber">[ your number ]</span>
           </span>
         </a>
-                <a href="https://wa.me/44" class="whatsapp-link hero-whatsapp-cta" target="_blank" rel="noopener">
+        <a href="https://wa.me/44" class="whatsapp-link hero-whatsapp-cta" target="_blank" rel="noopener">
           <span class="hero-whatsapp-icon">💬</span>
           <span class="hero-whatsapp-text">
             <span class="hero-whatsapp-label">Message us on</span>
@@ -315,15 +319,17 @@
           <h3>Window Cleaning</h3>
           <p>Streak-free windows inside &amp; out using pure water technology.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card coming-soon">
           <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v6H4zM6 10v10M18 10v10M6 20h12"/></svg></div>
           <h3>Gutter Cleaning</h3>
           <p>Clear gutters, free-flowing downpipes &amp; peace of mind.</p>
+          <span class="coming-soon-tag">Coming Soon</span>
         </div>
-        <div class="service-card">
+        <div class="service-card coming-soon">
           <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 20l6-16h6l6 16M7 14h10"/></svg></div>
           <h3>Pressure Washing</h3>
           <p>Powerful cleaning for driveways, patios, paths &amp; more.</p>
+          <span class="coming-soon-tag">Coming Soon</span>
         </div>
         <div class="service-card">
           <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 3l8 6v12H4V9z"/></svg></div>
@@ -353,7 +359,7 @@
           <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Reliable, friendly &amp; punctual</div>
           <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Modern equipment &amp; safe methods</div>
           <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Attention to detail &amp; quality guaranteed</div>
-                    <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Locally reviewed by happy customers</div>
+          <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Locally reviewed by happy customers</div>
           <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Text reminder the day before we're due</div>
           <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Secure online payments via Stripe</div>
         </div>
@@ -440,8 +446,8 @@
               <label for="service">Service Needed</label>
               <select id="service" name="Service">
                 <option>Window Cleaning</option>
-                <option>Gutter Cleaning</option>
-                <option>Pressure Washing</option>
+                <option>Gutter Cleaning (Coming Soon)</option>
+                <option>Pressure Washing (Coming Soon)</option>
                 <option>Conservatory Cleaning</option>
                 <option>Fascias &amp; Soffits</option>
                 <option>Exterior Property Cleaning</option>
@@ -488,19 +494,19 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-            <div class="footer-brand">
+      <div class="footer-brand">
         <img src="content/uploads/dec-logo-dark.png" alt="Drayton Exterior Cleaning" style="height:44px;width:auto;">
         <p>Professional window &amp; exterior cleaning services you can rely on — quality &amp; reliability, every time.</p>
       </div>
       <div class="footer-col">
         <h4>Contact Us</h4>
-                <a href="tel:+44" class="tel-link" id="footerPhoneText">📞 [ your number ]</a>
+        <a href="tel:+44" class="tel-link" id="footerPhoneText">📞 [ your number ]</a>
         <a href="https://wa.me/44" class="whatsapp-link" target="_blank" rel="noopener">💬 WhatsApp us</a>
         <a href="mailto:hello@draytonclean.co.uk">✉ hello@draytonclean.co.uk</a>
         <p>📍 Market Drayton, Shropshire</p>
       </div>
       <div class="footer-col">
-                <h4>Quick Links</h4>
+        <h4>Quick Links</h4>
         <a href="#services">Services</a>
         <a href="#gallery">Gallery</a>
         <a href="#reviews">Reviews</a>
@@ -509,7 +515,7 @@
       </div>
       <div class="footer-col">
         <h4>Follow Us</h4>
-                <div class="social-row">
+        <div class="social-row">
           <a href="https://www.facebook.com/profile.php?id=61593315966697" aria-label="Facebook" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H7.9V12h2.6V9.8c0-2.6 1.5-4 3.9-4 1.1 0 2.3.2 2.3.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12h2.9l-.5 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>
           </a>
@@ -547,7 +553,7 @@
       }
     });
   }
-    // Site settings — phone number, hero photo, van photo
+  // Site settings — phone number, hero photo, van photo
   fetch('content/settings.json').then(function(r){ return r.json(); }).then(function(s){
     if (s.phone) {
       document.querySelectorAll('.tel-link').forEach(function(a){
