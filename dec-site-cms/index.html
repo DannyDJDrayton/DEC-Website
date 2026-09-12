@@ -431,6 +431,330 @@
       </div>
     </div>
   </section>
+ <!--
+  ============================================================
+  DEC — Live Pricing Calculator (classy edit, email-gated reveal)
+  ============================================================
+  WHERE TO PASTE THIS:
+  Open index.html on GitHub, and paste this whole block in
+  between the closing </section> of "AREAS" (the "Where We Work"
+  section) and the <!-- BOOKING --> comment, so people get a
+  price and can immediately scroll down to book.
+
+  Ctrl+F for:  <!-- BOOKING -->
+  ...and paste this block just ABOVE that line.
+
+  This reuses the site's existing colours and fonts automatically
+  (--green, --black, --display, etc. are already defined at the
+  top of index.html) so nothing else needs to change.
+
+  HOW IT WORKS:
+  1. Visitor taps – / + to set quantities (no prices shown).
+  2. They enter their email and click "Show My Price".
+  3. The quantity list fades away and a single total is revealed.
+  4. Their email + the quantities + total are sent to you via
+     Netlify Forms — same mechanism as your booking form.
+
+  TO UPDATE PRICES LATER:
+  Change the numbers in the data-price="..." attributes below.
+  ============================================================
+-->
+<section id="calculator" style="background:var(--offwhite);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" style="text-align:center;">Instant Estimate</div>
+      <h2>Work Out Your Price</h2>
+      <p>Set your quantities, then enter your email to reveal your guide price.</p>
+    </div>
+
+    <div class="calc-card">
+      <div class="calc-card-accent"></div>
+
+      <div class="calc-body" id="calc-body">
+        <ul class="calc-list">
+          <li class="calc-item">
+            <span class="calc-item-name">Small window(s)</span>
+            <div class="calc-stepper" data-price="1.10">
+              <button type="button" class="calc-step-btn" data-action="minus" aria-label="Decrease small windows">–</button>
+              <input type="number" id="calc-small" class="calc-qty" value="0" min="0" inputmode="numeric" aria-label="Small window quantity">
+              <button type="button" class="calc-step-btn" data-action="plus" aria-label="Increase small windows">+</button>
+            </div>
+          </li>
+          <li class="calc-item">
+            <span class="calc-item-name">Standard window(s)</span>
+            <div class="calc-stepper" data-price="1.70">
+              <button type="button" class="calc-step-btn" data-action="minus" aria-label="Decrease standard windows">–</button>
+              <input type="number" id="calc-standard" class="calc-qty" value="0" min="0" inputmode="numeric" aria-label="Standard window quantity">
+              <button type="button" class="calc-step-btn" data-action="plus" aria-label="Increase standard windows">+</button>
+            </div>
+          </li>
+          <li class="calc-item">
+            <span class="calc-item-name">Large / bay window(s)</span>
+            <div class="calc-stepper" data-price="2.50">
+              <button type="button" class="calc-step-btn" data-action="minus" aria-label="Decrease large windows">–</button>
+              <input type="number" id="calc-large" class="calc-qty" value="0" min="0" inputmode="numeric" aria-label="Large or bay window quantity">
+              <button type="button" class="calc-step-btn" data-action="plus" aria-label="Increase large windows">+</button>
+            </div>
+          </li>
+          <li class="calc-item">
+            <span class="calc-item-name">Door(s)</span>
+            <div class="calc-stepper" data-price="1.20">
+              <button type="button" class="calc-step-btn" data-action="minus" aria-label="Decrease doors">–</button>
+              <input type="number" id="calc-door" class="calc-qty" value="0" min="0" inputmode="numeric" aria-label="Door quantity">
+              <button type="button" class="calc-step-btn" data-action="plus" aria-label="Increase doors">+</button>
+            </div>
+          </li>
+          <li class="calc-item">
+            <span class="calc-item-name">Patio door(s)</span>
+            <div class="calc-stepper" data-price="2.50">
+              <button type="button" class="calc-step-btn" data-action="minus" aria-label="Decrease patio doors">–</button>
+              <input type="number" id="calc-patio" class="calc-qty" value="0" min="0" inputmode="numeric" aria-label="Patio door quantity">
+              <button type="button" class="calc-step-btn" data-action="plus" aria-label="Increase patio doors">+</button>
+            </div>
+          </li>
+          <li class="calc-item">
+            <span class="calc-item-name">Conservatory</span>
+            <div class="calc-stepper" data-price="5.00">
+              <button type="button" class="calc-step-btn" data-action="minus" aria-label="Decrease conservatories">–</button>
+              <input type="number" id="calc-conservatory" class="calc-qty" value="0" min="0" inputmode="numeric" aria-label="Conservatory quantity">
+              <button type="button" class="calc-step-btn" data-action="plus" aria-label="Increase conservatories">+</button>
+            </div>
+          </li>
+          <li class="calc-item">
+            <span class="calc-item-name">Skylight(s)</span>
+            <div class="calc-stepper" data-price="1.50">
+              <button type="button" class="calc-step-btn" data-action="minus" aria-label="Decrease skylights">–</button>
+              <input type="number" id="calc-skylight" class="calc-qty" value="0" min="0" inputmode="numeric" aria-label="Skylight quantity">
+              <button type="button" class="calc-step-btn" data-action="plus" aria-label="Increase skylights">+</button>
+            </div>
+          </li>
+        </ul>
+
+        <form name="price-calculator-lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="calcLeadForm" class="calc-email-block">
+          <input type="hidden" name="form-name" value="price-calculator-lead">
+          <p style="position:absolute; left:-9999px;"><label>Leave this field blank: <input name="bot-field"></label></p>
+          <input type="hidden" name="Breakdown" id="calc-breakdown-field">
+          <input type="hidden" name="Total" id="calc-total-field">
+
+          <label for="calc-email" class="calc-email-label">Your email, to reveal your price</label>
+          <div class="calc-email-row">
+            <input type="email" id="calc-email" name="Email" class="calc-email-input" placeholder="you@example.com" required>
+            <button type="button" class="btn btn-green calc-reveal-btn" id="calc-reveal-btn">Show My Price →</button>
+          </div>
+          <p class="calc-error" id="calc-error" style="display:none;">Please enter a valid email address.</p>
+        </form>
+      </div>
+
+      <!-- Hidden until the email is submitted; replaces calc-body -->
+      <div class="calc-result" id="calc-result">
+        <span class="calc-result-label">Your estimated total</span>
+        <div class="calc-total" id="calc-total-display">£0.00</div>
+        <p class="calc-result-note" id="calc-min-note" style="display:none;">This reflects our £15 minimum call-out fee.</p>
+        <p class="calc-result-note">For one visit, based on ground-floor access — we'll confirm the exact price for free before any work begins.</p>
+        <a href="#booking" class="btn btn-green">Book This Quote →</a>
+        <button type="button" class="calc-restart-btn" id="calc-restart-btn">Start over</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .calc-card{
+    position:relative; background:#fff; border:1px solid var(--line); border-radius:16px;
+    box-shadow:0 24px 48px rgba(20,23,26,0.07); max-width:640px; margin:0 auto; overflow:hidden;
+  }
+  .calc-card-accent{
+    height:4px; width:100%;
+    background:linear-gradient(90deg, var(--green) 0%, var(--green-dark) 100%);
+  }
+  .calc-body{ padding:36px 40px 32px; }
+  @media (max-width:560px){ .calc-body{ padding:28px 22px 26px; } }
+
+  .calc-list{ list-style:none; margin:0 0 8px; padding:0; }
+  .calc-item{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:15px 0; border-bottom:1px solid var(--line);
+  }
+  .calc-item:first-child{ padding-top:0; }
+  .calc-item-name{ font-size:0.98rem; color:var(--black); font-weight:600; }
+
+  .calc-stepper{ display:flex; align-items:center; gap:0; flex:none; }
+  .calc-step-btn{
+    width:30px; height:30px; border-radius:50%; border:1.5px solid var(--line);
+    background:#fff; color:var(--black); font-family:var(--display); font-weight:700; font-size:1rem;
+    line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .calc-step-btn:hover{ border-color:var(--green); color:var(--green-dark); background:var(--green-tint); }
+  .calc-step-btn:active{ transform:scale(0.94); }
+  .calc-qty{
+    width:40px; text-align:center; border:none; background:transparent;
+    font-family:var(--display); font-weight:700; font-size:1.05rem; color:var(--black);
+    -moz-appearance:textfield;
+  }
+  .calc-qty::-webkit-outer-spin-button, .calc-qty::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  .calc-qty:focus{ outline:none; color:var(--green-dark); }
+
+  .calc-email-block{ margin-top:28px; padding-top:26px; border-top:1px solid var(--line); }
+  .calc-email-label{
+    display:block; font-size:0.8rem; font-weight:700; color:var(--black); margin-bottom:10px;
+  }
+  .calc-email-row{ display:flex; gap:10px; flex-wrap:wrap; }
+  .calc-email-input{
+    flex:1; min-width:200px; padding:12px 16px; border-radius:999px; border:1.5px solid var(--line);
+    font-family:var(--body); font-size:0.95rem; background:#fff;
+  }
+  .calc-email-input:focus{ outline:none; border-color:var(--green); }
+  .calc-reveal-btn{ white-space:nowrap; border-radius:999px; }
+  .calc-error{ color:#B3261E; font-size:0.82rem; font-weight:600; margin-top:10px; }
+
+  /* The reveal moment: body fades/slides out, result fades/slides in */
+  .calc-body{
+    transition:opacity 320ms ease, transform 320ms ease;
+  }
+  .calc-body.is-hidden{
+    display:none;
+  }
+  .calc-result{
+    display:none; text-align:center; padding:44px 40px 38px;
+    opacity:0; transform:translateY(6px);
+    transition:opacity 420ms ease, transform 420ms ease;
+  }
+  .calc-result.is-visible{ display:block; }
+  .calc-result.is-shown{ opacity:1; transform:translateY(0); }
+  @media (max-width:560px){ .calc-result{ padding:36px 22px 30px; } }
+
+  .calc-result-label{
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--green-dark); font-weight:600;
+  }
+  .calc-total{
+    font-family:var(--display); font-weight:800; font-size:3rem; color:var(--black);
+    margin:10px 0 6px; letter-spacing:-0.01em;
+  }
+  .calc-result-note{
+    font-size:0.86rem; color:var(--grey); opacity:0.75; max-width:380px; margin:0 auto 24px;
+    line-height:1.5;
+  }
+  .calc-restart-btn{
+    display:block; margin:16px auto 0; background:none; border:none; cursor:pointer;
+    font-family:var(--body); font-size:0.82rem; color:var(--grey); opacity:0.6; text-decoration:underline;
+  }
+  .calc-restart-btn:hover{ opacity:1; }
+</style>
+
+<script>
+  (function(){
+    var body = document.getElementById('calc-body');
+    var resultBlock = document.getElementById('calc-result');
+    var emailInput = document.getElementById('calc-email');
+    var revealBtn = document.getElementById('calc-reveal-btn');
+    var errorMsg = document.getElementById('calc-error');
+    var totalDisplay = document.getElementById('calc-total-display');
+    var minNote = document.getElementById('calc-min-note');
+    var breakdownField = document.getElementById('calc-breakdown-field');
+    var totalField = document.getElementById('calc-total-field');
+    var emailForm = document.getElementById('calcLeadForm');
+    var restartBtn = document.getElementById('calc-restart-btn');
+
+    // Stepper buttons
+    document.querySelectorAll('.calc-step-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var stepper = btn.closest('.calc-stepper');
+        var input = stepper.querySelector('.calc-qty');
+        var val = parseInt(input.value, 10) || 0;
+        if (btn.getAttribute('data-action') === 'plus') val++;
+        else val = Math.max(0, val - 1);
+        input.value = val;
+      });
+    });
+
+    function isValidEmail(value){
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    var MINIMUM_FEE = 15.00;
+
+    function calculateTotal(){
+      var total = 0;
+      var breakdown = [];
+      document.querySelectorAll('.calc-stepper').forEach(function(stepper){
+        var input = stepper.querySelector('.calc-qty');
+        var qty = parseInt(input.value, 10) || 0;
+        if (qty < 0) qty = 0;
+        var price = parseFloat(stepper.getAttribute('data-price')) || 0;
+        if (qty > 0){
+          var label = stepper.closest('.calc-item').querySelector('.calc-item-name').textContent;
+          breakdown.push(qty + 'x ' + label);
+        }
+        total += qty * price;
+      });
+
+      var minimumApplied = false;
+      if (total > 0 && total < MINIMUM_FEE){
+        total = MINIMUM_FEE;
+        minimumApplied = true;
+        breakdown.push('minimum call-out fee applied');
+      }
+
+      return { total: total, breakdown: breakdown.join(', '), minimumApplied: minimumApplied };
+    }
+
+    // Animated count-up for a single, deliberate reveal moment
+    function animateTotal(target){
+      var start = 0;
+      var duration = 650;
+      var startTime = null;
+      function step(ts){
+        if (!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = start + (target - start) * eased;
+        totalDisplay.textContent = '£' + current.toFixed(2);
+        if (progress < 1) requestAnimationFrame(step);
+        else totalDisplay.textContent = '£' + target.toFixed(2);
+      }
+      requestAnimationFrame(step);
+    }
+
+    revealBtn.addEventListener('click', function(){
+      var email = emailInput.value.trim();
+      if (!isValidEmail(email)){
+        errorMsg.style.display = 'block';
+        emailInput.focus();
+        return;
+      }
+      errorMsg.style.display = 'none';
+
+      var calc = calculateTotal();
+      breakdownField.value = calc.breakdown || 'No items selected';
+      totalField.value = '£' + calc.total.toFixed(2);
+      minNote.style.display = calc.minimumApplied ? 'block' : 'none';
+
+      // The reveal: body fades out, result fades in
+      body.classList.add('is-hidden');
+      resultBlock.classList.add('is-visible');
+      requestAnimationFrame(function(){
+        resultBlock.classList.add('is-shown');
+      });
+      animateTotal(calc.total);
+
+      // Best-effort background lead submission — never blocks the reveal
+      var data = new FormData(emailForm);
+      fetch('/', { method: 'POST', body: data }).catch(function(err){
+        console.warn('Lead submission failed silently:', err);
+      });
+    });
+
+    restartBtn.addEventListener('click', function(){
+      resultBlock.classList.remove('is-shown');
+      setTimeout(function(){
+        resultBlock.classList.remove('is-visible');
+        body.classList.remove('is-hidden');
+      }, 300);
+    });
+  })();
+</script>
   <!-- BOOKING -->
   <section id="booking" class="booking">
     <div class="wrap">
