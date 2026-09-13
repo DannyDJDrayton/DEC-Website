@@ -848,6 +848,7 @@
       resultBlock.classList.add('is-visible');
       requestAnimationFrame(function(){
         resultBlock.classList.add('is-shown');
+        resultBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
       animateTotal(calc.total);
 
