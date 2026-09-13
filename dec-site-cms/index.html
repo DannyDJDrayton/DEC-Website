@@ -592,6 +592,7 @@
         <div class="calc-total" id="calc-total-display">£0.00</div>
         <p class="calc-result-note" id="calc-min-note" style="display:none;">This reflects our minimum charge for your property size.</p>
         <p class="calc-result-note">This calculator is still being fine-tuned, so treat this as a starting guide — we'll confirm the exact price for free before any work begins.</p>
+        <p class="calc-result-note"><strong>Please note:</strong> first cleans and one-off cleans are subject to a surcharge. This price reflects our regular ongoing clean rate.</p>
         <a href="#booking" class="btn btn-green">Book This Quote →</a>
         <button type="button" class="calc-restart-btn" id="calc-restart-btn">Start over</button>
       </div>
@@ -732,6 +733,9 @@
       detached: { 1: 15.00, 2: 17.00, 3: 19.00, 4: 23.00, 5: 26.00 }
     };
 
+    // Conservatory price depends on bedroom count, not a flat rate like other items.
+    var CONSERVATORY_PRICE_TABLE = { 1: 5.00, 2: 5.00, 3: 6.00, 4: 8.00, 5: 8.00 };
+
     var PROPERTY_LABELS = {
       semi: 'Semi Detached',
       detached: 'Detached'
@@ -776,11 +780,17 @@
     function calculateTotal(){
       var total = 0;
       var breakdown = [];
+      var bedrooms = bedroomsSelect.value;
       document.querySelectorAll('.calc-stepper').forEach(function(stepper){
         var input = stepper.querySelector('.calc-qty');
         var qty = parseInt(input.value, 10) || 0;
         if (qty < 0) qty = 0;
-        var price = parseFloat(stepper.getAttribute('data-price')) || 0;
+        var price;
+        if (input.id === 'calc-conservatory'){
+          price = CONSERVATORY_PRICE_TABLE[bedrooms] || 0;
+        } else {
+          price = parseFloat(stepper.getAttribute('data-price')) || 0;
+        }
         if (qty > 0){
           var label = stepper.closest('.calc-item').querySelector('.calc-item-name').textContent;
           breakdown.push(qty + 'x ' + label);
@@ -789,7 +799,6 @@
       });
 
       var propertyType = propertyTypeSelect.value;
-      var bedrooms = bedroomsSelect.value;
       var minimum = (MINIMUM_TABLE[propertyType] && MINIMUM_TABLE[propertyType][bedrooms]) || 0;
       var minimumApplied = false;
 
