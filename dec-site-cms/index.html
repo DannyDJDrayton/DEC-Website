@@ -389,7 +389,7 @@
       <div class="section-head">
         <div class="eyebrow" style="text-align:center;">Our Results</div>
         <h2>See the Difference</h2>
-        <p>Before/after photos.</p>
+        <p>Before/after photos go here once real jobs are done — left empty rather than faked.</p>
       </div>
       <div class="gallery-grid" id="galleryGrid">
         <div class="gallery-item"><span>Before / After<br>coming soon</span></div>
@@ -435,13 +435,12 @@
   </section>
 <!--
   ============================================================
-  DEC — Live Pricing Calculator (property-based minimum pricing)
+  DEC — Live Pricing Calculator (GDPR-friendly: no email required)
   ============================================================
   WHERE TO PASTE THIS:
   Open index.html on GitHub, and paste this whole block in
   between the closing tag of "AREAS" (the "Where We Work"
-  section) and the BOOKING section comment, so people get a
-  price and can immediately scroll down to book.
+  section) and the BOOKING section comment.
 
   Search for the word BOOKING inside an HTML comment further
   down the file, and paste this block just ABOVE that line.
@@ -450,16 +449,21 @@
   (the green, black, and font variables are already defined at
   the top of index.html) so nothing else needs to change.
 
-  HOW IT WORKS:
-  1. Visitor picks their property type (Semi Detached / Detached)
-     and number of bedrooms. This sets a MINIMUM charge for their
-     property, based on the table below.
-  2. They tap the plus/minus buttons to set item quantities.
-  3. They enter their email and click "Show My Price".
-  4. The final total is whichever is HIGHER: the sum of their
-     items, or the minimum charge for their property size.
-  5. Their email, property details, quantities, and total are
-     sent to you via Netlify Forms, same as your booking form.
+  HOW IT WORKS NOW (updated for GDPR):
+  1. Visitor picks property type + bedrooms, sets item quantities.
+  2. They click "Reveal My Price" — the price shows IMMEDIATELY,
+     no email or any personal detail required.
+  3. A short reference code (e.g. DEC-4X7QK) is shown alongside
+     the price, generated fresh in their browser. It isn't stored
+     anywhere unless they choose to submit their email (see next).
+  4. BELOW the price, there's a fully OPTIONAL section: "Want us
+     to follow up?" with an email field and a consent checkbox.
+     Nothing is sent anywhere unless they tick the box AND enter
+     an email AND click "Send My Details" themselves.
+  5. If they do submit, their email + the reference code + their
+     quote details go to you via Netlify Forms, same as your
+     booking form — searchable by that reference code if they
+     quote it back to you on the phone.
 
   TO UPDATE THE MINIMUM PRICING TABLE LATER:
   Search for MINIMUM_TABLE further down in the <script> section.
@@ -468,11 +472,8 @@
       semi:     { 1: 14.00, 2: 16.00, 3: 18.00, 4: 22.00 },
       detached: { 1: 15.00, 2: 17.00, 3: 19.00, 4: 23.00, 5: 26.00 }
     };
-  Change any number to update that minimum. To add a new bedroom
-  option (e.g. a 5-bed semi), add a new entry like 5: 25.00 to
-  the "semi" section AND add a matching <option value="5">5 Bed
-  </option> line in the HTML further down (search for BEDROOM
-  OPTIONS to find where).
+  Change any number to update that minimum. Conservatory pricing
+  is separate — search for CONSERVATORY_PRICE_TABLE.
 
   TO UPDATE ITEM PRICES LATER:
   Change the numbers in the data-price attributes below.
@@ -483,7 +484,7 @@
     <div class="section-head">
       <div class="eyebrow" style="text-align:center;">Instant Estimate</div>
       <h2>Work Out Your Price <span class="calc-eval-badge">In Evaluation</span></h2>
-      <p>Tell us about your property, set your quantities, then enter your email to reveal your guide price.</p>
+      <p>Tell us about your property and set your quantities — your price shows straight away, no email needed.</p>
     </div>
 
     <div class="calc-card">
@@ -570,30 +571,45 @@
           </li>
         </ul>
 
-        <form name="price-calculator-lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="calcLeadForm" class="calc-email-block">
-          <input type="hidden" name="form-name" value="price-calculator-lead">
-          <p style="position:absolute; left:-9999px;"><label>Leave this field blank: <input name="bot-field"></label></p>
-          <input type="hidden" name="PropertyType" id="calc-property-field">
-          <input type="hidden" name="Breakdown" id="calc-breakdown-field">
-          <input type="hidden" name="Total" id="calc-total-field">
-
-          <label for="calc-email" class="calc-email-label">Your email, to reveal your price</label>
-          <div class="calc-email-row">
-            <input type="email" id="calc-email" name="Email" class="calc-email-input" placeholder="you@example.com" required>
-            <button type="button" class="btn btn-green calc-reveal-btn" id="calc-reveal-btn">Show My Price →</button>
-          </div>
-          <p class="calc-error" id="calc-error" style="display:none;">Please enter a valid email address.</p>
-        </form>
+        <div class="calc-reveal-row">
+          <button type="button" class="btn btn-green calc-reveal-btn" id="calc-reveal-btn">Reveal My Price →</button>
+        </div>
       </div>
 
-      <!-- Hidden until the email is submitted; replaces calc-body -->
+      <!-- Hidden until "Reveal My Price" is clicked; replaces calc-body -->
       <div class="calc-result" id="calc-result">
         <span class="calc-result-label">Your estimated total</span>
         <div class="calc-total" id="calc-total-display">£0.00</div>
+        <div class="calc-ref">Quote reference: <strong id="calc-ref-display">DEC-00000</strong></div>
         <p class="calc-result-note" id="calc-min-note" style="display:none;">This reflects our minimum charge for your property size.</p>
         <p class="calc-result-note">This calculator is still being fine-tuned, so treat this as a starting guide — we'll confirm the exact price for free before any work begins.</p>
         <p class="calc-result-note"><strong>Please note:</strong> first cleans and one-off cleans are subject to a surcharge. This price reflects our regular ongoing clean rate.</p>
-        <a href="#booking" class="btn btn-green">Book This Quote →</a>
+
+        <div class="calc-followup">
+          <p class="calc-followup-title">Want us to follow up on this quote?</p>
+          <p class="calc-followup-sub">Totally optional — only used to discuss this quote with you.</p>
+
+          <form name="price-calculator-lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="calcLeadForm">
+            <input type="hidden" name="form-name" value="price-calculator-lead">
+            <p style="position:absolute; left:-9999px;"><label>Leave this field blank: <input name="bot-field"></label></p>
+            <input type="hidden" name="Reference" id="calc-ref-field">
+            <input type="hidden" name="PropertyType" id="calc-property-field">
+            <input type="hidden" name="Breakdown" id="calc-breakdown-field">
+            <input type="hidden" name="Total" id="calc-total-field">
+
+            <input type="email" id="calc-followup-email" name="Email" class="calc-email-input" placeholder="you@example.com (optional)">
+
+            <label class="calc-consent-row">
+              <input type="checkbox" id="calc-consent" name="Consent">
+              <span>I'm happy for DEC to contact me about this quote</span>
+            </label>
+
+            <button type="button" class="btn btn-outline-dark calc-followup-btn" id="calc-followup-btn">Send My Details</button>
+            <p class="calc-followup-status" id="calc-followup-status" style="display:none;"></p>
+          </form>
+        </div>
+
+        <a href="#booking" class="btn btn-green calc-book-btn">Book This Quote →</a>
         <button type="button" class="calc-restart-btn" id="calc-restart-btn">Start over</button>
       </div>
     </div>
@@ -660,25 +676,11 @@
   .calc-qty::-webkit-outer-spin-button, .calc-qty::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
   .calc-qty:focus{ outline:none; color:var(--green-dark); }
 
-  .calc-email-block{ margin-top:28px; padding-top:26px; border-top:1px solid var(--line); }
-  .calc-email-label{
-    display:block; font-size:0.8rem; font-weight:700; color:var(--black); margin-bottom:10px;
-  }
-  .calc-email-row{ display:flex; gap:10px; flex-wrap:wrap; }
-  .calc-email-input{
-    flex:1; min-width:200px; padding:12px 16px; border-radius:999px; border:1.5px solid var(--line);
-    font-family:var(--body); font-size:0.95rem; background:#fff;
-  }
-  .calc-email-input:focus{ outline:none; border-color:var(--green); }
-  .calc-reveal-btn{ white-space:nowrap; border-radius:999px; }
-  .calc-error{ color:#B3261E; font-size:0.82rem; font-weight:600; margin-top:10px; }
+  .calc-reveal-row{ margin-top:28px; padding-top:26px; border-top:1px solid var(--line); text-align:center; }
+  .calc-reveal-btn{ border-radius:999px; padding:14px 32px; }
 
-  .calc-body{
-    transition:opacity 320ms ease, transform 320ms ease;
-  }
-  .calc-body.is-hidden{
-    display:none;
-  }
+  .calc-body{ transition:opacity 320ms ease, transform 320ms ease; }
+  .calc-body.is-hidden{ display:none; }
   .calc-result{
     display:none; text-align:center; padding:44px 40px 38px;
     opacity:0; transform:translateY(6px);
@@ -696,10 +698,34 @@
     font-family:var(--display); font-weight:800; font-size:3rem; color:var(--black);
     margin:10px 0 6px; letter-spacing:-0.01em;
   }
+  .calc-ref{
+    font-family:var(--mono); font-size:0.85rem; color:var(--grey); margin-bottom:18px;
+  }
+  .calc-ref strong{ color:var(--black); letter-spacing:0.03em; }
   .calc-result-note{
-    font-size:0.86rem; color:var(--grey); opacity:0.75; max-width:380px; margin:0 auto 24px;
+    font-size:0.86rem; color:var(--grey); opacity:0.75; max-width:380px; margin:0 auto 14px;
     line-height:1.5;
   }
+
+  .calc-followup{
+    margin:26px 0; padding:22px 24px; background:var(--offwhite); border-radius:12px; text-align:left;
+  }
+  .calc-followup-title{ font-weight:700; color:var(--black); font-size:0.95rem; margin-bottom:4px; }
+  .calc-followup-sub{ font-size:0.8rem; color:var(--grey); opacity:0.75; margin-bottom:16px; }
+  .calc-followup .calc-email-input{
+    width:100%; padding:12px 16px; border-radius:999px; border:1.5px solid var(--line);
+    font-family:var(--body); font-size:0.95rem; background:#fff; margin-bottom:14px;
+  }
+  .calc-followup .calc-email-input:focus{ outline:none; border-color:var(--green); }
+  .calc-consent-row{
+    display:flex; align-items:flex-start; gap:10px; font-size:0.85rem; color:var(--black);
+    margin-bottom:16px; cursor:pointer; line-height:1.4;
+  }
+  .calc-consent-row input{ margin-top:3px; flex:none; }
+  .calc-followup-btn{ width:100%; justify-content:center; border-radius:999px; }
+  .calc-followup-status{ font-size:0.82rem; margin-top:10px; text-align:center; color:var(--green-dark); font-weight:600; }
+
+  .calc-book-btn{ margin-top:6px; }
   .calc-restart-btn{
     display:block; margin:16px auto 0; background:none; border:none; cursor:pointer;
     font-family:var(--body); font-size:0.82rem; color:var(--grey); opacity:0.6; text-decoration:underline;
@@ -711,38 +737,33 @@
   (function(){
     var body = document.getElementById('calc-body');
     var resultBlock = document.getElementById('calc-result');
-    var emailInput = document.getElementById('calc-email');
     var revealBtn = document.getElementById('calc-reveal-btn');
-    var errorMsg = document.getElementById('calc-error');
     var totalDisplay = document.getElementById('calc-total-display');
+    var refDisplay = document.getElementById('calc-ref-display');
     var minNote = document.getElementById('calc-min-note');
     var propertyField = document.getElementById('calc-property-field');
     var breakdownField = document.getElementById('calc-breakdown-field');
     var totalField = document.getElementById('calc-total-field');
-    var emailForm = document.getElementById('calcLeadForm');
+    var refField = document.getElementById('calc-ref-field');
     var restartBtn = document.getElementById('calc-restart-btn');
     var propertyTypeSelect = document.getElementById('calc-property-type');
     var bedroomsSelect = document.getElementById('calc-bedrooms');
 
-    // ------------------------------------------------------------
-    // MINIMUM PRICING TABLE — edit these numbers to change minimums.
-    // Keys are bedroom counts; values are the minimum charge in £.
-    // ------------------------------------------------------------
+    var followupBtn = document.getElementById('calc-followup-btn');
+    var followupEmail = document.getElementById('calc-followup-email');
+    var followupConsent = document.getElementById('calc-consent');
+    var followupStatus = document.getElementById('calc-followup-status');
+    var followupForm = document.getElementById('calcLeadForm');
+
     var MINIMUM_TABLE = {
       semi:     { 1: 14.00, 2: 16.00, 3: 18.00, 4: 22.00 },
       detached: { 1: 15.00, 2: 17.00, 3: 19.00, 4: 23.00, 5: 26.00 }
     };
-
-    // Conservatory price depends on bedroom count, not a flat rate like other items.
     var CONSERVATORY_PRICE_TABLE = { 1: 5.00, 2: 5.00, 3: 6.00, 4: 8.00, 5: 8.00 };
+    var PROPERTY_LABELS = { semi: 'Semi Detached', detached: 'Detached' };
 
-    var PROPERTY_LABELS = {
-      semi: 'Semi Detached',
-      detached: 'Detached'
-    };
+    var currentReference = '';
 
-    // Rebuild the bedroom dropdown whenever property type changes,
-    // so only valid bedroom counts for that type are offered.
     function refreshBedroomOptions(){
       var type = propertyTypeSelect.value;
       var options = MINIMUM_TABLE[type];
@@ -754,14 +775,10 @@
         opt.textContent = bedCount + ' Bed';
         bedroomsSelect.appendChild(opt);
       });
-      // Keep the same bedroom count selected if it still exists for the new type
-      if (options[currentValue] !== undefined){
-        bedroomsSelect.value = currentValue;
-      }
+      if (options[currentValue] !== undefined){ bedroomsSelect.value = currentValue; }
     }
     propertyTypeSelect.addEventListener('change', refreshBedroomOptions);
 
-    // Stepper buttons
     document.querySelectorAll('.calc-step-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
         var stepper = btn.closest('.calc-stepper');
@@ -775,6 +792,17 @@
 
     function isValidEmail(value){
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    // Generates a short reference code, e.g. DEC-4X7QK — not stored anywhere
+    // unless the visitor opts in to the follow-up form below.
+    function generateReference(){
+      var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no confusing O/0, I/1
+      var code = '';
+      for (var i = 0; i < 5; i++){
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return 'DEC-' + code;
     }
 
     function calculateTotal(){
@@ -801,11 +829,7 @@
       var propertyType = propertyTypeSelect.value;
       var minimum = (MINIMUM_TABLE[propertyType] && MINIMUM_TABLE[propertyType][bedrooms]) || 0;
       var minimumApplied = false;
-
-      if (total < minimum){
-        total = minimum;
-        minimumApplied = true;
-      }
+      if (total < minimum){ total = minimum; minimumApplied = true; }
 
       var propertyLabel = PROPERTY_LABELS[propertyType] + ', ' + bedrooms + ' bed';
 
@@ -817,11 +841,8 @@
       };
     }
 
-    // Animated count-up for a single, deliberate reveal moment
     function animateTotal(target){
-      var start = 0;
-      var duration = 650;
-      var startTime = null;
+      var start = 0, duration = 650, startTime = null;
       function step(ts){
         if (!startTime) startTime = ts;
         var progress = Math.min((ts - startTime) / duration, 1);
@@ -834,25 +855,21 @@
       requestAnimationFrame(step);
     }
 
+    // Reveal the price immediately — no email, no gate, no personal data needed.
     revealBtn.addEventListener('click', function(){
-      var email = emailInput.value.trim();
-      if (!isValidEmail(email)){
-        errorMsg.style.display = 'block';
-        emailInput.focus();
-        return;
-      }
-      errorMsg.style.display = 'none';
-
       var calc = calculateTotal();
+      currentReference = generateReference();
+
+      refDisplay.textContent = currentReference;
       propertyField.value = calc.propertyLabel;
       breakdownField.value = calc.breakdown;
       totalField.value = '£' + calc.total.toFixed(2);
+      refField.value = currentReference;
       minNote.style.display = calc.minimumApplied ? 'block' : 'none';
       if (calc.minimumApplied){
         minNote.textContent = 'This reflects our minimum charge for a ' + calc.propertyLabel.toLowerCase() + ' property.';
       }
 
-      // The reveal: body fades out, result fades in
       body.classList.add('is-hidden');
       resultBlock.classList.add('is-visible');
       requestAnimationFrame(function(){
@@ -860,12 +877,44 @@
         resultBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
       animateTotal(calc.total);
+    });
 
-      // Best-effort background lead submission — never blocks the reveal
-      var data = new FormData(emailForm);
-      fetch('/', { method: 'POST', body: data }).catch(function(err){
-        console.warn('Lead submission failed silently:', err);
-      });
+    // Fully optional follow-up: only submits if the visitor enters an email
+    // AND ticks the consent checkbox AND clicks this button themselves.
+    followupBtn.addEventListener('click', function(){
+      var email = followupEmail.value.trim();
+
+      if (!email || !isValidEmail(email)){
+        followupStatus.textContent = 'Please enter a valid email address.';
+        followupStatus.style.color = '#B3261E';
+        followupStatus.style.display = 'block';
+        return;
+      }
+      if (!followupConsent.checked){
+        followupStatus.textContent = 'Please tick the box to confirm you\u2019re happy for us to contact you.';
+        followupStatus.style.color = '#B3261E';
+        followupStatus.style.display = 'block';
+        return;
+      }
+
+      followupBtn.disabled = true;
+      followupBtn.textContent = 'Sending…';
+
+      var data = new FormData(followupForm);
+      fetch('/', { method: 'POST', body: data })
+        .then(function(){
+          followupStatus.textContent = 'Thanks — we\u2019ve got your details and will be in touch.';
+          followupStatus.style.color = '';
+          followupStatus.style.display = 'block';
+          followupBtn.textContent = 'Sent ✓';
+        })
+        .catch(function(){
+          followupBtn.disabled = false;
+          followupBtn.textContent = 'Send My Details';
+          followupStatus.textContent = 'Something went wrong — please call or email us directly instead.';
+          followupStatus.style.color = '#B3261E';
+          followupStatus.style.display = 'block';
+        });
     });
 
     restartBtn.addEventListener('click', function(){
@@ -873,6 +922,11 @@
       setTimeout(function(){
         resultBlock.classList.remove('is-visible');
         body.classList.remove('is-hidden');
+        followupStatus.style.display = 'none';
+        followupEmail.value = '';
+        followupConsent.checked = false;
+        followupBtn.disabled = false;
+        followupBtn.textContent = 'Send My Details';
       }, 300);
     });
   })();
