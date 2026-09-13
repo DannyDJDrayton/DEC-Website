@@ -399,7 +399,7 @@
       if (calc.minimumApplied){ minNote.textContent = 'This reflects our minimum charge for a ' + calc.propertyLabel.toLowerCase() + ' property.'; }
       body.classList.add('is-hidden');
       resultBlock.classList.add('is-visible');
-      requestAnimationFrame(function(){ resultBlock.classList.add('is-shown'); });
+      requestAnimationFrame(function(){ resultBlock.classList.add('is-shown'); resultBlock.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
       animateTotal(calc.total);
       var data = new FormData(emailForm);
       fetch('/', { method: 'POST', body: data }).catch(function(err){ console.warn('Lead submission failed silently:', err); });
