@@ -605,6 +605,14 @@
         resultBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
       animateTotal(calc.total);
+
+      // Anonymous usage tracking — no personal data, just counts that a price was revealed.
+      if (typeof gtag === 'function'){
+        gtag('event', 'calculator_price_revealed', {
+          property_type: calc.propertyLabel,
+          quote_total: calc.total
+        });
+      }
     });
 
     // Fully optional follow-up: only submits if the visitor enters an email
@@ -635,6 +643,11 @@
           followupStatus.style.color = '';
           followupStatus.style.display = 'block';
           followupBtn.textContent = 'Sent ✓';
+
+          // Anonymous conversion tracking — counts the submission, not who submitted it.
+          if (typeof gtag === 'function'){
+            gtag('event', 'calculator_lead_submitted');
+          }
         })
         .catch(function(){
           followupBtn.disabled = false;
