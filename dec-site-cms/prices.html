@@ -161,12 +161,58 @@
 </header>
 
 <main>
+<!--
+  ============================================================
+  DEC — Live Pricing Calculator (GDPR-friendly: no email required)
+  ============================================================
+  WHERE TO PASTE THIS:
+  Open index.html on GitHub, and paste this whole block in
+  between the closing tag of "AREAS" (the "Where We Work"
+  section) and the BOOKING section comment.
+
+  Search for the word BOOKING inside an HTML comment further
+  down the file, and paste this block just ABOVE that line.
+
+  This reuses the site's existing colours and fonts automatically
+  (the green, black, and font variables are already defined at
+  the top of index.html) so nothing else needs to change.
+
+  HOW IT WORKS NOW (updated for GDPR):
+  1. Visitor picks property type + bedrooms, sets item quantities.
+  2. They click "Reveal My Price" — the price shows IMMEDIATELY,
+     no email or any personal detail required.
+  3. A short reference code (e.g. DEC-4X7QK) is shown alongside
+     the price, generated fresh in their browser. It isn't stored
+     anywhere unless they choose to submit their email (see next).
+  4. BELOW the price, there's a fully OPTIONAL section: "Want us
+     to follow up?" with an email field and a consent checkbox.
+     Nothing is sent anywhere unless they tick the box AND enter
+     an email AND click "Send My Details" themselves.
+  5. If they do submit, their email + the reference code + their
+     quote details go to you via Netlify Forms, same as your
+     booking form — searchable by that reference code if they
+     quote it back to you on the phone.
+
+  TO UPDATE THE MINIMUM PRICING TABLE LATER:
+  Search for MINIMUM_TABLE further down in the <script> section.
+  It looks like this:
+    var MINIMUM_TABLE = {
+      semi:     { 1: 14.00, 2: 16.00, 3: 18.00, 4: 22.00 },
+      detached: { 1: 15.00, 2: 17.00, 3: 19.00, 4: 23.00, 5: 26.00 }
+    };
+  Change any number to update that minimum. Conservatory pricing
+  is separate — search for CONSERVATORY_PRICE_TABLE.
+
+  TO UPDATE ITEM PRICES LATER:
+  Change the numbers in the data-price attributes below.
+  ============================================================
+-->
 <section id="calculator" style="background:var(--offwhite); padding-top:64px;">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow" style="text-align:center;">Instant Estimate</div>
       <h2>Work Out Your Price <span class="calc-eval-badge">In Evaluation</span></h2>
-      <p>Tell us about your property, set your quantities, then enter your email to reveal your guide price.</p>
+      <p>Tell us about your property and set your quantities — your price shows straight away, no email needed.</p>
     </div>
 
     <div class="calc-card">
@@ -184,6 +230,7 @@
           </div>
           <div class="calc-property-field">
             <label for="calc-bedrooms">Bedrooms</label>
+            <!-- BEDROOM OPTIONS: repopulated by JS when Property Type changes -->
             <select id="calc-bedrooms" class="calc-select">
               <option value="1">1 Bed</option>
               <option value="2">2 Bed</option>
@@ -252,70 +299,189 @@
           </li>
         </ul>
 
-        <form name="price-calculator-lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="calcLeadForm" class="calc-email-block">
-          <input type="hidden" name="form-name" value="price-calculator-lead">
-          <p style="position:absolute; left:-9999px;"><label>Leave this field blank: <input name="bot-field"></label></p>
-          <input type="hidden" name="PropertyType" id="calc-property-field">
-          <input type="hidden" name="Breakdown" id="calc-breakdown-field">
-          <input type="hidden" name="Total" id="calc-total-field">
-
-          <label for="calc-email" class="calc-email-label">Your email, to reveal your price</label>
-          <div class="calc-email-row">
-            <input type="email" id="calc-email" name="Email" class="calc-email-input" placeholder="you@example.com" required>
-            <button type="button" class="btn btn-green calc-reveal-btn" id="calc-reveal-btn">Show My Price →</button>
-          </div>
-          <p class="calc-error" id="calc-error" style="display:none;">Please enter a valid email address.</p>
-        </form>
+        <div class="calc-reveal-row">
+          <button type="button" class="btn btn-green calc-reveal-btn" id="calc-reveal-btn">Reveal My Price →</button>
+        </div>
       </div>
 
+      <!-- Hidden until "Reveal My Price" is clicked; replaces calc-body -->
       <div class="calc-result" id="calc-result">
         <span class="calc-result-label">Your estimated total</span>
         <div class="calc-total" id="calc-total-display">£0.00</div>
+        <div class="calc-ref">Quote reference: <strong id="calc-ref-display">DEC-00000</strong></div>
         <p class="calc-result-note" id="calc-min-note" style="display:none;">This reflects our minimum charge for your property size.</p>
         <p class="calc-result-note">This calculator is still being fine-tuned, so treat this as a starting guide — we'll confirm the exact price for free before any work begins.</p>
         <p class="calc-result-note"><strong>Please note:</strong> first cleans and one-off cleans are subject to a surcharge. This price reflects our regular ongoing clean rate.</p>
-        <a href="index.html#booking" class="btn btn-green">Book This Quote →</a>
+
+        <div class="calc-followup">
+          <p class="calc-followup-title">Want us to follow up on this quote?</p>
+          <p class="calc-followup-sub">Totally optional — only used to discuss this quote with you.</p>
+
+          <form name="price-calculator-lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="calcLeadForm">
+            <input type="hidden" name="form-name" value="price-calculator-lead">
+            <p style="position:absolute; left:-9999px;"><label>Leave this field blank: <input name="bot-field"></label></p>
+            <input type="hidden" name="Reference" id="calc-ref-field">
+            <input type="hidden" name="PropertyType" id="calc-property-field">
+            <input type="hidden" name="Breakdown" id="calc-breakdown-field">
+            <input type="hidden" name="Total" id="calc-total-field">
+
+            <input type="email" id="calc-followup-email" name="Email" class="calc-email-input" placeholder="you@example.com (optional)">
+
+            <label class="calc-consent-row">
+              <input type="checkbox" id="calc-consent" name="Consent">
+              <span>I'm happy for DEC to contact me about this quote</span>
+            </label>
+
+            <button type="button" class="btn btn-outline-dark calc-followup-btn" id="calc-followup-btn">Send My Details</button>
+            <p class="calc-followup-status" id="calc-followup-status" style="display:none;"></p>
+          </form>
+        </div>
+
+        <a href="#booking" class="btn btn-green calc-book-btn">Book This Quote →</a>
         <button type="button" class="calc-restart-btn" id="calc-restart-btn">Start over</button>
       </div>
     </div>
   </div>
 </section>
-</main>
 
-<footer>
-  <div class="wrap">
-    <p style="text-align:center;">
-      <a href="tel:+447367298499">📞 07367 298499</a> &nbsp;•&nbsp;
-      <a href="mailto:hello@draytonclean.co.uk">✉ hello@draytonclean.co.uk</a>
-    </p>
-    <div class="footer-bottom">
-      <p class="legal-line">Drayton Exterior Cleaning (DEC) is a trading name of Prime Event &amp; Media Solutions Ltd. Registered in England &amp; Wales No. 16904317.</p>
-    </div>
-  </div>
-</footer>
+<style>
+  .calc-eval-badge{
+    display:inline-block; vertical-align:middle; margin-left:10px;
+    font-family:var(--mono); font-size:0.55rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--green-dark); background:var(--green-tint); padding:4px 10px; border-radius:999px;
+  }
+  @media (max-width:560px){
+    .calc-eval-badge{ display:block; margin:10px auto 0; width:fit-content; }
+  }
+  .calc-card{
+    position:relative; background:#fff; border:1px solid var(--line); border-radius:16px;
+    box-shadow:0 24px 48px rgba(20,23,26,0.07); max-width:640px; margin:0 auto; overflow:hidden;
+  }
+  .calc-card-accent{
+    height:4px; width:100%;
+    background:linear-gradient(90deg, var(--green) 0%, var(--green-dark) 100%);
+  }
+  .calc-body{ padding:36px 40px 32px; }
+  @media (max-width:560px){ .calc-body{ padding:28px 22px 26px; } }
 
-<script>
-  var burgerBtn = document.getElementById('burgerBtn');
-  var mobileMenu = document.getElementById('mobileMenu');
-  if (burgerBtn && mobileMenu) {
-    burgerBtn.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+  .calc-property-row{
+    display:grid; grid-template-columns:1fr 1fr; gap:16px;
+    margin-bottom:28px; padding-bottom:26px; border-bottom:1px solid var(--line);
+  }
+  @media (max-width:480px){ .calc-property-row{ grid-template-columns:1fr; } }
+  .calc-property-field label{
+    display:block; font-size:0.8rem; font-weight:700; color:var(--black); margin-bottom:8px;
+  }
+  .calc-select{
+    width:100%; padding:11px 14px; border-radius:8px; border:1.5px solid var(--line);
+    font-family:var(--body); font-size:0.95rem; background:#fff; color:var(--black);
+    cursor:pointer;
+  }
+  .calc-select:focus{ outline:none; border-color:var(--green); }
+
+  .calc-list{ list-style:none; margin:0 0 8px; padding:0; }
+  .calc-item{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:15px 0; border-bottom:1px solid var(--line);
+  }
+  .calc-item:first-child{ padding-top:0; }
+  .calc-item-name{ font-size:0.98rem; color:var(--black); font-weight:600; }
+
+  .calc-stepper{ display:flex; align-items:center; gap:0; flex:none; }
+  .calc-step-btn{
+    width:30px; height:30px; border-radius:50%; border:1.5px solid var(--line);
+    background:#fff; color:var(--black); font-family:var(--display); font-weight:700; font-size:1rem;
+    line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .calc-step-btn:hover{ border-color:var(--green); color:var(--green-dark); background:var(--green-tint); }
+  .calc-step-btn:active{ transform:scale(0.94); }
+  .calc-qty{
+    width:40px; text-align:center; border:none; background:transparent;
+    font-family:var(--display); font-weight:700; font-size:1.05rem; color:var(--black);
+    -moz-appearance:textfield;
+  }
+  .calc-qty::-webkit-outer-spin-button, .calc-qty::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  .calc-qty:focus{ outline:none; color:var(--green-dark); }
+
+  .calc-reveal-row{ margin-top:28px; padding-top:26px; border-top:1px solid var(--line); text-align:center; }
+  .calc-reveal-btn{ border-radius:999px; padding:14px 32px; }
+
+  .calc-body{ transition:opacity 320ms ease, transform 320ms ease; }
+  .calc-body.is-hidden{ display:none; }
+  .calc-result{
+    display:none; text-align:center; padding:44px 40px 38px;
+    opacity:0; transform:translateY(6px);
+    transition:opacity 420ms ease, transform 420ms ease;
+  }
+  .calc-result.is-visible{ display:block; }
+  .calc-result.is-shown{ opacity:1; transform:translateY(0); }
+  @media (max-width:560px){ .calc-result{ padding:36px 22px 30px; } }
+
+  .calc-result-label{
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--green-dark); font-weight:600;
+  }
+  .calc-total{
+    font-family:var(--display); font-weight:800; font-size:3rem; color:var(--black);
+    margin:10px 0 6px; letter-spacing:-0.01em;
+  }
+  .calc-ref{
+    font-family:var(--mono); font-size:0.85rem; color:var(--grey); margin-bottom:18px;
+  }
+  .calc-ref strong{ color:var(--black); letter-spacing:0.03em; }
+  .calc-result-note{
+    font-size:0.86rem; color:var(--grey); opacity:0.75; max-width:380px; margin:0 auto 14px;
+    line-height:1.5;
   }
 
+  .calc-followup{
+    margin:26px 0; padding:22px 24px; background:var(--offwhite); border-radius:12px; text-align:left;
+  }
+  .calc-followup-title{ font-weight:700; color:var(--black); font-size:0.95rem; margin-bottom:4px; }
+  .calc-followup-sub{ font-size:0.8rem; color:var(--grey); opacity:0.75; margin-bottom:16px; }
+  .calc-followup .calc-email-input{
+    width:100%; padding:12px 16px; border-radius:999px; border:1.5px solid var(--line);
+    font-family:var(--body); font-size:0.95rem; background:#fff; margin-bottom:14px;
+  }
+  .calc-followup .calc-email-input:focus{ outline:none; border-color:var(--green); }
+  .calc-consent-row{
+    display:flex; align-items:flex-start; gap:10px; font-size:0.85rem; color:var(--black);
+    margin-bottom:16px; cursor:pointer; line-height:1.4;
+  }
+  .calc-consent-row input{ margin-top:3px; flex:none; }
+  .calc-followup-btn{ width:100%; justify-content:center; border-radius:999px; }
+  .calc-followup-status{ font-size:0.82rem; margin-top:10px; text-align:center; color:var(--green-dark); font-weight:600; }
+
+  .calc-book-btn{ margin-top:6px; }
+  .calc-restart-btn{
+    display:block; margin:16px auto 0; background:none; border:none; cursor:pointer;
+    font-family:var(--body); font-size:0.82rem; color:var(--grey); opacity:0.6; text-decoration:underline;
+  }
+  .calc-restart-btn:hover{ opacity:1; }
+</style>
+
+<script>
   (function(){
     var body = document.getElementById('calc-body');
     var resultBlock = document.getElementById('calc-result');
-    var emailInput = document.getElementById('calc-email');
     var revealBtn = document.getElementById('calc-reveal-btn');
-    var errorMsg = document.getElementById('calc-error');
     var totalDisplay = document.getElementById('calc-total-display');
+    var refDisplay = document.getElementById('calc-ref-display');
     var minNote = document.getElementById('calc-min-note');
     var propertyField = document.getElementById('calc-property-field');
     var breakdownField = document.getElementById('calc-breakdown-field');
     var totalField = document.getElementById('calc-total-field');
-    var emailForm = document.getElementById('calcLeadForm');
+    var refField = document.getElementById('calc-ref-field');
     var restartBtn = document.getElementById('calc-restart-btn');
     var propertyTypeSelect = document.getElementById('calc-property-type');
     var bedroomsSelect = document.getElementById('calc-bedrooms');
+
+    var followupBtn = document.getElementById('calc-followup-btn');
+    var followupEmail = document.getElementById('calc-followup-email');
+    var followupConsent = document.getElementById('calc-consent');
+    var followupStatus = document.getElementById('calc-followup-status');
+    var followupForm = document.getElementById('calcLeadForm');
 
     var MINIMUM_TABLE = {
       semi:     { 1: 14.00, 2: 16.00, 3: 18.00, 4: 22.00 },
@@ -323,6 +489,8 @@
     };
     var CONSERVATORY_PRICE_TABLE = { 1: 5.00, 2: 5.00, 3: 6.00, 4: 8.00, 5: 8.00 };
     var PROPERTY_LABELS = { semi: 'Semi Detached', detached: 'Detached' };
+
+    var currentReference = '';
 
     function refreshBedroomOptions(){
       var type = propertyTypeSelect.value;
@@ -350,7 +518,20 @@
       });
     });
 
-    function isValidEmail(value){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); }
+    function isValidEmail(value){
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    // Generates a short reference code, e.g. DEC-4X7QK — not stored anywhere
+    // unless the visitor opts in to the follow-up form below.
+    function generateReference(){
+      var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no confusing O/0, I/1
+      var code = '';
+      for (var i = 0; i < 5; i++){
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return 'DEC-' + code;
+    }
 
     function calculateTotal(){
       var total = 0;
@@ -372,12 +553,20 @@
         }
         total += qty * price;
       });
+
       var propertyType = propertyTypeSelect.value;
       var minimum = (MINIMUM_TABLE[propertyType] && MINIMUM_TABLE[propertyType][bedrooms]) || 0;
       var minimumApplied = false;
       if (total < minimum){ total = minimum; minimumApplied = true; }
+
       var propertyLabel = PROPERTY_LABELS[propertyType] + ', ' + bedrooms + ' bed';
-      return { total: total, breakdown: breakdown.join(', ') || 'No items selected', minimumApplied: minimumApplied, propertyLabel: propertyLabel };
+
+      return {
+        total: total,
+        breakdown: breakdown.join(', ') || 'No items selected',
+        minimumApplied: minimumApplied,
+        propertyLabel: propertyLabel
+      };
     }
 
     function animateTotal(target){
@@ -394,29 +583,102 @@
       requestAnimationFrame(step);
     }
 
+    // Reveal the price immediately — no email, no gate, no personal data needed.
     revealBtn.addEventListener('click', function(){
-      var email = emailInput.value.trim();
-      if (!isValidEmail(email)){ errorMsg.style.display = 'block'; emailInput.focus(); return; }
-      errorMsg.style.display = 'none';
       var calc = calculateTotal();
+      currentReference = generateReference();
+
+      refDisplay.textContent = currentReference;
       propertyField.value = calc.propertyLabel;
       breakdownField.value = calc.breakdown;
       totalField.value = '£' + calc.total.toFixed(2);
+      refField.value = currentReference;
       minNote.style.display = calc.minimumApplied ? 'block' : 'none';
-      if (calc.minimumApplied){ minNote.textContent = 'This reflects our minimum charge for a ' + calc.propertyLabel.toLowerCase() + ' property.'; }
+      if (calc.minimumApplied){
+        minNote.textContent = 'This reflects our minimum charge for a ' + calc.propertyLabel.toLowerCase() + ' property.';
+      }
+
       body.classList.add('is-hidden');
       resultBlock.classList.add('is-visible');
-      requestAnimationFrame(function(){ resultBlock.classList.add('is-shown'); resultBlock.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+      requestAnimationFrame(function(){
+        resultBlock.classList.add('is-shown');
+        resultBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
       animateTotal(calc.total);
-      var data = new FormData(emailForm);
-      fetch('/', { method: 'POST', body: data }).catch(function(err){ console.warn('Lead submission failed silently:', err); });
+    });
+
+    // Fully optional follow-up: only submits if the visitor enters an email
+    // AND ticks the consent checkbox AND clicks this button themselves.
+    followupBtn.addEventListener('click', function(){
+      var email = followupEmail.value.trim();
+
+      if (!email || !isValidEmail(email)){
+        followupStatus.textContent = 'Please enter a valid email address.';
+        followupStatus.style.color = '#B3261E';
+        followupStatus.style.display = 'block';
+        return;
+      }
+      if (!followupConsent.checked){
+        followupStatus.textContent = 'Please tick the box to confirm you\u2019re happy for us to contact you.';
+        followupStatus.style.color = '#B3261E';
+        followupStatus.style.display = 'block';
+        return;
+      }
+
+      followupBtn.disabled = true;
+      followupBtn.textContent = 'Sending…';
+
+      var data = new FormData(followupForm);
+      fetch('/', { method: 'POST', body: data })
+        .then(function(){
+          followupStatus.textContent = 'Thanks — we\u2019ve got your details and will be in touch.';
+          followupStatus.style.color = '';
+          followupStatus.style.display = 'block';
+          followupBtn.textContent = 'Sent ✓';
+        })
+        .catch(function(){
+          followupBtn.disabled = false;
+          followupBtn.textContent = 'Send My Details';
+          followupStatus.textContent = 'Something went wrong — please call or email us directly instead.';
+          followupStatus.style.color = '#B3261E';
+          followupStatus.style.display = 'block';
+        });
     });
 
     restartBtn.addEventListener('click', function(){
       resultBlock.classList.remove('is-shown');
-      setTimeout(function(){ resultBlock.classList.remove('is-visible'); body.classList.remove('is-hidden'); }, 300);
+      setTimeout(function(){
+        resultBlock.classList.remove('is-visible');
+        body.classList.remove('is-hidden');
+        followupStatus.style.display = 'none';
+        followupEmail.value = '';
+        followupConsent.checked = false;
+        followupBtn.disabled = false;
+        followupBtn.textContent = 'Send My Details';
+      }, 300);
     });
   })();
+</script>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p style="text-align:center;">
+      <a href="tel:+447367298499">📞 07367 298499</a> &nbsp;•&nbsp;
+      <a href="mailto:hello@draytonclean.co.uk">✉ hello@draytonclean.co.uk</a>
+    </p>
+    <div class="footer-bottom">
+      <p class="legal-line">Drayton Exterior Cleaning (DEC) is a trading name of Prime Event &amp; Media Solutions Ltd. Registered in England &amp; Wales No. 16904317.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  var burgerBtn = document.getElementById('burgerBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (burgerBtn && mobileMenu) {
+    burgerBtn.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+  }
 </script>
 </body>
 </html>
