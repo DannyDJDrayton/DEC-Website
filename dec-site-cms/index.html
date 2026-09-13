@@ -248,6 +248,7 @@
     </a>
     <nav class="links">
       <a href="#services">Services</a>
+      <a href="#calculator">Prices</a>
       <a href="#about">About</a>
       <a href="#gallery">Gallery</a>
       <a href="#reviews">Reviews</a>
@@ -265,6 +266,7 @@
   </div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="#services">Services</a>
+    <a href="#calculator">Prices</a>
     <a href="#about">About</a>
     <a href="#gallery">Gallery</a>
     <a href="#reviews">Reviews</a>
@@ -431,18 +433,84 @@
       </div>
     </div>
   </section>
+<!--
+  ============================================================
+  DEC — Live Pricing Calculator (property-based minimum pricing)
+  ============================================================
+  WHERE TO PASTE THIS:
+  Open index.html on GitHub, and paste this whole block in
+  between the closing tag of "AREAS" (the "Where We Work"
+  section) and the BOOKING section comment, so people get a
+  price and can immediately scroll down to book.
+
+  Search for the word BOOKING inside an HTML comment further
+  down the file, and paste this block just ABOVE that line.
+
+  This reuses the site's existing colours and fonts automatically
+  (the green, black, and font variables are already defined at
+  the top of index.html) so nothing else needs to change.
+
+  HOW IT WORKS:
+  1. Visitor picks their property type (Semi Detached / Detached)
+     and number of bedrooms. This sets a MINIMUM charge for their
+     property, based on the table below.
+  2. They tap the plus/minus buttons to set item quantities.
+  3. They enter their email and click "Show My Price".
+  4. The final total is whichever is HIGHER: the sum of their
+     items, or the minimum charge for their property size.
+  5. Their email, property details, quantities, and total are
+     sent to you via Netlify Forms, same as your booking form.
+
+  TO UPDATE THE MINIMUM PRICING TABLE LATER:
+  Search for MINIMUM_TABLE further down in the <script> section.
+  It looks like this:
+    var MINIMUM_TABLE = {
+      semi:     { 1: 14.00, 2: 16.00, 3: 18.00, 4: 22.00 },
+      detached: { 1: 15.00, 2: 17.00, 3: 19.00, 4: 23.00, 5: 26.00 }
+    };
+  Change any number to update that minimum. To add a new bedroom
+  option (e.g. a 5-bed semi), add a new entry like 5: 25.00 to
+  the "semi" section AND add a matching <option value="5">5 Bed
+  </option> line in the HTML further down (search for BEDROOM
+  OPTIONS to find where).
+
+  TO UPDATE ITEM PRICES LATER:
+  Change the numbers in the data-price attributes below.
+  ============================================================
+-->
 <section id="calculator" style="background:var(--offwhite);">
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow" style="text-align:center;">Instant Estimate</div>
-      <h2>Work Out Your Price</h2>
-      <p>Set your quantities, then enter your email to reveal your guide price.</p>
+      <h2>Work Out Your Price <span class="calc-eval-badge">In Evaluation</span></h2>
+      <p>Tell us about your property, set your quantities, then enter your email to reveal your guide price.</p>
     </div>
 
     <div class="calc-card">
       <div class="calc-card-accent"></div>
 
       <div class="calc-body" id="calc-body">
+
+        <div class="calc-property-row">
+          <div class="calc-property-field">
+            <label for="calc-property-type">Property Type</label>
+            <select id="calc-property-type" class="calc-select">
+              <option value="semi">Semi Detached</option>
+              <option value="detached">Detached</option>
+            </select>
+          </div>
+          <div class="calc-property-field">
+            <label for="calc-bedrooms">Bedrooms</label>
+            <!-- BEDROOM OPTIONS: repopulated by JS when Property Type changes -->
+            <select id="calc-bedrooms" class="calc-select">
+              <option value="1">1 Bed</option>
+              <option value="2">2 Bed</option>
+              <option value="3">3 Bed</option>
+              <option value="4">4 Bed</option>
+            </select>
+          </div>
+        </div>
+
         <ul class="calc-list">
           <li class="calc-item">
             <span class="calc-item-name">Small window(s)</span>
@@ -505,6 +573,7 @@
         <form name="price-calculator-lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="calcLeadForm" class="calc-email-block">
           <input type="hidden" name="form-name" value="price-calculator-lead">
           <p style="position:absolute; left:-9999px;"><label>Leave this field blank: <input name="bot-field"></label></p>
+          <input type="hidden" name="PropertyType" id="calc-property-field">
           <input type="hidden" name="Breakdown" id="calc-breakdown-field">
           <input type="hidden" name="Total" id="calc-total-field">
 
@@ -521,8 +590,8 @@
       <div class="calc-result" id="calc-result">
         <span class="calc-result-label">Your estimated total</span>
         <div class="calc-total" id="calc-total-display">£0.00</div>
-        <p class="calc-result-note" id="calc-min-note" style="display:none;">This reflects our £15 minimum call-out fee.</p>
-        <p class="calc-result-note">For one visit, based on ground-floor access — we'll confirm the exact price for free before any work begins.</p>
+        <p class="calc-result-note" id="calc-min-note" style="display:none;">This reflects our minimum charge for your property size.</p>
+        <p class="calc-result-note">This calculator is still being fine-tuned, so treat this as a starting guide — we'll confirm the exact price for free before any work begins.</p>
         <a href="#booking" class="btn btn-green">Book This Quote →</a>
         <button type="button" class="calc-restart-btn" id="calc-restart-btn">Start over</button>
       </div>
@@ -531,6 +600,14 @@
 </section>
 
 <style>
+  .calc-eval-badge{
+    display:inline-block; vertical-align:middle; margin-left:10px;
+    font-family:var(--mono); font-size:0.55rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--green-dark); background:var(--green-tint); padding:4px 10px; border-radius:999px;
+  }
+  @media (max-width:560px){
+    .calc-eval-badge{ display:block; margin:10px auto 0; width:fit-content; }
+  }
   .calc-card{
     position:relative; background:#fff; border:1px solid var(--line); border-radius:16px;
     box-shadow:0 24px 48px rgba(20,23,26,0.07); max-width:640px; margin:0 auto; overflow:hidden;
@@ -541,6 +618,21 @@
   }
   .calc-body{ padding:36px 40px 32px; }
   @media (max-width:560px){ .calc-body{ padding:28px 22px 26px; } }
+
+  .calc-property-row{
+    display:grid; grid-template-columns:1fr 1fr; gap:16px;
+    margin-bottom:28px; padding-bottom:26px; border-bottom:1px solid var(--line);
+  }
+  @media (max-width:480px){ .calc-property-row{ grid-template-columns:1fr; } }
+  .calc-property-field label{
+    display:block; font-size:0.8rem; font-weight:700; color:var(--black); margin-bottom:8px;
+  }
+  .calc-select{
+    width:100%; padding:11px 14px; border-radius:8px; border:1.5px solid var(--line);
+    font-family:var(--body); font-size:0.95rem; background:#fff; color:var(--black);
+    cursor:pointer;
+  }
+  .calc-select:focus{ outline:none; border-color:var(--green); }
 
   .calc-list{ list-style:none; margin:0 0 8px; padding:0; }
   .calc-item{
@@ -580,7 +672,6 @@
   .calc-reveal-btn{ white-space:nowrap; border-radius:999px; }
   .calc-error{ color:#B3261E; font-size:0.82rem; font-weight:600; margin-top:10px; }
 
-  /* The reveal moment: body fades/slides out, result fades/slides in */
   .calc-body{
     transition:opacity 320ms ease, transform 320ms ease;
   }
@@ -624,10 +715,47 @@
     var errorMsg = document.getElementById('calc-error');
     var totalDisplay = document.getElementById('calc-total-display');
     var minNote = document.getElementById('calc-min-note');
+    var propertyField = document.getElementById('calc-property-field');
     var breakdownField = document.getElementById('calc-breakdown-field');
     var totalField = document.getElementById('calc-total-field');
     var emailForm = document.getElementById('calcLeadForm');
     var restartBtn = document.getElementById('calc-restart-btn');
+    var propertyTypeSelect = document.getElementById('calc-property-type');
+    var bedroomsSelect = document.getElementById('calc-bedrooms');
+
+    // ------------------------------------------------------------
+    // MINIMUM PRICING TABLE — edit these numbers to change minimums.
+    // Keys are bedroom counts; values are the minimum charge in £.
+    // ------------------------------------------------------------
+    var MINIMUM_TABLE = {
+      semi:     { 1: 14.00, 2: 16.00, 3: 18.00, 4: 22.00 },
+      detached: { 1: 15.00, 2: 17.00, 3: 19.00, 4: 23.00, 5: 26.00 }
+    };
+
+    var PROPERTY_LABELS = {
+      semi: 'Semi Detached',
+      detached: 'Detached'
+    };
+
+    // Rebuild the bedroom dropdown whenever property type changes,
+    // so only valid bedroom counts for that type are offered.
+    function refreshBedroomOptions(){
+      var type = propertyTypeSelect.value;
+      var options = MINIMUM_TABLE[type];
+      var currentValue = bedroomsSelect.value;
+      bedroomsSelect.innerHTML = '';
+      Object.keys(options).forEach(function(bedCount){
+        var opt = document.createElement('option');
+        opt.value = bedCount;
+        opt.textContent = bedCount + ' Bed';
+        bedroomsSelect.appendChild(opt);
+      });
+      // Keep the same bedroom count selected if it still exists for the new type
+      if (options[currentValue] !== undefined){
+        bedroomsSelect.value = currentValue;
+      }
+    }
+    propertyTypeSelect.addEventListener('change', refreshBedroomOptions);
 
     // Stepper buttons
     document.querySelectorAll('.calc-step-btn').forEach(function(btn){
@@ -645,8 +773,6 @@
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     }
 
-    var MINIMUM_FEE = 15.00;
-
     function calculateTotal(){
       var total = 0;
       var breakdown = [];
@@ -662,14 +788,24 @@
         total += qty * price;
       });
 
+      var propertyType = propertyTypeSelect.value;
+      var bedrooms = bedroomsSelect.value;
+      var minimum = (MINIMUM_TABLE[propertyType] && MINIMUM_TABLE[propertyType][bedrooms]) || 0;
       var minimumApplied = false;
-      if (total > 0 && total < MINIMUM_FEE){
-        total = MINIMUM_FEE;
+
+      if (total < minimum){
+        total = minimum;
         minimumApplied = true;
-        breakdown.push('minimum call-out fee applied');
       }
 
-      return { total: total, breakdown: breakdown.join(', '), minimumApplied: minimumApplied };
+      var propertyLabel = PROPERTY_LABELS[propertyType] + ', ' + bedrooms + ' bed';
+
+      return {
+        total: total,
+        breakdown: breakdown.join(', ') || 'No items selected',
+        minimumApplied: minimumApplied,
+        propertyLabel: propertyLabel
+      };
     }
 
     // Animated count-up for a single, deliberate reveal moment
@@ -699,9 +835,13 @@
       errorMsg.style.display = 'none';
 
       var calc = calculateTotal();
-      breakdownField.value = calc.breakdown || 'No items selected';
+      propertyField.value = calc.propertyLabel;
+      breakdownField.value = calc.breakdown;
       totalField.value = '£' + calc.total.toFixed(2);
       minNote.style.display = calc.minimumApplied ? 'block' : 'none';
+      if (calc.minimumApplied){
+        minNote.textContent = 'This reflects our minimum charge for a ' + calc.propertyLabel.toLowerCase() + ' property.';
+      }
 
       // The reveal: body fades out, result fades in
       body.classList.add('is-hidden');
@@ -812,6 +952,7 @@
       <div class="footer-col">
         <h4>Quick Links</h4>
         <a href="#services">Services</a>
+        <a href="#calculator">Prices</a>
         <a href="#gallery">Gallery</a>
         <a href="#reviews">Reviews</a>
         <a href="#booking">Contact</a>
