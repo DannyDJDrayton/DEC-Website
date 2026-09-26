@@ -22,6 +22,12 @@
       "location": "Market Drayton",
       "name": "Emma",
       "quote": "\"5 Star service\""
+    },
+    {
+      "rating": 5,
+      "quote": "Highly Recommended 2nd to none. Reliable and Professional 👍🤙",
+      "name": "Stuart",
+      "location": "Market Drayton"
     }
   ]
 }
