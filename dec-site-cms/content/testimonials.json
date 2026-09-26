@@ -16,6 +16,12 @@
       "rating": 5,
       "quote": "*google review* Really good service from Drayton Exterior Cleaning. I particularly like the customer portal as it's easy to see when the next clean is due and communicate if you need to change anything. Everything feels very organised and professional. Great job on the windows too!",
       "name": "Derek Shelton"
+    },
+    {
+      "rating": 5,
+      "location": "Market Drayton",
+      "name": "Emma",
+      "quote": "\"5 Star service\""
     }
   ]
 }
