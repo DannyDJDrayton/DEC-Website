@@ -188,7 +188,7 @@
      Address and Postcode. Details are only sent if they tick
      the box, fill these in
      AND click "Send My Details" themselves. That goes to
-     the separate Netlify form "price-calculator-lead".
+     the separate Netlify form "quote-contact-request".
 
   TO UPDATE THE MINIMUM PRICING TABLE LATER:
   Search for MINIMUM_TABLE further down in the <script> section.
@@ -309,8 +309,8 @@
           <p class="calc-followup-title">Want us to follow up on this quote?</p>
           <p class="calc-followup-sub">Totally optional — only used to discuss this quote with you.</p>
 
-          <form name="price-calculator-lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="calcLeadForm">
-            <input type="hidden" name="form-name" value="price-calculator-lead">
+          <form name="quote-contact-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="calcLeadForm">
+            <input type="hidden" name="form-name" value="quote-contact-request">
             <p style="position:absolute; left:-9999px;"><label>Leave this field blank: <input name="bot-field"></label></p>
             <input type="hidden" name="Reference" id="calc-ref-field">
             <input type="hidden" name="PropertyType" id="calc-property-field">
