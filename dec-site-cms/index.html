@@ -437,43 +437,32 @@
   ============================================================
   DEC — Live Pricing Calculator (GDPR-friendly: no email required)
   ============================================================
-  WHERE TO PASTE THIS:
-  Open index.html on GitHub, and paste this whole block in
-  between the closing tag of "AREAS" (the "Where We Work"
-  section) and the BOOKING section comment.
-
-  Search for the word BOOKING inside an HTML comment further
-  down the file, and paste this block just ABOVE that line.
-
-  This reuses the site's existing colours and fonts automatically
-  (the green, black, and font variables are already defined at
-  the top of index.html) so nothing else needs to change.
-
-  HOW IT WORKS NOW (updated for GDPR):
+  HOW IT WORKS:
   1. Visitor picks property type + bedrooms, sets item quantities.
   2. They click "Reveal My Price" — the price shows IMMEDIATELY,
      no email or any personal detail required.
   3. A short reference code (e.g. DEC-4X7QK) is shown alongside
-     the price, generated fresh in their browser. It isn't stored
-     anywhere unless they choose to submit their email (see next).
-  4. BELOW the price, there's a fully OPTIONAL section: "Want us
+     the price.
+  4. ANONYMOUS QUOTE LOG (added Oct 2026): at the moment the price
+     is revealed, the quote details ONLY (reference, property,
+     items, total — no name, email, phone or anything personal)
+     are sent to the Netlify form called "calculator-quote-log".
+     You can see every quote in Netlify under Forms, and look one
+     up by reference code if a customer quotes it back to you.
+     The same details also go to Google Analytics (GA4) with the
+     "calculator_price_revealed" event.
+  5. BELOW the price, there's a fully OPTIONAL section: "Want us
      to follow up?" with an email field and a consent checkbox.
-     Nothing is sent anywhere unless they tick the box AND enter
-     an email AND click "Send My Details" themselves.
-  5. If they do submit, their email + the reference code + their
-     quote details go to you via Netlify Forms, same as your
-     booking form — searchable by that reference code if they
-     quote it back to you on the phone.
+     Ticking the consent box reveals Name, Email, Mobile number,
+     Address and Postcode. Details are only sent if they tick
+     the box, fill these in
+     AND click "Send My Details" themselves. That goes to
+     the separate Netlify form "quote-contact-request".
 
   TO UPDATE THE MINIMUM PRICING TABLE LATER:
   Search for MINIMUM_TABLE further down in the <script> section.
-  It looks like this:
-    var MINIMUM_TABLE = {
-      semi:     { 1: 14.00, 2: 16.00, 3: 18.00, 4: 22.00 },
-      detached: { 1: 15.00, 2: 17.00, 3: 19.00, 4: 23.00, 5: 26.00 }
-    };
-  Change any number to update that minimum. Conservatory pricing
-  is separate — search for CONSERVATORY_PRICE_TABLE.
+  Conservatory pricing is separate — search for
+  CONSERVATORY_PRICE_TABLE.
 
   TO UPDATE ITEM PRICES LATER:
   Change the numbers in the data-price attributes below.
@@ -589,30 +578,63 @@
           <p class="calc-followup-title">Want us to follow up on this quote?</p>
           <p class="calc-followup-sub">Totally optional — only used to discuss this quote with you.</p>
 
-          <form name="price-calculator-lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="calcLeadForm">
-            <input type="hidden" name="form-name" value="price-calculator-lead">
+          <form name="quote-contact-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="calcLeadForm">
+            <input type="hidden" name="form-name" value="quote-contact-request">
             <p style="position:absolute; left:-9999px;"><label>Leave this field blank: <input name="bot-field"></label></p>
             <input type="hidden" name="Reference" id="calc-ref-field">
             <input type="hidden" name="PropertyType" id="calc-property-field">
             <input type="hidden" name="Breakdown" id="calc-breakdown-field">
             <input type="hidden" name="Total" id="calc-total-field">
 
-            <input type="email" id="calc-followup-email" name="Email" class="calc-email-input" placeholder="you@example.com (optional)">
-
             <label class="calc-consent-row">
-              <input type="checkbox" id="calc-consent" name="Consent">
-              <span>I'm happy for DEC to contact me about this quote</span>
+              <input type="checkbox" id="calc-consent" name="Consent" value="Yes">
+              <span>I'm happy for DEC to contact me about this quote by email, phone or text</span>
             </label>
 
-            <button type="button" class="btn btn-outline-dark calc-followup-btn" id="calc-followup-btn">Send My Details</button>
+            <!-- Contact fields: hidden until the consent box is ticked -->
+            <div class="calc-contact-fields" id="calc-contact-fields" hidden>
+              <label class="calc-field-label" for="calc-name">Name</label>
+              <input type="text" id="calc-name" name="Name" class="calc-email-input" placeholder="Your name" autocomplete="name">
+
+              <label class="calc-field-label" for="calc-followup-email">Email</label>
+              <input type="email" id="calc-followup-email" name="Email" class="calc-email-input" placeholder="you@example.com" autocomplete="email">
+
+              <label class="calc-field-label" for="calc-mobile">Mobile number</label>
+              <input type="tel" id="calc-mobile" name="Mobile" class="calc-email-input" placeholder="07xxx xxxxxx" autocomplete="tel" inputmode="tel">
+
+              <label class="calc-field-label" for="calc-address">Address</label>
+              <input type="text" id="calc-address" name="Address" class="calc-email-input" placeholder="House number, street and town" autocomplete="street-address">
+
+              <label class="calc-field-label" for="calc-postcode">Postcode</label>
+              <input type="text" id="calc-postcode" name="Postcode" class="calc-email-input calc-postcode-input" placeholder="TF9 1AA" autocomplete="postal-code" autocapitalize="characters">
+            </div>
+
+            <button type="button" class="btn btn-outline-dark calc-followup-btn" id="calc-followup-btn" hidden>Send My Details</button>
             <p class="calc-followup-status" id="calc-followup-status" style="display:none;"></p>
           </form>
         </div>
 
-        <a href="#booking" class="btn btn-green calc-book-btn">Book This Quote →</a>
         <button type="button" class="calc-restart-btn" id="calc-restart-btn">Start over</button>
+        <p class="calc-privacy-note">We keep an anonymous record of quote selections (no personal details) to help us improve our pricing.</p>
       </div>
     </div>
+
+    <!--
+      ANONYMOUS QUOTE LOG — invisible to visitors.
+      Netlify reads this form when the site deploys so it knows the
+      form exists. The script below fills it in and sends it each
+      time someone reveals a price. No personal data is collected.
+    -->
+    <form name="calculator-quote-log" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="calculator-quote-log">
+      <input name="bot-field">
+      <input type="hidden" name="Reference">
+      <input type="hidden" name="Property">
+      <input type="hidden" name="Breakdown">
+      <input type="hidden" name="Total">
+      <input type="hidden" name="MinimumApplied">
+      <input type="hidden" name="Page">
+    </form>
   </div>
 </section>
 
@@ -724,6 +746,10 @@
   .calc-consent-row input{ margin-top:3px; flex:none; }
   .calc-followup-btn{ width:100%; justify-content:center; border-radius:999px; }
   .calc-followup-status{ font-size:0.82rem; margin-top:10px; text-align:center; color:var(--green-dark); font-weight:600; }
+  .calc-contact-fields{ margin-bottom:6px; }
+  .calc-contact-fields[hidden], .calc-followup-btn[hidden]{ display:none; }
+  .calc-field-label{ display:block; font-size:0.8rem; font-weight:700; color:var(--black); margin:0 0 6px 4px; }
+  .calc-postcode-input{ text-transform:uppercase; }
 
   .calc-book-btn{ margin-top:6px; }
   .calc-restart-btn{
@@ -731,6 +757,9 @@
     font-family:var(--body); font-size:0.82rem; color:var(--grey); opacity:0.6; text-decoration:underline;
   }
   .calc-restart-btn:hover{ opacity:1; }
+  .calc-privacy-note{
+    font-size:0.72rem; color:var(--grey); opacity:0.55; max-width:380px; margin:18px auto 0; line-height:1.4;
+  }
 </style>
 
 <script>
@@ -750,10 +779,49 @@
     var bedroomsSelect = document.getElementById('calc-bedrooms');
 
     var followupBtn = document.getElementById('calc-followup-btn');
-    var followupEmail = document.getElementById('calc-followup-email');
     var followupConsent = document.getElementById('calc-consent');
     var followupStatus = document.getElementById('calc-followup-status');
     var followupForm = document.getElementById('calcLeadForm');
+    var contactFields = document.getElementById('calc-contact-fields');
+    var nameInput = document.getElementById('calc-name');
+    var emailInput = document.getElementById('calc-followup-email');
+    var mobileInput = document.getElementById('calc-mobile');
+    var addressInput = document.getElementById('calc-address');
+    var postcodeInput = document.getElementById('calc-postcode');
+
+    // Show the contact fields only once the consent box is ticked.
+    followupConsent.addEventListener('change', function(){
+      var on = followupConsent.checked;
+      contactFields.hidden = !on;
+      followupBtn.hidden = !on;
+      followupStatus.style.display = 'none';
+      if (on){ nameInput.focus(); }
+    });
+
+    // UK mobile: 07xxx xxxxxx or +44 7xxx xxxxxx (spaces/dashes allowed)
+    function cleanMobile(value){
+      var digits = value.replace(/[\s\-()]/g, '');
+      if (/^\+447\d{9}$/.test(digits)) return '0' + digits.substring(3);
+      if (/^00447\d{9}$/.test(digits)) return '0' + digits.substring(4);
+      if (/^07\d{9}$/.test(digits)) return digits;
+      return '';
+    }
+
+    // Tidies a postcode into the standard format, e.g. "tf91aa" -> "TF9 1AA"
+    function formatPostcode(value){
+      var pc = value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (pc.length < 5) return pc;
+      return pc.slice(0, -3) + ' ' + pc.slice(-3);
+    }
+    function looksLikePostcode(value){
+      return /^[A-Z]{1,2}[0-9][A-Z0-9]? [0-9][A-Z]{2}$/.test(value);
+    }
+
+    function showFollowupError(text){
+      followupStatus.textContent = text;
+      followupStatus.style.color = '#B3261E';
+      followupStatus.style.display = 'block';
+    }
 
     var MINIMUM_TABLE = {
       semi:     { 1: 14.00, 2: 16.00, 3: 18.00, 4: 22.00 },
@@ -794,8 +862,7 @@
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     }
 
-    // Generates a short reference code, e.g. DEC-4X7QK — not stored anywhere
-    // unless the visitor opts in to the follow-up form below.
+    // Generates a short reference code, e.g. DEC-4X7QK
     function generateReference(){
       var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no confusing O/0, I/1
       var code = '';
@@ -837,7 +904,9 @@
         total: total,
         breakdown: breakdown.join(', ') || 'No items selected',
         minimumApplied: minimumApplied,
-        propertyLabel: propertyLabel
+        propertyLabel: propertyLabel,
+        propertyType: PROPERTY_LABELS[propertyType],
+        bedrooms: bedrooms
       };
     }
 
@@ -853,6 +922,29 @@
         else totalDisplay.textContent = '£' + target.toFixed(2);
       }
       requestAnimationFrame(step);
+    }
+
+    // Sends the quote details (NO personal data) to the hidden
+    // Netlify form "calculator-quote-log" so every quote is visible
+    // in the Netlify dashboard. Fails silently — the visitor never
+    // sees an error from this.
+    function logQuoteToNetlify(calc, reference){
+      try {
+        var params = new URLSearchParams();
+        params.append('form-name', 'calculator-quote-log');
+        params.append('bot-field', '');
+        params.append('Reference', reference);
+        params.append('Property', calc.propertyLabel);
+        params.append('Breakdown', calc.breakdown);
+        params.append('Total', '£' + calc.total.toFixed(2));
+        params.append('MinimumApplied', calc.minimumApplied ? 'Yes' : 'No');
+        params.append('Page', window.location.pathname);
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: params.toString()
+        }).catch(function(){});
+      } catch (e) {}
     }
 
     // Reveal the price immediately — no email, no gate, no personal data needed.
@@ -878,11 +970,20 @@
       });
       animateTotal(calc.total);
 
-      // Anonymous usage tracking — no personal data, just counts that a price was revealed.
+      // Anonymous quote log to Netlify (no personal data).
+      logQuoteToNetlify(calc, currentReference);
+
+      // Anonymous GA4 tracking — quote details only, no personal data.
+      // (GA4 limits each value to 100 characters, hence the trim.)
       if (typeof gtag === 'function'){
         gtag('event', 'calculator_price_revealed', {
           property_type: calc.propertyLabel,
-          quote_total: calc.total
+          property_style: calc.propertyType,
+          bedrooms: calc.bedrooms,
+          quote_total: calc.total,
+          quote_ref: currentReference,
+          quote_breakdown: calc.breakdown.substring(0, 100),
+          minimum_applied: calc.minimumApplied ? 'yes' : 'no'
         });
       }
     });
@@ -890,21 +991,45 @@
     // Fully optional follow-up: only submits if the visitor enters an email
     // AND ticks the consent checkbox AND clicks this button themselves.
     followupBtn.addEventListener('click', function(){
-      var email = followupEmail.value.trim();
-
-      if (!email || !isValidEmail(email)){
-        followupStatus.textContent = 'Please enter a valid email address.';
-        followupStatus.style.color = '#B3261E';
-        followupStatus.style.display = 'block';
-        return;
-      }
       if (!followupConsent.checked){
-        followupStatus.textContent = 'Please tick the box to confirm you\u2019re happy for us to contact you.';
-        followupStatus.style.color = '#B3261E';
-        followupStatus.style.display = 'block';
+        showFollowupError('Please tick the box to confirm you\u2019re happy for us to contact you.');
+        return;
+      }
+      if (!nameInput.value.trim()){
+        showFollowupError('Please enter your name.');
+        nameInput.focus();
+        return;
+      }
+      if (!isValidEmail(emailInput.value.trim())){
+        showFollowupError('Please enter a valid email address.');
+        emailInput.focus();
+        return;
+      }
+      var mobile = cleanMobile(mobileInput.value);
+      if (!mobile){
+        showFollowupError('Please enter a valid UK mobile number, e.g. 07123 456789.');
+        mobileInput.focus();
+        return;
+      }
+      mobileInput.value = mobile.substring(0, 5) + ' ' + mobile.substring(5);
+      if (!addressInput.value.trim()){
+        showFollowupError('Please enter your address.');
+        addressInput.focus();
+        return;
+      }
+      var pc = formatPostcode(postcodeInput.value);
+      postcodeInput.value = pc;
+      if (!looksLikePostcode(pc)){
+        showFollowupError('Please enter a full UK postcode, e.g. TF9 1AA.');
+        postcodeInput.focus();
         return;
       }
 
+      followupStatus.style.display = 'none';
+      sendFollowup();
+    });
+
+    function sendFollowup(){
       followupBtn.disabled = true;
       followupBtn.textContent = 'Sending…';
 
@@ -918,7 +1043,7 @@
 
           // Anonymous conversion tracking — counts the submission, not who submitted it.
           if (typeof gtag === 'function'){
-            gtag('event', 'calculator_lead_submitted');
+            gtag('event', 'calculator_lead_submitted', { quote_ref: currentReference });
           }
         })
         .catch(function(){
@@ -928,7 +1053,7 @@
           followupStatus.style.color = '#B3261E';
           followupStatus.style.display = 'block';
         });
-    });
+    }
 
     restartBtn.addEventListener('click', function(){
       resultBlock.classList.remove('is-shown');
@@ -936,8 +1061,14 @@
         resultBlock.classList.remove('is-visible');
         body.classList.remove('is-hidden');
         followupStatus.style.display = 'none';
-        followupEmail.value = '';
         followupConsent.checked = false;
+        nameInput.value = '';
+        emailInput.value = '';
+        mobileInput.value = '';
+        addressInput.value = '';
+        postcodeInput.value = '';
+        contactFields.hidden = true;
+        followupBtn.hidden = true;
         followupBtn.disabled = false;
         followupBtn.textContent = 'Send My Details';
       }, 300);
