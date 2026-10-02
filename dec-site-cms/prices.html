@@ -184,8 +184,10 @@
      "calculator_price_revealed" event.
   5. BELOW the price, there's a fully OPTIONAL section: "Want us
      to follow up?" with an email field and a consent checkbox.
-     The email is only sent if they tick the box AND enter an
-     email AND click "Send My Details" themselves. That goes to
+     Ticking the consent box reveals Name, Email, Mobile number,
+     Address and Postcode. Details are only sent if they tick
+     the box, fill these in
+     AND click "Send My Details" themselves. That goes to
      the separate Netlify form "price-calculator-lead".
 
   TO UPDATE THE MINIMUM PRICING TABLE LATER:
@@ -315,19 +317,34 @@
             <input type="hidden" name="Breakdown" id="calc-breakdown-field">
             <input type="hidden" name="Total" id="calc-total-field">
 
-            <input type="email" id="calc-followup-email" name="Email" class="calc-email-input" placeholder="you@example.com (optional)">
-
             <label class="calc-consent-row">
-              <input type="checkbox" id="calc-consent" name="Consent">
-              <span>I'm happy for DEC to contact me about this quote</span>
+              <input type="checkbox" id="calc-consent" name="Consent" value="Yes">
+              <span>I'm happy for DEC to contact me about this quote by email, phone or text</span>
             </label>
 
-            <button type="button" class="btn btn-outline-dark calc-followup-btn" id="calc-followup-btn">Send My Details</button>
+            <!-- Contact fields: hidden until the consent box is ticked -->
+            <div class="calc-contact-fields" id="calc-contact-fields" hidden>
+              <label class="calc-field-label" for="calc-name">Name</label>
+              <input type="text" id="calc-name" name="Name" class="calc-email-input" placeholder="Your name" autocomplete="name">
+
+              <label class="calc-field-label" for="calc-followup-email">Email</label>
+              <input type="email" id="calc-followup-email" name="Email" class="calc-email-input" placeholder="you@example.com" autocomplete="email">
+
+              <label class="calc-field-label" for="calc-mobile">Mobile number</label>
+              <input type="tel" id="calc-mobile" name="Mobile" class="calc-email-input" placeholder="07xxx xxxxxx" autocomplete="tel" inputmode="tel">
+
+              <label class="calc-field-label" for="calc-address">Address</label>
+              <input type="text" id="calc-address" name="Address" class="calc-email-input" placeholder="House number, street and town" autocomplete="street-address">
+
+              <label class="calc-field-label" for="calc-postcode">Postcode</label>
+              <input type="text" id="calc-postcode" name="Postcode" class="calc-email-input calc-postcode-input" placeholder="TF9 1AA" autocomplete="postal-code" autocapitalize="characters">
+            </div>
+
+            <button type="button" class="btn btn-outline-dark calc-followup-btn" id="calc-followup-btn" hidden>Send My Details</button>
             <p class="calc-followup-status" id="calc-followup-status" style="display:none;"></p>
           </form>
         </div>
 
-        <a href="index.html#booking" class="btn btn-green calc-book-btn">Book This Quote →</a>
         <button type="button" class="calc-restart-btn" id="calc-restart-btn">Start over</button>
         <p class="calc-privacy-note">We keep an anonymous record of quote selections (no personal details) to help us improve our pricing.</p>
       </div>
@@ -460,6 +477,10 @@
   .calc-consent-row input{ margin-top:3px; flex:none; }
   .calc-followup-btn{ width:100%; justify-content:center; border-radius:999px; }
   .calc-followup-status{ font-size:0.82rem; margin-top:10px; text-align:center; color:var(--green-dark); font-weight:600; }
+  .calc-contact-fields{ margin-bottom:6px; }
+  .calc-contact-fields[hidden], .calc-followup-btn[hidden]{ display:none; }
+  .calc-field-label{ display:block; font-size:0.8rem; font-weight:700; color:var(--black); margin:0 0 6px 4px; }
+  .calc-postcode-input{ text-transform:uppercase; }
 
   .calc-book-btn{ margin-top:6px; }
   .calc-restart-btn{
@@ -489,10 +510,49 @@
     var bedroomsSelect = document.getElementById('calc-bedrooms');
 
     var followupBtn = document.getElementById('calc-followup-btn');
-    var followupEmail = document.getElementById('calc-followup-email');
     var followupConsent = document.getElementById('calc-consent');
     var followupStatus = document.getElementById('calc-followup-status');
     var followupForm = document.getElementById('calcLeadForm');
+    var contactFields = document.getElementById('calc-contact-fields');
+    var nameInput = document.getElementById('calc-name');
+    var emailInput = document.getElementById('calc-followup-email');
+    var mobileInput = document.getElementById('calc-mobile');
+    var addressInput = document.getElementById('calc-address');
+    var postcodeInput = document.getElementById('calc-postcode');
+
+    // Show the contact fields only once the consent box is ticked.
+    followupConsent.addEventListener('change', function(){
+      var on = followupConsent.checked;
+      contactFields.hidden = !on;
+      followupBtn.hidden = !on;
+      followupStatus.style.display = 'none';
+      if (on){ nameInput.focus(); }
+    });
+
+    // UK mobile: 07xxx xxxxxx or +44 7xxx xxxxxx (spaces/dashes allowed)
+    function cleanMobile(value){
+      var digits = value.replace(/[\s\-()]/g, '');
+      if (/^\+447\d{9}$/.test(digits)) return '0' + digits.substring(3);
+      if (/^00447\d{9}$/.test(digits)) return '0' + digits.substring(4);
+      if (/^07\d{9}$/.test(digits)) return digits;
+      return '';
+    }
+
+    // Tidies a postcode into the standard format, e.g. "tf91aa" -> "TF9 1AA"
+    function formatPostcode(value){
+      var pc = value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (pc.length < 5) return pc;
+      return pc.slice(0, -3) + ' ' + pc.slice(-3);
+    }
+    function looksLikePostcode(value){
+      return /^[A-Z]{1,2}[0-9][A-Z0-9]? [0-9][A-Z]{2}$/.test(value);
+    }
+
+    function showFollowupError(text){
+      followupStatus.textContent = text;
+      followupStatus.style.color = '#B3261E';
+      followupStatus.style.display = 'block';
+    }
 
     var MINIMUM_TABLE = {
       semi:     { 1: 14.00, 2: 16.00, 3: 18.00, 4: 22.00 },
@@ -662,21 +722,45 @@
     // Fully optional follow-up: only submits if the visitor enters an email
     // AND ticks the consent checkbox AND clicks this button themselves.
     followupBtn.addEventListener('click', function(){
-      var email = followupEmail.value.trim();
-
-      if (!email || !isValidEmail(email)){
-        followupStatus.textContent = 'Please enter a valid email address.';
-        followupStatus.style.color = '#B3261E';
-        followupStatus.style.display = 'block';
-        return;
-      }
       if (!followupConsent.checked){
-        followupStatus.textContent = 'Please tick the box to confirm you\u2019re happy for us to contact you.';
-        followupStatus.style.color = '#B3261E';
-        followupStatus.style.display = 'block';
+        showFollowupError('Please tick the box to confirm you\u2019re happy for us to contact you.');
+        return;
+      }
+      if (!nameInput.value.trim()){
+        showFollowupError('Please enter your name.');
+        nameInput.focus();
+        return;
+      }
+      if (!isValidEmail(emailInput.value.trim())){
+        showFollowupError('Please enter a valid email address.');
+        emailInput.focus();
+        return;
+      }
+      var mobile = cleanMobile(mobileInput.value);
+      if (!mobile){
+        showFollowupError('Please enter a valid UK mobile number, e.g. 07123 456789.');
+        mobileInput.focus();
+        return;
+      }
+      mobileInput.value = mobile.substring(0, 5) + ' ' + mobile.substring(5);
+      if (!addressInput.value.trim()){
+        showFollowupError('Please enter your address.');
+        addressInput.focus();
+        return;
+      }
+      var pc = formatPostcode(postcodeInput.value);
+      postcodeInput.value = pc;
+      if (!looksLikePostcode(pc)){
+        showFollowupError('Please enter a full UK postcode, e.g. TF9 1AA.');
+        postcodeInput.focus();
         return;
       }
 
+      followupStatus.style.display = 'none';
+      sendFollowup();
+    });
+
+    function sendFollowup(){
       followupBtn.disabled = true;
       followupBtn.textContent = 'Sending…';
 
@@ -700,7 +784,7 @@
           followupStatus.style.color = '#B3261E';
           followupStatus.style.display = 'block';
         });
-    });
+    }
 
     restartBtn.addEventListener('click', function(){
       resultBlock.classList.remove('is-shown');
@@ -708,8 +792,14 @@
         resultBlock.classList.remove('is-visible');
         body.classList.remove('is-hidden');
         followupStatus.style.display = 'none';
-        followupEmail.value = '';
         followupConsent.checked = false;
+        nameInput.value = '';
+        emailInput.value = '';
+        mobileInput.value = '';
+        addressInput.value = '';
+        postcodeInput.value = '';
+        contactFields.hidden = true;
+        followupBtn.hidden = true;
         followupBtn.disabled = false;
         followupBtn.textContent = 'Send My Details';
       }, 300);
