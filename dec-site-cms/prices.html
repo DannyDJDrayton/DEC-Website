@@ -63,6 +63,9 @@
   .btn{display:inline-flex; align-items:center; gap:8px; font-family:var(--body); font-weight:700; font-size:0.94rem; padding:13px 24px; border-radius:8px; border:2px solid transparent; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease;}
   .btn-green{background:var(--green); color:#fff; box-shadow:0 6px 16px rgba(76,175,60,0.3);}
   .btn-green:hover{background:var(--green-dark); transform:translateY(-1px);}
+  .btn-outline-dark{background:#fff; color:var(--black); border-color:var(--black);}
+  .btn-outline-dark:hover{background:var(--black); color:#fff;}
+  .btn-outline-dark:disabled{opacity:0.6; cursor:default;}
   header{position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
   .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:20px;}
   .brand{display:flex; flex-direction:column; line-height:1;}
@@ -165,43 +168,30 @@
   ============================================================
   DEC — Live Pricing Calculator (GDPR-friendly: no email required)
   ============================================================
-  WHERE TO PASTE THIS:
-  Open index.html on GitHub, and paste this whole block in
-  between the closing tag of "AREAS" (the "Where We Work"
-  section) and the BOOKING section comment.
-
-  Search for the word BOOKING inside an HTML comment further
-  down the file, and paste this block just ABOVE that line.
-
-  This reuses the site's existing colours and fonts automatically
-  (the green, black, and font variables are already defined at
-  the top of index.html) so nothing else needs to change.
-
-  HOW IT WORKS NOW (updated for GDPR):
+  HOW IT WORKS:
   1. Visitor picks property type + bedrooms, sets item quantities.
   2. They click "Reveal My Price" — the price shows IMMEDIATELY,
      no email or any personal detail required.
   3. A short reference code (e.g. DEC-4X7QK) is shown alongside
-     the price, generated fresh in their browser. It isn't stored
-     anywhere unless they choose to submit their email (see next).
-  4. BELOW the price, there's a fully OPTIONAL section: "Want us
+     the price.
+  4. ANONYMOUS QUOTE LOG (added Oct 2026): at the moment the price
+     is revealed, the quote details ONLY (reference, property,
+     items, total — no name, email, phone or anything personal)
+     are sent to the Netlify form called "calculator-quote-log".
+     You can see every quote in Netlify under Forms, and look one
+     up by reference code if a customer quotes it back to you.
+     The same details also go to Google Analytics (GA4) with the
+     "calculator_price_revealed" event.
+  5. BELOW the price, there's a fully OPTIONAL section: "Want us
      to follow up?" with an email field and a consent checkbox.
-     Nothing is sent anywhere unless they tick the box AND enter
-     an email AND click "Send My Details" themselves.
-  5. If they do submit, their email + the reference code + their
-     quote details go to you via Netlify Forms, same as your
-     booking form — searchable by that reference code if they
-     quote it back to you on the phone.
+     The email is only sent if they tick the box AND enter an
+     email AND click "Send My Details" themselves. That goes to
+     the separate Netlify form "price-calculator-lead".
 
   TO UPDATE THE MINIMUM PRICING TABLE LATER:
   Search for MINIMUM_TABLE further down in the <script> section.
-  It looks like this:
-    var MINIMUM_TABLE = {
-      semi:     { 1: 14.00, 2: 16.00, 3: 18.00, 4: 22.00 },
-      detached: { 1: 15.00, 2: 17.00, 3: 19.00, 4: 23.00, 5: 26.00 }
-    };
-  Change any number to update that minimum. Conservatory pricing
-  is separate — search for CONSERVATORY_PRICE_TABLE.
+  Conservatory pricing is separate — search for
+  CONSERVATORY_PRICE_TABLE.
 
   TO UPDATE ITEM PRICES LATER:
   Change the numbers in the data-price attributes below.
@@ -337,10 +327,28 @@
           </form>
         </div>
 
-        <a href="#booking" class="btn btn-green calc-book-btn">Book This Quote →</a>
+        <a href="index.html#booking" class="btn btn-green calc-book-btn">Book This Quote →</a>
         <button type="button" class="calc-restart-btn" id="calc-restart-btn">Start over</button>
+        <p class="calc-privacy-note">We keep an anonymous record of quote selections (no personal details) to help us improve our pricing.</p>
       </div>
     </div>
+
+    <!--
+      ANONYMOUS QUOTE LOG — invisible to visitors.
+      Netlify reads this form when the site deploys so it knows the
+      form exists. The script below fills it in and sends it each
+      time someone reveals a price. No personal data is collected.
+    -->
+    <form name="calculator-quote-log" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="calculator-quote-log">
+      <input name="bot-field">
+      <input type="hidden" name="Reference">
+      <input type="hidden" name="Property">
+      <input type="hidden" name="Breakdown">
+      <input type="hidden" name="Total">
+      <input type="hidden" name="MinimumApplied">
+      <input type="hidden" name="Page">
+    </form>
   </div>
 </section>
 
@@ -459,6 +467,9 @@
     font-family:var(--body); font-size:0.82rem; color:var(--grey); opacity:0.6; text-decoration:underline;
   }
   .calc-restart-btn:hover{ opacity:1; }
+  .calc-privacy-note{
+    font-size:0.72rem; color:var(--grey); opacity:0.55; max-width:380px; margin:18px auto 0; line-height:1.4;
+  }
 </style>
 
 <script>
@@ -522,8 +533,7 @@
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     }
 
-    // Generates a short reference code, e.g. DEC-4X7QK — not stored anywhere
-    // unless the visitor opts in to the follow-up form below.
+    // Generates a short reference code, e.g. DEC-4X7QK
     function generateReference(){
       var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no confusing O/0, I/1
       var code = '';
@@ -565,7 +575,9 @@
         total: total,
         breakdown: breakdown.join(', ') || 'No items selected',
         minimumApplied: minimumApplied,
-        propertyLabel: propertyLabel
+        propertyLabel: propertyLabel,
+        propertyType: PROPERTY_LABELS[propertyType],
+        bedrooms: bedrooms
       };
     }
 
@@ -581,6 +593,29 @@
         else totalDisplay.textContent = '£' + target.toFixed(2);
       }
       requestAnimationFrame(step);
+    }
+
+    // Sends the quote details (NO personal data) to the hidden
+    // Netlify form "calculator-quote-log" so every quote is visible
+    // in the Netlify dashboard. Fails silently — the visitor never
+    // sees an error from this.
+    function logQuoteToNetlify(calc, reference){
+      try {
+        var params = new URLSearchParams();
+        params.append('form-name', 'calculator-quote-log');
+        params.append('bot-field', '');
+        params.append('Reference', reference);
+        params.append('Property', calc.propertyLabel);
+        params.append('Breakdown', calc.breakdown);
+        params.append('Total', '£' + calc.total.toFixed(2));
+        params.append('MinimumApplied', calc.minimumApplied ? 'Yes' : 'No');
+        params.append('Page', window.location.pathname);
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: params.toString()
+        }).catch(function(){});
+      } catch (e) {}
     }
 
     // Reveal the price immediately — no email, no gate, no personal data needed.
@@ -606,11 +641,20 @@
       });
       animateTotal(calc.total);
 
-      // Anonymous usage tracking — no personal data, just counts that a price was revealed.
+      // Anonymous quote log to Netlify (no personal data).
+      logQuoteToNetlify(calc, currentReference);
+
+      // Anonymous GA4 tracking — quote details only, no personal data.
+      // (GA4 limits each value to 100 characters, hence the trim.)
       if (typeof gtag === 'function'){
         gtag('event', 'calculator_price_revealed', {
           property_type: calc.propertyLabel,
-          quote_total: calc.total
+          property_style: calc.propertyType,
+          bedrooms: calc.bedrooms,
+          quote_total: calc.total,
+          quote_ref: currentReference,
+          quote_breakdown: calc.breakdown.substring(0, 100),
+          minimum_applied: calc.minimumApplied ? 'yes' : 'no'
         });
       }
     });
@@ -646,7 +690,7 @@
 
           // Anonymous conversion tracking — counts the submission, not who submitted it.
           if (typeof gtag === 'function'){
-            gtag('event', 'calculator_lead_submitted');
+            gtag('event', 'calculator_lead_submitted', { quote_ref: currentReference });
           }
         })
         .catch(function(){
