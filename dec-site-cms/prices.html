@@ -28,16 +28,10 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PENXMTE224"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-PENXMTE224');
-</script>
+<!-- Cookie consent: Google Analytics only loads after "Accept" -->
+<script src="/dec-consent.js"></script>
 
 <style>
   :root{
@@ -45,7 +39,7 @@
     --white:#FFFFFF; --offwhite:#F7F8F6;
     --green:#4CAF3C; --green-dark:#3A8A2E; --green-tint:#EAF6E7;
     --grey:#4A4A4A; --line:rgba(20,23,26,0.12);
-    --display:'Space Grotesk',sans-serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+    --display:'Space Grotesk',sans-serif; --body:'Inter',sans-serif; --mono:'Inter',sans-serif;
     --radius:12px;
   }
   *{box-sizing:border-box;}
@@ -131,6 +125,13 @@
   .calc-result-note{ font-size:0.86rem; color:var(--grey); opacity:0.75; max-width:380px; margin:0 auto 24px; line-height:1.5; }
   .calc-restart-btn{ display:block; margin:16px auto 0; background:none; border:none; cursor:pointer; font-family:var(--body); font-size:0.82rem; color:var(--grey); opacity:0.6; text-decoration:underline; }
   .calc-restart-btn:hover{ opacity:1; }
+
+  /* Respect visitors who turn off animations */
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto !important;}
+    *,*::before,*::after{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;}
+  }
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--green-dark); outline-offset:2px;}
 </style>
 </head>
 <body>
@@ -203,7 +204,7 @@
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow" style="text-align:center;">Instant Estimate</div>
-      <h2>Work Out Your Price <span class="calc-eval-badge">In Evaluation</span></h2>
+      <h2>Get Your Price in 30 Seconds</h2>
       <p>Tell us about your property and set your quantities — your price shows straight away, no email needed.</p>
     </div>
 
@@ -815,7 +816,7 @@
       <a href="mailto:hello@draytonclean.co.uk">✉ hello@draytonclean.co.uk</a>
     </p>
     <div class="footer-bottom">
-      <p class="legal-line">Drayton Exterior Cleaning (DEC) is a trading name of Prime Event &amp; Media Solutions Ltd. Registered in England &amp; Wales No. 16904317.</p>
+      <p class="legal-line">Drayton Exterior Cleaning (DEC) is a trading name of Prime Event &amp; Media Solutions Ltd. Registered in England &amp; Wales No. 16904317. <a href="/privacy" style="text-decoration:underline;">Privacy &amp; cookies</a> · <a href="#" data-cookie-settings style="text-decoration:underline;">Cookie settings</a></p>
     </div>
   </div>
 </footer>

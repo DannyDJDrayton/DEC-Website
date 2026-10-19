@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DEC — Drayton Exterior Cleaning | Market Drayton</title>
-<meta name="description" content="Professional window and exterior cleaning in Market Drayton. Fully insured, reliable local service, free quotes.">
+<title>Window Cleaning Market Drayton | Drayton Exterior Cleaning</title>
+<meta name="description" content="Pure-water window and exterior cleaning in Market Drayton and nearby villages. Fully insured, 5-star reviewed, instant online prices.">
 <link rel="canonical" href="https://draytonclean.co.uk/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="DEC — Drayton Exterior Cleaning | Market Drayton">
@@ -16,14 +16,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="DEC — Drayton Exterior Cleaning | Market Drayton">
 <meta name="twitter:description" content="Professional window and exterior cleaning in Market Drayton. Fully insured, reliable local service, free quotes.">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PENXMTE224"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-PENXMTE224');
-</script>
+<!-- Cookie consent: Google Analytics only loads after "Accept" -->
+<script src="/dec-consent.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -68,9 +62,10 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+<link rel="preload" as="image" href="/content/uploads/dd-3569.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <style>
   :root{
@@ -78,7 +73,7 @@
     --white:#FFFFFF; --offwhite:#F7F8F6;
     --green:#4CAF3C; --green-dark:#3A8A2E; --green-tint:#EAF6E7;
     --grey:#4A4A4A; --line:rgba(20,23,26,0.12);
-    --display:'Space Grotesk',sans-serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+    --display:'Space Grotesk',sans-serif; --body:'Inter',sans-serif; --mono:'Inter',sans-serif;
     --radius:12px;
   }
   *{box-sizing:border-box;}
@@ -198,13 +193,20 @@
   .gallery-item{aspect-ratio:1/1; border-radius:10px; border:1.5px dashed var(--line); display:flex; align-items:center; justify-content:center; background:var(--offwhite);}
   .gallery-item span{font-family:var(--mono); font-size:0.72rem; color:var(--grey); opacity:0.6; text-align:center; padding:0 14px;}
   .gallery-cta{text-align:center; margin-top:32px;}
+  .ba-item{border:0; padding:0; overflow:hidden; position:relative; display:flex; flex-direction:column; align-items:stretch; justify-content:stretch; background:var(--black);}
+  .ba-half{position:relative; flex:1; overflow:hidden; min-height:0;}
+  .ba-half + .ba-half{border-top:2px solid #fff;}
+  .ba-half img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; cursor:zoom-in;}
+  .gallery-item .ba-tag{position:absolute; top:6px; left:6px; background:rgba(20,23,26,0.8); color:#fff; font-size:0.62rem; padding:2px 8px; border-radius:6px; text-transform:uppercase; letter-spacing:0.04em; opacity:1 !important; font-family:var(--body);}
+  .gallery-item .ba-tag.ba-after{background:var(--green-dark);}
+  .gallery-item .ba-cap{position:absolute; bottom:6px; left:6px; right:6px; background:rgba(20,23,26,0.8); color:#fff; font-size:0.72rem; padding:4px 8px; border-radius:6px; opacity:1 !important;}
   /* Testimonials + CTA */
   .testi-wrap{display:grid; grid-template-columns:1fr 1fr 1fr 0.9fr; gap:18px;}
   @media (max-width:980px){ .testi-wrap{grid-template-columns:1fr 1fr;} }
   @media (max-width:640px){ .testi-wrap{grid-template-columns:1fr;} }
-  .testi-card{border:1px dashed var(--line); border-radius:var(--radius); padding:22px; background:var(--offwhite);}
+  .testi-card{border:1px solid var(--line); border-radius:var(--radius); padding:22px; background:var(--offwhite);}
   .testi-card .stars{color:var(--green); font-family:var(--mono); letter-spacing:2px; font-size:0.85rem;}
-  .testi-card p.quote{margin-top:10px; font-size:0.86rem; opacity:0.7; font-style:italic;}
+  .testi-card p.quote{margin-top:10px; font-size:0.92rem; color:var(--black); opacity:0.85;}
   .testi-card .who{margin-top:12px; font-size:0.82rem; font-weight:700; color:var(--black);}
   .testi-card .placeholder-tag{font-family:var(--mono); font-size:0.6rem; color:var(--green-dark); background:var(--green-tint); padding:2px 7px; border-radius:999px; display:inline-block; margin-bottom:8px;}
   .cta-panel{background:var(--black); border-radius:var(--radius); padding:26px 22px; color:#fff; display:flex; flex-direction:column; justify-content:center; gap:14px;}
@@ -238,6 +240,13 @@
   .social-row a{width:32px; height:32px; border-radius:50%; border:1px solid rgba(255,255,255,0.25); display:flex; align-items:center; justify-content:center; font-size:0.75rem;}
   .footer-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:20px; flex-wrap:wrap; gap:10px;}
   .legal-line{font-family:var(--mono); font-size:0.7rem; opacity:0.45; max-width:600px;}
+
+  /* Respect visitors who turn off animations */
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto !important;}
+    *,*::before,*::after{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;}
+  }
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--green-dark); outline-offset:2px;}
 </style>
 </head>
 <body>
@@ -256,9 +265,9 @@
       <a href="blog.html">Blog</a>
     </nav>
     <div class="header-ctas">
-      <a class="btn btn-green" href="#booking">Get a Free Quote</a>
-      <a class="btn btn-outline-dark tel-link" href="tel:+44">Call Now</a>
-      <a class="btn btn-outline-dark whatsapp-link" href="https://wa.me/44" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="btn btn-green" href="#calculator">Get My Price</a>
+      <a class="btn btn-outline-dark tel-link" href="tel:+447367298499">Call Now</a>
+      <a class="btn btn-outline-dark whatsapp-link" href="https://wa.me/447367298499" target="_blank" rel="noopener">WhatsApp</a>
     </div>
     <button class="burger-btn" id="burgerBtn" aria-label="Open menu">
       <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -280,24 +289,25 @@
     <div class="wrap hero-inner">
       <div>
         <div class="eyebrow">Market Drayton &amp; surrounding villages</div>
-        <h1>Professional Window &amp; Exterior Cleaning <span class="accent">in Your Area</span></h1>
-        <p class="sub">We deliver a spotless finish every time with expert window and exterior cleaning services you can rely on.</p>
+        <h1>Window &amp; Exterior Cleaning <span class="accent">in Market Drayton</span></h1>
+        <p class="sub">Pure-water window cleaning that takes care of the frames, sills and doors too — with an online customer portal and a text the day before every visit.</p>
         <div class="trust-row">
           <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg> Fully Insured</div>
           <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a5 5 0 0110-1 5 5 0 0110 1c0 5.5-7 10-7 10z"/></svg> Reliable Local Service</div>
           <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M7 7h13M7 12h13M7 17h13M3 7h.01M3 12h.01M3 17h.01"/></svg> Free Quotes</div>
         </div>
         <div class="cta-row">
-          <a class="btn btn-green" href="#booking">Get a Free Quote →</a>
+          <a class="btn btn-green" href="#calculator">Get My Price in 30 Seconds →</a>
+          <a class="btn btn-outline-dark" href="#booking">Request a Free Quote</a>
         </div>
-        <a href="tel:+44" class="tel-link hero-phone-cta">
+        <a href="tel:+447367298499" class="tel-link hero-phone-cta">
           <span class="hero-phone-icon">📞</span>
           <span class="hero-phone-text">
             <span class="hero-phone-label">Call us now</span>
-            <span class="hero-phone-number" id="heroPhoneNumber">[ your number ]</span>
+            <span class="hero-phone-number" id="heroPhoneNumber">07367 298 499</span>
           </span>
         </a>
-        <a href="https://wa.me/44" class="whatsapp-link hero-whatsapp-cta" target="_blank" rel="noopener">
+        <a href="https://wa.me/447367298499" class="whatsapp-link hero-whatsapp-cta" target="_blank" rel="noopener">
           <span class="hero-whatsapp-icon">💬</span>
           <span class="hero-whatsapp-text">
             <span class="hero-whatsapp-label">Message us on</span>
@@ -305,9 +315,7 @@
           </span>
         </a>
       </div>
-      <div class="hero-photo" id="heroPhoto">
-        <div class="ph-label">[ Photo placeholder — add one in the dashboard: Site Photos &amp; Phone Number → Hero Photo ]</div>
-      </div>
+      <div class="hero-photo" id="heroPhoto" role="img" aria-label="Danny from Drayton Exterior Cleaning at work" style="background-image:url(/content/uploads/dd-3569.jpg); background-size:cover; background-position:center;"></div>
     </div>
   </section>
   <!-- SERVICES -->
@@ -370,17 +378,16 @@
           <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Attention to detail &amp; quality guaranteed</div>
           <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Locally reviewed by happy customers</div>
           <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Text reminder the day before we're due</div>
+          <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Your own online customer portal — see your next clean &amp; change dates</div>
           <div class="item"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Secure online payments via Stripe</div>
         </div>
         <div class="stat-row">
           <div class="stat-card"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg><div class="label">FULLY INSURED<br><span style="font-weight:400; opacity:0.6;">Your property in safe hands</span></div></div>
-          <div class="stat-card"><svg viewBox="0 0 24 24"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><div class="label">5-STAR RATED<br><span style="font-weight:400; opacity:0.6;">Coming soon — building our reviews</span></div></div>
+          <div class="stat-card"><svg viewBox="0 0 24 24"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><div class="label">5-STAR RATED<br><span style="font-weight:400; opacity:0.6;">Every review so far is 5 stars</span></div></div>
           <div class="stat-card"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a5 5 0 0110-1 5 5 0 0110 1c0 5.5-7 10-7 10z"/></svg><div class="label">LOCAL EXPERTS<br><span style="font-weight:400; opacity:0.6;">Proudly serving Market Drayton</span></div></div>
         </div>
       </div>
-      <div class="why-photo" id="vanPhoto">
-        <div class="ph-label">[ Van photo placeholder — add once your vehicle is signwritten, via the dashboard ]</div>
-      </div>
+      <div class="why-photo" id="vanPhoto" role="img" aria-label="Drayton Exterior Cleaning van" style="background-image:url(/content/uploads/van-photo.jpg); background-size:cover; background-position:center;"></div>
     </div>
   </section>
   <!-- GALLERY -->
@@ -389,13 +396,29 @@
       <div class="section-head">
         <div class="eyebrow" style="text-align:center;">Our Results</div>
         <h2>See the Difference</h2>
-        <p>Before/after photos go here once real jobs are done — left empty rather than faked.</p>
+        <p>Real jobs around Market Drayton. Tap any photo to see it full size.</p>
       </div>
       <div class="gallery-grid" id="galleryGrid">
-        <div class="gallery-item"><span>Before / After<br>coming soon</span></div>
-        <div class="gallery-item"><span>Before / After<br>coming soon</span></div>
-        <div class="gallery-item"><span>Before / After<br>coming soon</span></div>
-        <div class="gallery-item"><span>Before / After<br>coming soon</span></div>
+        <div class="gallery-item ba-item">
+          <div class="ba-half"><img src="/content/uploads/before.jpg" alt="Before cleaning — job 1" loading="lazy" decoding="async" width="600" height="600" data-full="/content/uploads/before.jpg"><span class="ba-tag">Before</span></div>
+          <div class="ba-half"><img src="/content/uploads/after.jpg" alt="After cleaning — job 1" loading="lazy" decoding="async" width="600" height="600" data-full="/content/uploads/after.jpg"><span class="ba-tag ba-after">After</span></div>
+        </div>
+        <div class="gallery-item ba-item">
+          <div class="ba-half"><img src="/content/uploads/img_6696.jpeg" alt="Before cleaning — job 2" loading="lazy" decoding="async" width="600" height="600" data-full="/content/uploads/img_6696.jpeg"><span class="ba-tag">Before</span></div>
+          <div class="ba-half"><img src="/content/uploads/img_6697.jpeg" alt="After cleaning — job 2" loading="lazy" decoding="async" width="600" height="600" data-full="/content/uploads/img_6697.jpeg"><span class="ba-tag ba-after">After</span></div>
+        </div>
+        <div class="gallery-item ba-item">
+          <div class="ba-half"><img src="/content/uploads/img_6705.jpeg" alt="Before cleaning — job 3" loading="lazy" decoding="async" width="600" height="600" data-full="/content/uploads/img_6705.jpeg"><span class="ba-tag">Before</span></div>
+          <div class="ba-half"><img src="/content/uploads/img_6707.jpeg" alt="After cleaning — job 3" loading="lazy" decoding="async" width="600" height="600" data-full="/content/uploads/img_6707.jpeg"><span class="ba-tag ba-after">After</span></div>
+        </div>
+        <div class="gallery-item ba-item">
+          <div class="ba-half"><img src="/content/uploads/img_6775.jpeg" alt="Before cleaning — job 4" loading="lazy" decoding="async" width="600" height="600" data-full="/content/uploads/img_6775.jpeg"><span class="ba-tag">Before</span></div>
+          <div class="ba-half"><img src="/content/uploads/img_6781.jpeg" alt="After cleaning — job 4" loading="lazy" decoding="async" width="600" height="600" data-full="/content/uploads/img_6781.jpeg"><span class="ba-tag ba-after">After</span></div>
+        </div>
+        <div class="gallery-item ba-item">
+          <div class="ba-half"><img src="/content/uploads/img_6809.jpeg" alt="Before cleaning — job 5" loading="lazy" decoding="async" width="600" height="600" data-full="/content/uploads/img_6809.jpeg"><span class="ba-tag">Before</span></div>
+          <div class="ba-half"><img src="/content/uploads/img_6814.jpeg" alt="After cleaning — job 5" loading="lazy" decoding="async" width="600" height="600" data-full="/content/uploads/img_6814.jpeg"><span class="ba-tag ba-after">After</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -407,28 +430,48 @@
         <h2>Real Feedback, Real Results</h2>
       </div>
       <div class="testi-wrap" id="testiWrap">
-        <div class="testi-card" data-example="true">
-          <span class="placeholder-tag">Example</span>
-          <div class="stars">★★★★★</div>
-          <p class="quote">"Brilliant service from start to finish. Windows, gutters and patio look fantastic. Highly recommend!"</p>
-          <div class="who">— Placeholder name</div>
+        <div class="testi-card">
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="quote">“Danny did a great job of our windows, he even did the surround around our front door which was also left by the last window cleaner”</p>
+          <div class="who">— Kath, Market Drayton</div>
         </div>
-        <div class="testi-card" data-example="true">
-          <span class="placeholder-tag">Example</span>
-          <div class="stars">★★★★★</div>
-          <p class="quote">"Professional, reliable and reasonably priced. Our go-to for all exterior cleaning."</p>
-          <div class="who">— Placeholder name</div>
+        <div class="testi-card">
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="quote">“Danny has done some commercial window cleaning on show homes across shropshire for myself and never lets me down! I would recommend his company for all aspects of window cleaning cleaning domestic and commercial!”</p>
+          <div class="who">— Matt Jenkins, Shropshire</div>
         </div>
-        <div class="testi-card" data-example="true">
-          <span class="placeholder-tag">Example</span>
-          <div class="stars">★★★★★</div>
-          <p class="quote">"Great communication and outstanding results. Will definitely use again."</p>
-          <div class="who">— Placeholder name</div>
+        <div class="testi-card">
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="quote">“Really good service from Drayton Exterior Cleaning. I particularly like the customer portal as it&#x27;s easy to see when the next clean is due and communicate if you need to change anything. Everything feels very organised and professional. Great job on the windows too!”</p>
+          <div class="who">— Derek Shelton</div>
+        </div>
+        <div class="testi-card">
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="quote">“5 Star service”</p>
+          <div class="who">— Emma, Market Drayton</div>
+        </div>
+        <div class="testi-card">
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="quote">“Highly Recommended 2nd to none. Reliable and Professional 👍🤙”</p>
+          <div class="who">— Stuart, Market Drayton</div>
+        </div>
+        <div class="testi-card">
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="quote">“Danny has done an incredible job to all our windows and upvc - we are constantly let down by the previous guy but Danny has restored our faith! He ensured everything was gleaming and took a great deal of pride in the job! Simply incredible! The before and after speaks for itself!”</p>
+          <div class="who">— Sian Cage, Market Drayton</div>
+        </div>
+        <div class="testi-card">
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="quote">“After seeing Danny’s advert on Facebook, I was given a simple online quote and Danny came out to have a look at the job a couple of days later. He sent me over a link to an online portal where everything to do with my window cleaning is managed and noted and so easy to access! 
+But the biggest Wow 🤩 is how my windows are so sparkly! ✨ they honestly look brand new! It’s made my whole house feel so much brighter and cleaner! If your thinking about it, do it! 
+I promise he won’t disappoint! 
+Thank you Danny- I Can’t wait to have you back! 🧽 ✨”</p>
+          <div class="who">— Sam Day, Market Drayton</div>
         </div>
         <div class="cta-panel">
           <h3>Ready for a <span class="accent">Spotless Finish?</span></h3>
-          <a class="btn btn-green" href="#booking">Get a Free Quote →</a>
-          <a class="btn btn-outline-white tel-link" href="tel:+44">📞 Call Now</a>
+          <a class="btn btn-green" href="#calculator">Get My Price →</a>
+          <a class="btn btn-outline-white tel-link" href="tel:+447367298499">📞 Call Now</a>
         </div>
       </div>
     </div>
@@ -472,7 +515,7 @@
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow" style="text-align:center;">Instant Estimate</div>
-      <h2>Work Out Your Price <span class="calc-eval-badge">In Evaluation</span></h2>
+      <h2>Get Your Price in 30 Seconds</h2>
       <p>Tell us about your property and set your quantities — your price shows straight away, no email needed.</p>
     </div>
 
@@ -1129,7 +1172,7 @@
     <div class="wrap">
       <div class="section-head">
         <div class="eyebrow" style="text-align:center;">Where We Work</div>
-        <h2>Proudly Serving Your Area</h2>
+        <h2>Proudly Serving Market Drayton &amp; Nearby Villages</h2>
       </div>
       <div class="area-tags">
         <span class="area-tag primary">Market Drayton</span>
@@ -1152,8 +1195,8 @@
       </div>
       <div class="footer-col">
         <h4>Contact Us</h4>
-        <a href="tel:+44" class="tel-link" id="footerPhoneText">📞 [ your number ]</a>
-        <a href="https://wa.me/44" class="whatsapp-link" target="_blank" rel="noopener">💬 WhatsApp us</a>
+        <a href="tel:+447367298499" class="tel-link" id="footerPhoneText">📞 07367 298 499</a>
+        <a href="https://wa.me/447367298499" class="whatsapp-link" target="_blank" rel="noopener">💬 WhatsApp us</a>
         <a href="mailto:hello@draytonclean.co.uk">✉ hello@draytonclean.co.uk</a>
         <p>📍 Market Drayton, Shropshire</p>
       </div>
@@ -1176,12 +1219,12 @@
             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M16.6 5.82c-1.02-.9-1.6-2.16-1.6-3.62h-3.06v13.4c0 1.6-1.3 2.9-2.9 2.9-1.6 0-2.9-1.3-2.9-2.9 0-1.6 1.3-2.9 2.9-2.9.3 0 .58.04.85.13V9.62c-.28-.04-.56-.06-.85-.06-3.28 0-5.94 2.66-5.94 5.94S6.66 21.44 9.94 21.44s5.94-2.66 5.94-5.94V9.03c1.2.86 2.66 1.36 4.24 1.36V7.34c-1.34 0-2.55-.5-3.52-1.32z"/></svg>
           </a>
         </div>
-        <a class="btn btn-green" href="#booking" style="margin-top:14px; padding:9px 16px; font-size:0.82rem;">Get a Free Quote</a>
+        <a class="btn btn-green" href="#calculator" style="margin-top:14px; padding:9px 16px; font-size:0.82rem;">Get My Price</a>
       </div>
     </div>
     <div class="footer-bottom">
       <p class="legal-line">Drayton Exterior Cleaning (DEC) is a trading name of Prime Event &amp; Media Solutions Ltd. Registered in England &amp; Wales No. 16904317.</p>
-      <p style="font-size:0.78rem; opacity:0.4;">© <span id="year"></span> DEC Drayton Exterior Cleaning</p>
+      <p style="font-size:0.78rem; opacity:0.6;">© <span id="year"></span> DEC Drayton Exterior Cleaning · <a href="/privacy" style="text-decoration:underline;">Privacy &amp; cookies</a> · <a href="#" data-cookie-settings style="text-decoration:underline;">Cookie settings</a></p>
     </div>
   </div>
 </footer>
@@ -1235,37 +1278,51 @@
       van.innerHTML = '';
     }
   }).catch(function(){});
-  // Gallery — replace placeholders only if real items exist
+  // Helpers
+  function decEsc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  // Small, fast versions of photos via Netlify Image CDN (falls back to the original file if unavailable)
+  function decThumb(src){ return /^\/content\//.test(src) ? '/.netlify/images?url=' + encodeURIComponent(src) + '&w=700&q=72' : src; }
+  function decWireGallery(){
+    var grid = document.getElementById('galleryGrid');
+    grid.querySelectorAll('img[data-full]').forEach(function(img){
+      if (!img.dataset.wired){
+        img.dataset.wired = '1';
+        var full = img.getAttribute('data-full');
+        img.addEventListener('error', function(){ if (img.src.indexOf('/.netlify/images') > -1) img.src = full; });
+        img.addEventListener('click', function(){ openLightbox(full); });
+        img.src = decThumb(full);
+      }
+    });
+  }
+  decWireGallery();
+  // Gallery — rebuilt from the dashboard data so new photos appear automatically
   fetch('content/gallery.json').then(function(r){ return r.json(); }).then(function(d){
     var items = d.items || [];
     if (!items.length) return;
     var grid = document.getElementById('galleryGrid');
-    grid.innerHTML = items.map(function(it){
-      return '<div class="gallery-item" style="border-style:solid; padding:0; overflow:hidden; position:relative; display:flex; flex-direction:column;">' +
-        '<div style="position:relative; flex:1; overflow:hidden;">' +
-          '<img src="' + it.before_image + '" style="width:100%; height:100%; object-fit:cover; display:block; cursor:zoom-in;" alt="Before" onclick="openLightbox(\'' + it.before_image + '\')">' +
-          '<span style="position:absolute; top:6px; left:6px; background:rgba(20,23,26,0.75); color:#fff; font-size:0.6rem; padding:2px 8px; border-radius:6px; text-transform:uppercase; letter-spacing:0.04em;">Before</span>' +
-        '</div>' +
-        '<div style="position:relative; flex:1; overflow:hidden; border-top:2px solid #fff;">' +
-          '<img src="' + it.after_image + '" style="width:100%; height:100%; object-fit:cover; display:block; cursor:zoom-in;" alt="After" onclick="openLightbox(\'' + it.after_image + '\')">' +
-          '<span style="position:absolute; top:6px; left:6px; background:rgba(76,175,60,0.9); color:#fff; font-size:0.6rem; padding:2px 8px; border-radius:6px; text-transform:uppercase; letter-spacing:0.04em;">After</span>' +
-        '</div>' +
-        (it.caption ? '<span style="position:absolute; bottom:6px; left:6px; right:6px; background:rgba(20,23,26,0.75); color:#fff; font-size:0.68rem; padding:4px 8px; border-radius:6px;">' + it.caption + '</span>' : '') +
+    grid.innerHTML = items.map(function(it, i){
+      var n = i + 1;
+      return '<div class="gallery-item ba-item">' +
+        '<div class="ba-half"><img alt="Before cleaning — job ' + n + '" loading="lazy" decoding="async" width="600" height="600" data-full="' + decEsc(it.before_image) + '"><span class="ba-tag">Before</span></div>' +
+        '<div class="ba-half"><img alt="After cleaning — job ' + n + '" loading="lazy" decoding="async" width="600" height="600" data-full="' + decEsc(it.after_image) + '"><span class="ba-tag ba-after">After</span></div>' +
+        (it.caption ? '<span class="ba-cap">' + decEsc(it.caption) + '</span>' : '') +
       '</div>';
     }).join('');
+    decWireGallery();
   }).catch(function(){});
-  // Testimonials — replace example cards only if real reviews exist
+  // Testimonials — rebuilt from the dashboard data so new reviews appear automatically
   fetch('content/testimonials.json').then(function(r){ return r.json(); }).then(function(d){
     var items = d.items || [];
     if (!items.length) return;
     var wrap = document.getElementById('testiWrap');
-    wrap.querySelectorAll('[data-example="true"]').forEach(function(el){ el.remove(); });
+    wrap.querySelectorAll('.testi-card').forEach(function(el){ el.remove(); });
     var html = items.map(function(t){
-      var stars = '★★★★★'.slice(0, t.rating || 5);
+      var n = Math.max(1, Math.min(5, parseInt(t.rating, 10) || 5));
+      var q = String(t.quote || '').replace(/^\*(from google|google review)\*\s*/i, '').trim();
       return '<div class="testi-card">' +
-        '<div class="stars">' + stars + '</div>' +
-        '<p class="quote">"' + t.quote + '"</p>' +
-        '<div class="who">— ' + t.name + (t.location ? ', ' + t.location : '') + '</div>' +
+        '<div class="stars" aria-label="' + n + ' out of 5 stars">' + '★★★★★'.slice(0, n) + '</div>' +
+        '<p class="quote">“' + decEsc(q) + '”</p>' +
+        '<div class="who">— ' + decEsc(String(t.name || '').trim()) + (t.location && t.location.trim() ? ', ' + decEsc(t.location.trim()) : '') + '</div>' +
       '</div>';
     }).join('');
     wrap.insertAdjacentHTML('afterbegin', html);
@@ -1300,7 +1357,7 @@
   }
 </script>
 <div id="lightbox" style="display:none; position:fixed; inset:0; background:rgba(20,23,26,0.92); z-index:999; align-items:center; justify-content:center; padding:24px; cursor:zoom-out;" onclick="this.style.display='none';">
-  <img id="lightboxImg" src="" style="max-width:90vw; max-height:90vh; border-radius:8px; object-fit:contain;">
+  <img id="lightboxImg" src="" alt="Full size photo" style="max-width:90vw; max-height:90vh; border-radius:8px; object-fit:contain;">
 </div>
 <script>
   function openLightbox(src){
