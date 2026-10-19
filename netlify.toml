@@ -1,0 +1,5 @@
+# Netlify settings (used when the site's "Base directory" is empty).
+# Every publish runs the blog builder, which makes a page for each post.
+[build]
+  publish = "dec-site-cms"
+  command = "node dec-site-cms/_build/build-blog.js"
