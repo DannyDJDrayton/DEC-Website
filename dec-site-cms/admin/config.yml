@@ -30,10 +30,13 @@ collections:
             summary: "{{title}}"
             fields:
               - { label: "Title", name: "title", widget: "string" }
+              - { label: "Web address name (optional)", name: "slug", widget: "string", required: false, hint: "Leave blank and it's made from the title, e.g. /blog/hard-water-and-streaky-windows/. Once you've shared a post, don't change this or old links will break." }
               - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "D MMM YYYY" }
               - { label: "Read time (e.g. '5 min read')", name: "readtime", widget: "string", default: "5 min read" }
-              - { label: "Short excerpt (shown on the blog list)", name: "excerpt", widget: "text" }
-              - { label: "Cover image (optional)", name: "image", widget: "image", required: false }
+              - { label: "Short excerpt (shown on the blog list AND in the preview when the link is shared)", name: "excerpt", widget: "text", hint: "One or two sentences, under about 155 characters." }
+              - { label: "Cover image (optional)", name: "image", widget: "image", required: false, hint: "Shown at the top of the post. Resize phone photos to about 1600px wide first." }
+              - { label: "Share image (optional, 1200 x 630)", name: "share_image", widget: "image", required: false, hint: "The picture people see when you share the link on Facebook or WhatsApp. Leave blank to use the cover image, or the DEC logo image." }
+              - { label: "Hide this post (draft)", name: "draft", widget: "boolean", default: false, required: false }
               - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "gallery"
