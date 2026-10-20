@@ -1,0 +1,69 @@
+{
+  "services": [
+    {
+      "slug": "window-cleaning",
+      "name": "Window Cleaning",
+      "h1": "Window Cleaning in Market Drayton & Nearby Villages",
+      "title": "Window Cleaning Market Drayton | Pure Water | DEC",
+      "description": "Pure-water exterior window cleaning in Market Drayton and nearby villages. Frames, sills and doors included. Regular cleans from £14, priced online.",
+      "lede": "Pure-water window cleaning that does the frames, sills and doors as well as the glass, on a regular round with a text the day before each visit.",
+      "image": "/content/uploads/web-img_6707.webp",
+      "image_alt": "Sparkling windows after a pure-water clean",
+      "body": "## The problem with a quick squeegee job\n\nA lot of window cleans only do the middle of the glass. Frames, sills and the door get skipped, the dirt stays on them, and the next shower washes it straight back down the window. On top of that, Market Drayton's hard tap water leaves spots if it's used for rinsing.\n\n## How we clean\n\nWe use a water-fed pole with a soft brush and water that's been filtered until there's almost nothing left in it. The brush scrubs the glass, frames and sills, then everything is rinsed with pure water. With nothing dissolved in it, the water dries clear with no streaks and no soap film. Upstairs windows get done from the ground, so there are no ladders against your guttering.\n\n## What's included\n\n- All exterior glass, ground floor and upstairs\n- Frames and sills scrubbed and rinsed\n- Front and back doors, including the glass panels\n- A text the day before every visit\n- Your own online customer portal to see and change your clean dates\n- Secure online payment\n\n## What sets the price\n\nYour price depends on your property type (semi-detached or detached) and the number of bedrooms. Extras like a conservatory, porch or extension add a little on top. Regular cleans start from £14. First cleans and one-off cleans carry a surcharge, because there's usually more build-up to shift the first time.",
+      "faq": [
+        { "q": "How often should I have my windows cleaned?", "a": "Every 4 weeks suits most homes. Quieter, sheltered houses can stretch to 6 to 8 weeks. Our guide explains how to choose." },
+        { "q": "Can you clean windows in the rain?", "a": "Yes, light rain and drizzle are fine with pure water, because there's no soap on the glass for the rain to mix with. We stop for lightning and strong winds." },
+        { "q": "Do I need to be in?", "a": "No, as long as we can get to the windows, including through any side gate." }
+      ],
+      "related_posts": ["how-often-should-windows-be-cleaned", "hard-water-streaky-windows", "cleaning-windows-in-the-rain"]
+    },
+    {
+      "slug": "interior-window-cleaning",
+      "name": "Interior Window Cleaning",
+      "h1": "Inside Window Cleaning in Market Drayton",
+      "title": "Inside Window Cleaning Market Drayton | DEC",
+      "description": "Professional inside window cleaning in Market Drayton and nearby villages. Glass, frames and sills cleaned for brighter rooms. Add it to your regular visit.",
+      "lede": "Fingerprints, dust and cooking haze build up on the inside of your glass so slowly you stop noticing. An inside clean brings the light back in.",
+      "image": "/content/uploads/web-inside-window-cleaning.webp",
+      "image_alt": "Inside window cleaning in a Market Drayton home",
+      "body": "## Why clean the inside?\n\nThe outside of your windows gets the attention, but the inside matters just as much for how bright your rooms feel. Grease from cooking, condensation marks, little handprints and pet noses all leave a film you look through every day.\n\n## What's included\n\n- Inside glass cleaned to a streak-free finish\n- Frames and sills wiped down\n- The awkward panes you can't easily reach yourself\n- Booked separately from your outside clean, at a time that suits you\n\n## Already a customer?\n\nAdding an inside clean is easy. Ask Danny when he's next round, or text or WhatsApp us and we'll arrange a time when you're home.",
+      "faq": [
+        { "q": "Do I need to be home for an inside clean?", "a": "Yes. Inside cleans are booked for a time when you're in, separately from your regular outside round." },
+        { "q": "How often do people have the inside done?", "a": "Most customers go for every few months, or before a special occasion. There's no need to match your outside schedule." }
+      ],
+      "related_posts": ["inside-window-cleaning-market-drayton"]
+    },
+    {
+      "slug": "conservatory-cleaning",
+      "name": "Conservatory Cleaning",
+      "h1": "Conservatory Cleaning in Market Drayton",
+      "title": "Conservatory Cleaning Market Drayton | DEC",
+      "description": "Conservatory glass and frame cleaning in Market Drayton and nearby villages, using pure water. Add it to your regular window clean or ask for a roof quote.",
+      "lede": "Conservatories are all glass, and they show every mark. We clean the glass and frames with pure water so the whole room looks bright again.",
+      "image": "/content/uploads/web-img_6814.webp",
+      "image_alt": "Clean windows and frames on a Shropshire home",
+      "body": "## Glass, frames and sills\n\nConservatory sides collect pollen, garden dust and splash-back from rain. We clean the glass and the uPVC frames with a soft brush and pure water, which dries clear with no streaks.\n\n## Adding it to your regular clean\n\nThe easiest option is to include your conservatory in your regular window clean. The online calculator adds it to your price, and the amount depends on the size of your home.\n\n## Conservatory roofs\n\nRoofs vary a lot in size, pitch and how much moss and algae has built up. Send us a photo by text or WhatsApp and we'll give you a price for a roof clean.",
+      "faq": [
+        { "q": "Will pure water damage my conservatory frames?", "a": "No. It's just filtered water and a soft brush, with no chemicals or abrasives." },
+        { "q": "Can you clean polycarbonate roofs?", "a": "Send us a photo first. We'll check the condition and the access, and tell you honestly what we can do." }
+      ],
+      "related_posts": []
+    },
+    {
+      "slug": "fascia-and-soffit-cleaning",
+      "name": "Fascia & Soffit Cleaning",
+      "h1": "Fascia & Soffit Cleaning in Market Drayton",
+      "title": "Fascia & Soffit Cleaning Market Drayton | DEC",
+      "description": "Fascia, soffit and cladding cleaning in Market Drayton and nearby villages. Lift green algae and grime off your uPVC from the ground. Free photo quotes.",
+      "lede": "Grey, green or streaky fascias make a whole house look tired. A proper clean lifts the grime and brings the uPVC back to its original colour.",
+      "image": "/content/uploads/web-black-windows-after.webp",
+      "image_alt": "Clean dark uPVC frames after cleaning",
+      "body": "## What we clean\n\n- Fascia boards along the roofline\n- Soffits underneath\n- uPVC cladding and bargeboards\n- The outside face of gutters (gutter clearing is coming soon)\n\n## How it's done\n\nWe use our water-fed pole system to scrub the roofline from the ground, then rinse everything with pure water so it dries without streaks. Nobody needs to lean ladders on your gutters.\n\n## Getting a price\n\nEvery roofline is different, so we quote fascias and soffits individually. Text or WhatsApp a photo of the front of your house to 07367 298 499, or use the booking form and attach a photo.",
+      "faq": [
+        { "q": "How long do clean fascias stay clean?", "a": "It depends on how much shade and how many trees are around your house. Many customers have them done once or twice a year." },
+        { "q": "Do you clear gutters?", "a": "Gutter clearing is coming soon. Get in touch and we'll let you know as soon as it's available." }
+      ],
+      "related_posts": []
+    }
+  ]
+}

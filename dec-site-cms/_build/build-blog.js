@@ -6,6 +6,7 @@
     /blog/                      - the blog list page
     /blog/<post-name>/          - one shareable page per post
     sitemap.xml                 - updated with every post
+  and (via build-pages.js) the /areas/ village pages and /services/ pages.
   It also redirects the old blog.html links to the new pages.
 
   No extra software needed - plain Node.js. If anything goes wrong the
@@ -15,105 +16,13 @@
 const fs = require('fs');
 const path = require('path');
 
-const SITE = path.resolve(__dirname, '..');          // the dec-site-cms folder
-const ORIGIN = 'https://draytonclean.co.uk';
-const DEFAULT_SHARE = '/content/uploads/og-image.png';
-const PHONE = '07367 298 499', TEL = '+447367298499', WA = '447367298499';
-
-// ---------- helpers ----------
-const esc = s => String(s == null ? '' : s)
-  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-  .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-const slugify = s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+const {
+  SITE, ORIGIN, DEFAULT_SHARE, PHONE, TEL, WA,
+  esc, slugify, abs, isoDate, niceDate, plain, clip, markdown,
+  HEAD_COMMON, HEADER, FOOTER
+} = require('./shared');
+const buildPages = require('./build-pages');
 const postSlug = p => slugify(p.slug && p.slug.trim() ? p.slug : p.title);
-const abs = u => !u ? '' : /^https?:\/\//.test(u) ? u : ORIGIN + (u.startsWith('/') ? u : '/' + u);
-const isoDate = d => { const t = new Date(d); return isNaN(t) ? '' : t.toISOString().slice(0, 10); };
-const niceDate = d => { const t = new Date(d); return isNaN(t) ? '' :
-  t.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }); };
-const plain = md => String(md || '').replace(/<[^>]+>/g, ' ').replace(/!\[[^\]]*\]\([^)]*\)/g, '')
-  .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[#*_>`-]/g, ' ').replace(/\s+/g, ' ').trim();
-const clip = (s, n) => s.length <= n ? s : s.slice(0, n - 1).replace(/\s+\S*$/, '') + '…';
-
-// ---------- tiny markdown converter (headings, lists, bold, italic, links, images, quotes, raw HTML) ----------
-function inline(text) {
-  let s = esc(text);
-  s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (m, alt, src) =>
-    `<img src="${src}" alt="${alt}" loading="lazy" decoding="async">`);
-  s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, t, href) => {
-    const ext = /^https?:\/\//.test(href) && !href.includes('draytonclean.co.uk');
-    return `<a href="${href}"${ext ? ' target="_blank" rel="noopener"' : ''}>${t}</a>`;
-  });
-  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/__([^_]+)__/g, '<strong>$1</strong>');
-  s = s.replace(/(^|[^*])\*([^*\s][^*]*)\*/g, '$1<em>$2</em>');
-  // turn bare draytonclean.co.uk links into real links
-  s = s.replace(/(^|[\s(])((?:https?:\/\/)?draytonclean\.co\.uk(\/[^\s<)]*)?)/g, (m, pre, url, p) =>
-    `${pre}<a href="${p ? p.replace(/[.,]$/, '') : '/'}">${url}</a>`);
-  return s;
-}
-function markdown(md) {
-  const lines = String(md || '').replace(/\r\n?/g, '\n').split('\n');
-  const out = []; let para = [], list = null;
-  const flushPara = () => { if (para.length) { out.push('<p>' + inline(para.join(' ')) + '</p>'); para = []; } };
-  const flushList = () => { if (list) { out.push(`<${list.type}>` + list.items.map(i => '<li>' + inline(i) + '</li>').join('') + `</${list.type}>`); list = null; } };
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i], t = line.trim();
-    if (!t) { flushPara(); flushList(); continue; }
-    let m;
-    if (/^<(iframe|div|figure|video|blockquote|table|p|h\d|ul|ol)\b/i.test(t)) {    // raw HTML block
-      flushPara(); flushList();
-      const block = [line];
-      while (i + 1 < lines.length && lines[i + 1].trim()) block.push(lines[++i]);
-      out.push(block.join('\n')); continue;
-    }
-    if ((m = t.match(/^(#{1,4})\s+(.*)$/))) {
-      flushPara(); flushList();
-      const lvl = Math.min(4, Math.max(2, m[1].length));       // # and ## -> h2 (the title is the h1)
-      out.push(`<h${lvl}>${inline(m[2])}</h${lvl}>`); continue;
-    }
-    if (/^(-{3,}|\*{3,})$/.test(t)) { flushPara(); flushList(); out.push('<hr>'); continue; }
-    if ((m = t.match(/^>\s?(.*)$/))) { flushPara(); flushList(); out.push('<blockquote><p>' + inline(m[1]) + '</p></blockquote>'); continue; }
-    if ((m = t.match(/^[-*•]\s+(.*)$/)) || (m = t.match(/^\d+[.)]\s+(.*)$/))) {
-      flushPara();
-      const type = /^\d/.test(t) ? 'ol' : 'ul';
-      if (!list || list.type !== type) { flushList(); list = { type, items: [] }; }
-      list.items.push(m[1]); continue;
-    }
-    flushList(); para.push(t);
-  }
-  flushPara(); flushList();
-  return out.join('\n');
-}
-
-// ---------- shared page pieces ----------
-const HEAD_COMMON = `<script src="/dec-consent.js"></script>
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/_build/blog.css">`;
-
-const HEADER = `<a class="skip" href="#main">Skip to content</a>
-<header class="site-head">
-  <div class="nav">
-    <a href="/" aria-label="Drayton Exterior Cleaning home"><img src="/content/uploads/dec-logo.png" alt="Drayton Exterior Cleaning" width="120" height="40" style="height:40px;width:auto;"></a>
-    <nav class="nav-links" aria-label="Main">
-      <a href="/">Home</a><a href="/blog/">Blog</a><a href="/#reviews">Reviews</a>
-      <a class="btn" href="/#calculator">Get My Price</a>
-    </nav>
-  </div>
-</header>`;
-
-const FOOTER = `<footer class="site-foot">
-  <div class="wrap-wide">
-    <img src="/content/uploads/dec-logo-dark.png" alt="Drayton Exterior Cleaning" width="110" height="36" style="height:36px;width:auto;">
-    <p>Window &amp; exterior cleaning in Market Drayton, Sambrook, Hinstock, Norton-in-Hales, Moreton Say, Loggerheads and Sutton-upon-Tern.</p>
-    <p><a href="tel:${TEL}">${PHONE}</a> · <a href="mailto:hello@draytonclean.co.uk">hello@draytonclean.co.uk</a></p>
-    <p class="legal">Drayton Exterior Cleaning (DEC) is a trading name of Prime Event &amp; Media Solutions Ltd. Registered in England &amp; Wales No. 16904317.
-      <a href="/privacy">Privacy &amp; cookies</a> · <a href="#" data-cookie-settings>Cookie settings</a></p>
-  </div>
-</footer>`;
 
 function card(p, small) {
   const img = p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy" decoding="async" width="600" height="340">` : '';
@@ -260,12 +169,14 @@ ${FOOTER}
 }
 
 // ---------- sitemap ----------
-function sitemap(posts) {
+function sitemap(posts, extra) {
   const today = new Date().toISOString().slice(0, 10);
   const rows = [
-    ['/', today, 'weekly', '1.0'], ['/prices.html', today, 'monthly', '0.9'],
+    // homepage + prices: change these dates when those pages are edited
+    ['/', '2026-10-20', 'weekly', '1.0'], ['/prices.html', '2026-10-20', 'monthly', '0.9'],
     ['/blog/', isoDate(posts[0] && posts[0].date) || today, 'weekly', '0.7'],
     ...posts.map(p => [`/blog/${p._slug}/`, isoDate(p.updated || p.date) || today, 'monthly', '0.6']),
+    ...(extra || []),
     ['/privacy', '2026-10-19', 'yearly', '0.2']
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -300,7 +211,8 @@ console.log(`DEC blog builder: ${posts.length} post(s)`);
 fs.rmSync(path.join(SITE, 'blog'), { recursive: true, force: true });
 posts.forEach(p => write(`blog/${p._slug}/index.html`, postPage(p, posts.filter(o => o !== p))));
 write('blog/index.html', listPage(posts));
-write('sitemap.xml', sitemap(posts));
+const pageRows = buildPages(write);       // village + service pages
+write('sitemap.xml', sitemap(posts, pageRows));
 
 // Retire the old single-page blog: remove it from the published site and redirect old links.
 fs.rmSync(path.join(SITE, 'blog.html'), { force: true });
