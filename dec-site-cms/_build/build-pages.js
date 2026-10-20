@@ -233,7 +233,7 @@ ${tail()}`;
 function areasIndex() {
   const url = ORIGIN + '/areas/';
   const title = 'Areas We Cover | Window Cleaning Near Market Drayton | DEC';
-  const description = 'Window and exterior cleaning in Market Drayton, Loggerheads, Hinstock, Norton-in-Hales, Moreton Say, Sutton-upon-Tern and Sambrook.';
+  const description = 'Window cleaning in Market Drayton, Newport, Audlem, Hodnet, Loggerheads, Woore, Hinstock, Cheswardine and nearby villages. Find your area.';
   const schema = [crumbsLd([['Home', '/'], ['Areas we cover', '/areas/']])];
   return `${head({ title, description, url, schema })}
 <main id="main" class="pg">
@@ -241,7 +241,7 @@ function areasIndex() {
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <span aria-current="page">Areas</span></nav>
     <div class="eyebrow">Where we work</div>
     <h1>Window cleaning in Market Drayton and the villages around it</h1>
-    <p class="lede">We're based in Market Drayton and clean homes across the town and the surrounding villages, including a few just over the border in Staffordshire. Pick your village to see what we do there.</p>
+    <p class="lede">We're based in Market Drayton and clean homes across the town and the surrounding villages, including a few just over the borders in Staffordshire and Cheshire. Pick your village to see what we do there.</p>
     ${ctaButtons()}
     <div class="area-cards">
       ${AREAS.map(a => `<a class="area-card" href="/areas/${a.slug}/">

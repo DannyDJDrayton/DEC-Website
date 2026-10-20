@@ -172,7 +172,7 @@
       "postcode": "TF10",
       "title": "Window Cleaning Sambrook | Drayton Exterior Cleaning",
       "description": "Window cleaning in Sambrook, Ellerton, Howle and Pickstock. Pure water, gentle on older homes, a text the day before, instant prices online.",
-      "lede": "Sambrook is a small village between Hinstock and Newport, with its millpond, St Luke's church and the Three Horseshoes, and it's the southern edge of our patch.",
+      "lede": "Sambrook is a small village between Hinstock and Newport, with its millpond, St Luke's church and the Three Horseshoes, on the way from Hinstock down to Newport.",
       "image": "/content/uploads/web-black-windows-after.webp",
       "image_alt": "Clean black window frames after a pure-water clean",
       "covers": [
@@ -190,6 +190,199 @@
         {
           "q": "Can you clean large houses with lots of windows?",
           "a": "Yes. The calculator covers homes up to 5 bedrooms. For anything bigger or unusual, text us a photo and we'll give you a price."
+        }
+      ]
+    },
+    {
+      "slug": "newport",
+      "name": "Newport",
+      "postcode": "TF10",
+      "title": "Window Cleaning Newport, Shropshire | Drayton Exterior Cleaning",
+      "description": "Pure-water window cleaning in Newport, Shropshire, plus Church Aston and Edgmond. Frames and sills included, a text the day before, instant prices.",
+      "lede": "Newport is the biggest place on our patch: a busy market town with a long High Street and plenty of newer estates around the edges. We clean homes right across it.",
+      "image": "/content/uploads/web-dd-3569.webp",
+      "image_alt": "Danny from Drayton Exterior Cleaning with a water-fed pole",
+      "covers": [
+        "Newport town centre",
+        "Church Aston",
+        "Edgmond",
+        "Chetwynd End",
+        "Newer estates off the A518"
+      ],
+      "body": "## Window cleaning in Newport\n\nFrom period townhouses near the High Street and St Nicholas Church to the newer family estates on the edges of town, Newport has a lot of glass to keep clean. We cover the whole town, plus Church Aston and Edgmond next door.\n\n## Town-centre grime\n\nHomes on busier roads, close to the A518 and the town centre, collect a grey traffic film that rain doesn't shift. Our soft brush and pure water lift it off the glass and the frames. Because there's no soap left behind, the next shower doesn't leave streaks.\n\n## New-build windows and frames\n\nNew-build homes often have lots of white uPVC that greys quickly. We scrub the frames and sills on every visit, not just the glass, so the whole window stays bright. Upstairs windows are cleaned from the ground with a water-fed pole, so nobody leans a ladder on your guttering.",
+      "faq": [
+        {
+          "q": "Do you cover all of Newport?",
+          "a": "Yes, the whole town, along with Church Aston and Edgmond. If you're on the edge and not sure, text us your postcode."
+        },
+        {
+          "q": "How much is window cleaning in Newport?",
+          "a": "We use the same price list as everywhere else we cover. Regular cleans start from £14, and the online calculator shows your exact price in about 30 seconds."
+        }
+      ]
+    },
+    {
+      "slug": "hodnet",
+      "name": "Hodnet",
+      "postcode": "TF9",
+      "title": "Window Cleaning Hodnet | Drayton Exterior Cleaning",
+      "description": "Window cleaning in Hodnet, Wollerton, Marchamley and Peplow. Pure water, gentle on older homes, a text the day before, instant prices online.",
+      "lede": "Hodnet sits south-west of Market Drayton on the A53, home to Hodnet Hall gardens, St Luke's Church and the Bear. It's a regular stop for us.",
+      "image": "/content/uploads/web-img_6814.webp",
+      "image_alt": "Clean windows on a period home",
+      "covers": [
+        "Hodnet village",
+        "Wollerton",
+        "Marchamley",
+        "Peplow",
+        "Hopton",
+        "Little Bolas"
+      ],
+      "body": "## Window cleaning in Hodnet\n\nHodnet has a mix of older brick and timber-framed cottages in the village centre, family homes, and farmhouses spread across Wollerton, Marchamley, Peplow and the surrounding lanes. We clean them all.\n\n## Careful with older homes\n\nPure-water cleaning uses no detergent, and nobody drags a squeegee across old glazing. A soft brush on a water-fed pole scrubs the glass and frames, then filtered water rinses everything and dries clear. That suits older and painted windows, and upstairs is done from the ground.\n\n## Quieter since the bypass\n\nThe village streets have been much quieter since the A53 bypass opened, but homes near the main road still pick up traffic film. For most houses, a clean every 4 to 8 weeks keeps on top of it.",
+      "faq": [
+        {
+          "q": "Do you cover Wollerton, Marchamley and Peplow?",
+          "a": "Yes, along with the rest of the area around Hodnet."
+        },
+        {
+          "q": "Do I need to be home?",
+          "a": "No, as long as we can get to the windows. You'll get a text the day before each visit."
+        }
+      ]
+    },
+    {
+      "slug": "cheswardine",
+      "name": "Cheswardine",
+      "postcode": "TF9",
+      "title": "Window Cleaning Cheswardine | Drayton Exterior Cleaning",
+      "description": "Window cleaning in Cheswardine, Chipnall, Soudley and Goldstone. Pure water, no ladders, a text the day before, instant prices online.",
+      "lede": "Cheswardine is about five miles south-east of Market Drayton, near the Staffordshire border, with St Swithun's on the hill above the village.",
+      "image": "/content/uploads/web-img_6781.webp",
+      "image_alt": "Clean windows and frames on a detached house",
+      "covers": [
+        "Cheswardine village",
+        "Chipnall",
+        "Soudley",
+        "Goldstone",
+        "Ellerton"
+      ],
+      "body": "## Window cleaning in Cheswardine\n\nCheswardine is a proper rural parish. There are homes around the village centre near the Red Lion and the shop, plus houses and farms out at Chipnall, Soudley, Goldstone and Ellerton. We cover all of it.\n\n## Country homes, country dirt\n\nHomes surrounded by fields pick up dust at harvest and spraying time, and trees and hedges bring pollen and cobwebs. We scrub the frames and sills as well as the glass, so that dirt doesn't run back down the window the next time it rains.\n\n## No tap needed\n\nWe bring our own purified water, so we don't need an outside tap or any power. You don't need to be in either. You'll get a text the day before, and you can see your next clean in your online portal.",
+      "faq": [
+        {
+          "q": "Do you cover Chipnall and Soudley?",
+          "a": "Yes, along with Goldstone, Ellerton and the rest of Cheswardine parish."
+        },
+        {
+          "q": "Do you need my water?",
+          "a": "No. We bring our own purified water, so there's no need for an outside tap."
+        }
+      ]
+    },
+    {
+      "slug": "woore",
+      "name": "Woore",
+      "postcode": "CW3",
+      "title": "Window Cleaning Woore | Drayton Exterior Cleaning",
+      "description": "Window cleaning in Woore, Pipe Gate, Ireland's Cross and Gravenhunger. Pure water, frames included, a text the day before, instant prices online.",
+      "lede": "Woore sits where the A51 meets the A525, right on the Shropshire, Cheshire and Staffordshire borders, and just up the road from us.",
+      "image": "/content/uploads/web-img_6707.webp",
+      "image_alt": "Sparkling windows after a pure-water clean",
+      "covers": [
+        "Woore village",
+        "Pipe Gate",
+        "Ireland's Cross",
+        "Gravenhunger",
+        "Dorrington",
+        "Bearstone"
+      ],
+      "body": "## Window cleaning in Woore\n\nWoore has homes around the village square and St Leonard's, newer houses, and properties spread out towards Pipe Gate, Ireland's Cross, Gravenhunger, Dorrington and Bearstone. We cover the whole parish.\n\n## Main-road homes\n\nHouses along the A51 and A525 get more traffic film on the glass than quieter homes. Every 4 weeks usually keeps them looking right. Homes tucked down the lanes can often go 6 to 8 weeks.\n\n## A Crewe postcode, still local\n\nWoore has a CW3 postcode, but it's only a few minutes from Market Drayton, so you get the same price list, the same text the day before each visit, and the same online portal.",
+      "faq": [
+        {
+          "q": "Do you cover Pipe Gate and Ireland's Cross?",
+          "a": "Yes, along with Gravenhunger, Dorrington, Bearstone and the rest of Woore parish."
+        },
+        {
+          "q": "Is Woore priced differently because it's CW3?",
+          "a": "No. It's the same price list as Market Drayton. The calculator shows yours instantly."
+        }
+      ]
+    },
+    {
+      "slug": "adderley",
+      "name": "Adderley",
+      "postcode": "TF9",
+      "title": "Window Cleaning Adderley | Drayton Exterior Cleaning",
+      "description": "Window cleaning in Adderley and Spoonley, north of Market Drayton. Pure water, no ladders, a text the day before, instant prices online.",
+      "lede": "Adderley is a few miles north of Market Drayton, on the road to Audlem, with St Peter's Church and the Shropshire Union Canal running past.",
+      "image": "/content/uploads/web-img_6697.webp",
+      "image_alt": "Clean windows and frames on a rural home",
+      "covers": [
+        "Adderley village",
+        "Spoonley",
+        "Homes along the canal",
+        "Farms around Shavington"
+      ],
+      "body": "## Window cleaning in Adderley\n\nAdderley is small and spread out. There are cottages near St Peter's and the village hall, plus farmhouses and homes along the lanes, by the canal and out towards Spoonley. We're happy to come out to all of them.\n\n## Canal-side and farmland homes\n\nHomes near water and open fields tend to collect more cobwebs, pollen and field dust on their windows and frames. A soft brush and pure water clear the lot, and because we bring our own water, we don't need an outside tap.\n\n## Easy to book\n\nUse the online calculator for an instant price, then text or WhatsApp Danny. You don't need to be in on the day.",
+      "faq": [
+        {
+          "q": "Is Adderley too far out for you?",
+          "a": "Not at all. It's only a few minutes from Market Drayton."
+        },
+        {
+          "q": "How often should I have my windows cleaned?",
+          "a": "Every 4 to 8 weeks, depending on how exposed your house is. We'll help you choose."
+        }
+      ]
+    },
+    {
+      "slug": "calverhall",
+      "name": "Calverhall",
+      "postcode": "SY13",
+      "title": "Window Cleaning Calverhall | Drayton Exterior Cleaning",
+      "description": "Window cleaning in Calverhall and Ightfield, between Market Drayton and Whitchurch. Pure water, a text the day before, instant prices online.",
+      "lede": "Calverhall is a small village between Market Drayton and Whitchurch, home to the Olde Jack Inn and Holy Trinity Church. We cover Calverhall and neighbouring Ightfield.",
+      "image": "/content/uploads/web-black-windows-after.webp",
+      "image_alt": "Clean dark window frames after a pure-water clean",
+      "covers": [
+        "Calverhall village",
+        "Ightfield",
+        "Homes around Cloverley"
+      ],
+      "body": "## Window cleaning in Calverhall\n\nCalverhall and Ightfield are quiet, rural villages with cottages, farmhouses and family homes set among fields. Many have larger gardens and plenty of glass, which is exactly what our water-fed pole is made for.\n\n## Gentle on every kind of frame\n\nWe clean with filtered pure water and a soft brush: no soap, no harsh chemicals and no squeegee marks. It's gentle on older painted frames and modern uPVC alike, and the frames and sills get scrubbed with the glass every time.\n\n## Fitting into the round\n\nCalverhall is only about 15 minutes from Market Drayton. You'll get a text the day before each visit and can move dates around in your online portal.",
+      "faq": [
+        {
+          "q": "Do you cover Ightfield too?",
+          "a": "Yes. We cover Calverhall and Ightfield."
+        },
+        {
+          "q": "Do I need to be home?",
+          "a": "No, as long as we can reach the windows, including through any side gate."
+        }
+      ]
+    },
+    {
+      "slug": "audlem",
+      "name": "Audlem",
+      "postcode": "CW3",
+      "title": "Window Cleaning Audlem | Drayton Exterior Cleaning",
+      "description": "Pure-water window cleaning in Audlem and Buerton, just over the Cheshire border. Frames included, a text the day before, instant prices online.",
+      "lede": "Audlem is about seven miles north of Market Drayton, just over the border in Cheshire, and famous for its flight of 15 canal locks. We cover the village and Buerton.",
+      "image": "/content/uploads/web-van-photo.webp",
+      "image_alt": "The Drayton Exterior Cleaning van",
+      "covers": [
+        "Audlem village",
+        "Buerton",
+        "Homes along the Shropshire Union locks"
+      ],
+      "body": "## Window cleaning in Audlem\n\nAudlem has a lovely mix of homes, from Georgian and Victorian buildings in the village centre near St James' Church to cottages along the canal and newer houses on the edges. We clean them all, and Buerton next door too.\n\n## Canal-side homes\n\nHomes along the Shropshire Union locks get more damp, algae and cobwebs around their frames than most. We scrub the frames and sills as well as the glass, then rinse with pure water so everything dries clear with no streaks.\n\n## Across the border, same service\n\nAudlem is in Cheshire with a CW3 postcode, but it's just up the road from Market Drayton. You get the same prices, the same text the day before and the same online customer portal.",
+      "faq": [
+        {
+          "q": "Do you really come out to Audlem?",
+          "a": "Yes. Audlem and Buerton are on our patch, about 15 minutes from Market Drayton."
+        },
+        {
+          "q": "Is there a travel charge for Audlem?",
+          "a": "No. It's the same price list as Market Drayton. Check yours in the online calculator."
         }
       ]
     }
