@@ -67,6 +67,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<!-- Animations: switched on only for visitors who haven't asked their device to reduce motion -->
+<script>
+  try{ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){ document.documentElement.classList.add('motion-ok'); } }catch(e){}
+</script>
 <style>
   :root{
     --black:#14171A; --black-soft:#1D2124;
@@ -240,6 +244,70 @@
   .social-row a{width:32px; height:32px; border-radius:50%; border:1px solid rgba(255,255,255,0.25); display:flex; align-items:center; justify-content:center; font-size:0.75rem;}
   .footer-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:20px; flex-wrap:wrap; gap:10px;}
   .legal-line{font-family:var(--mono); font-size:0.7rem; opacity:0.45; max-width:600px;}
+
+  /* ============================================================
+     ANIMATIONS (added Oct 2026)
+     - Only run when the page adds "motion-ok" (visitors who have
+       NOT turned on "reduce motion" on their phone/computer).
+     - Scroll-in effects only hide things once the script at the
+       bottom of the page has started ("motion-ready"), so nothing
+       can ever get stuck invisible.
+     ============================================================ */
+  :root{ --ease-out:cubic-bezier(0.2,0.8,0.2,1); }
+  @keyframes dec-rise{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
+  @keyframes dec-wipe{ from{transform:translateX(-130%) skewX(-12deg);} to{transform:translateX(130%) skewX(-12deg);} }
+
+  /* 1. Hero: text settles in, then a squeegee-style shine sweeps the photo once */
+  .motion-ok .hero .eyebrow,
+  .motion-ok .hero h1,
+  .motion-ok .hero .sub,
+  .motion-ok .hero .trust-row,
+  .motion-ok .hero .cta-row,
+  .motion-ok .hero .hero-phone-cta,
+  .motion-ok .hero .hero-whatsapp-cta{ animation:dec-rise .5s var(--ease-out) both; }
+  .motion-ok .hero h1{ animation-delay:.06s; }
+  .motion-ok .hero .sub{ animation-delay:.12s; }
+  .motion-ok .hero .trust-row{ animation-delay:.18s; }
+  .motion-ok .hero .cta-row{ animation-delay:.24s; }
+  .motion-ok .hero .hero-phone-cta{ animation-delay:.30s; }
+  .motion-ok .hero .hero-whatsapp-cta{ animation-delay:.34s; }
+  .motion-ok .hero-photo::after{
+    content:""; position:absolute; top:-10%; bottom:-10%; left:0; width:55%; pointer-events:none;
+    background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.10) 35%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0.10) 65%, rgba(255,255,255,0) 100%);
+    transform:translateX(-130%) skewX(-12deg);
+    animation:dec-wipe .9s .45s var(--ease-out) both;
+  }
+
+  /* 2. Things that glide in as you scroll to them (once only) */
+  .motion-ready .reveal{ opacity:0; transform:translateY(14px); transition:opacity .55s var(--ease-out), transform .55s var(--ease-out); transition-delay:var(--d,0s); }
+  .motion-ready .reveal.in{ opacity:1; transform:none; }
+  .motion-ready .service-card.reveal.in:hover{ transform:translateY(-3px); transition-delay:0s; }
+  .motion-ready .service-card.coming-soon.reveal.in{ opacity:0.6; }
+
+  /* 3. "Why choose" ticks draw themselves in */
+  .motion-ready .checklist svg path{ stroke-dasharray:1; stroke-dashoffset:1; transition:stroke-dashoffset .45s var(--ease-out); transition-delay:var(--d,0s); }
+  .motion-ready .checklist.in svg path{ stroke-dashoffset:0; }
+
+  /* 4. Before/after: the "after" photo is wiped clean left-to-right */
+  /* (a cover panel with a bright "blade" edge slides off the photo; the photo itself is untouched so it still loads normally) */
+  .motion-ready .ba-half.ba-wipe .ba-tag{ z-index:2; }
+  .motion-ready .ba-half.ba-wipe::after{
+    content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:linear-gradient(90deg, rgba(255,255,255,0.95) 0, rgba(255,255,255,0.95) 4px, rgba(234,246,231,0.6) 4px, rgba(29,33,36,0.92) 22px, #1D2124 60px);
+    transform:translateX(0); transition:transform .85s var(--ease-out); transition-delay:var(--d,0s);
+  }
+  .motion-ready .ba-half.ba-wipe.in::after{ transform:translateX(101%); }
+
+  /* 5. Review stars fill in */
+  .motion-ready .testi-card.reveal .stars{ clip-path:inset(0 100% 0 0); transition:clip-path .6s var(--ease-out); transition-delay:calc(var(--d,0s) + .15s); }
+  .motion-ready .testi-card.in .stars{ clip-path:inset(0 0 0 0); }
+
+  /* 6. Buttons feel pressable */
+  .btn:active, .hero-phone-cta:active, .hero-whatsapp-cta:active{ transform:scale(0.98); transition-duration:.08s; }
+
+  /* 7. Header gets a soft shadow once you scroll */
+  header{ transition:box-shadow .25s ease; }
+  header.scrolled{ box-shadow:0 6px 20px rgba(20,23,26,0.08); }
 
   /* Respect visitors who turn off animations */
   @media (prefers-reduced-motion: reduce){
@@ -1364,6 +1432,96 @@ Thank you Danny- I Can’t wait to have you back! 🧽 ✨”</p>
     document.getElementById('lightboxImg').src = src;
     document.getElementById('lightbox').style.display = 'flex';
   }
+</script>
+<!-- ============================================================
+     ANIMATIONS (added Oct 2026) — scroll-in effects + header shadow.
+     Does nothing for visitors who've asked their device to reduce motion.
+     Also copes with the gallery and reviews being rebuilt from the
+     dashboard (content/gallery.json, content/testimonials.json).
+     ============================================================ -->
+<script>
+(function(){
+  var root = document.documentElement;
+  var header = document.querySelector('header');
+
+  // Header shadow once the page is scrolled
+  function onScroll(){ if(header){ header.classList.toggle('scrolled', window.scrollY > 8); } }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  if(!root.classList.contains('motion-ok') || !('IntersectionObserver' in window)) return;
+
+  // Show an item. Before/after photos wait until the photo has loaded,
+  // so the wipe is actually seen, even on a slow mobile connection.
+  function show(el){
+    var img = el.classList.contains('ba-wipe') ? el.querySelector('img') : null;
+    if(img && !(img.complete && img.naturalWidth)){
+      var done = function(){ el.classList.add('in'); };
+      img.addEventListener('load', done, {once:true});
+      // (an error on the resized version is ignored — the page swaps to the original photo)
+      img.addEventListener('error', function(){ if(img.src.indexOf('/.netlify/images') === -1) done(); });
+      setTimeout(done, 4000); // never leave a photo hidden
+    } else {
+      el.classList.add('in');
+    }
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ show(e.target); io.unobserve(e.target); }
+    });
+  }, {rootMargin:'0px 0px -8% 0px', threshold:0.15});
+
+  function watch(el){
+    var r = el.getBoundingClientRect();
+    // Already on screen: show straight away (no hidden flash)
+    if(r.top < window.innerHeight && r.bottom > 0 && !root.classList.contains('motion-live')){ el.classList.add('in'); }
+    else { io.observe(el); }
+  }
+
+  // Mark a group of items once, with a small stagger (max 5 steps so nothing waits long)
+  function prep(selector, cls){
+    var items = document.querySelectorAll(selector);
+    for(var i=0;i<items.length;i++){
+      var el = items[i];
+      if(el.dataset.motion) continue;
+      el.dataset.motion = '1';
+      el.classList.add(cls || 'reveal');
+      el.style.setProperty('--d', (Math.min(i % 6, 5) * 0.06) + 's');
+      watch(el);
+    }
+  }
+  function prepAll(){
+    prep('#services .service-card');
+    prep('.stat-card');
+    prep('#reviews .testi-card');
+    prep('.cta-panel');
+    prep('#gallery .ba-item .ba-half + .ba-half', 'ba-wipe');
+  }
+
+  root.classList.add('motion-ready');
+
+  // "Why choose" ticks draw in one after another
+  var checklist = document.querySelector('.checklist');
+  if(checklist){
+    var paths = checklist.querySelectorAll('svg path');
+    for(var j=0;j<paths.length;j++){
+      paths[j].setAttribute('pathLength','1');
+      paths[j].style.setProperty('--d', (j * 0.07) + 's');
+    }
+    watch(checklist);
+  }
+
+  prepAll();
+  root.classList.add('motion-live');
+
+  // When the gallery or reviews are rebuilt from the dashboard, set up the new items too
+  if('MutationObserver' in window){
+    ['galleryGrid','testiWrap'].forEach(function(id){
+      var box = document.getElementById(id);
+      if(box){ new MutationObserver(prepAll).observe(box, {childList:true}); }
+    });
+  }
+})();
 </script>
 </body>
 </html>
