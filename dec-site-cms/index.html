@@ -305,6 +305,28 @@
   /* 6. Buttons feel pressable */
   .btn:active, .hero-phone-cta:active, .hero-whatsapp-cta:active{ transform:scale(0.98); transition-duration:.08s; }
 
+  /* 6b. "Get My Price" buttons give a little giggle: a quick wiggle when they
+     come into view, repeated 4 times (every 6 seconds), then they settle.
+     They also giggle whenever someone hovers over them. */
+  @keyframes dec-giggle{
+    0%,13%,100%{ transform:none; }
+    2%{ transform:rotate(-3deg) scale(1.04); }
+    4%{ transform:rotate(3deg) scale(1.04); }
+    6%{ transform:rotate(-2deg) scale(1.03); }
+    8%{ transform:rotate(2deg) scale(1.02); }
+    10%{ transform:rotate(-1deg); }
+  }
+  @keyframes dec-giggle-once{
+    0%,100%{ transform:none; }
+    15%{ transform:rotate(-3deg) scale(1.04); }
+    30%{ transform:rotate(3deg) scale(1.04); }
+    45%{ transform:rotate(-2deg) scale(1.03); }
+    60%{ transform:rotate(2deg) scale(1.02); }
+    75%{ transform:rotate(-1deg); }
+  }
+  .motion-ok a.btn-green[href="#calculator"].giggle{ animation:dec-giggle 6s ease-in-out var(--gd,.6s) 4 both; }
+  .motion-ok a.btn-green[href="#calculator"]:hover{ animation:dec-giggle-once .6s ease-in-out 1; }
+
   /* 7. Header gets a soft shadow once you scroll */
   header{ transition:box-shadow .25s ease; }
   header.scrolled{ box-shadow:0 6px 20px rgba(20,23,26,0.08); }
@@ -1513,6 +1535,23 @@ Thank you Danny- I Can’t wait to have you back! 🧽 ✨”</p>
 
   prepAll();
   root.classList.add('motion-live');
+
+  // "Get My Price" buttons: start the giggle when each one comes into view.
+  // The header button waits a little longer so it doesn't wiggle at the same time as the hero button.
+  var priceBtns = document.querySelectorAll('a.btn-green[href="#calculator"]');
+  var gio = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('giggle'); gio.unobserve(e.target); }
+    });
+  }, {threshold:0.6});
+  for(var g=0; g<priceBtns.length; g++){
+    var b = priceBtns[g];
+    if(b.closest('header')){ b.style.setProperty('--gd','3.6s'); }
+    b.addEventListener('animationend', function(ev){
+      if(ev.animationName === 'dec-giggle'){ ev.currentTarget.classList.remove('giggle'); }
+    });
+    gio.observe(b);
+  }
 
   // When the gallery or reviews are rebuilt from the dashboard, set up the new items too
   if('MutationObserver' in window){
