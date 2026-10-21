@@ -177,6 +177,7 @@ function sitemap(posts, extra) {
     ['/blog/', isoDate(posts[0] && posts[0].date) || today, 'weekly', '0.7'],
     ...posts.map(p => [`/blog/${p._slug}/`, isoDate(p.updated || p.date) || today, 'monthly', '0.6']),
     ...(extra || []),
+    ['/terms', '2026-10-21', 'yearly', '0.2'],
     ['/privacy', '2026-10-19', 'yearly', '0.2']
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>

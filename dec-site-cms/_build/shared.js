@@ -125,7 +125,7 @@ const FOOTER = `<footer class="site-foot">
       </nav>
     </div>
     <p class="legal">Drayton Exterior Cleaning (DEC) is a trading name of Prime Event &amp; Media Solutions Ltd. Registered in England &amp; Wales No. 16904317.
-      <a href="/privacy">Privacy &amp; cookies</a> · <a href="#" data-cookie-settings>Cookie settings</a></p>
+      <a href="/terms">Terms</a> · <a href="/privacy">Privacy &amp; cookies</a> · <a href="#" data-cookie-settings>Cookie settings</a></p>
   </div>
 </footer>`;
 
