@@ -192,6 +192,14 @@
      the box, fill these in
      AND click "Send My Details" themselves. That goes to
      the separate Netlify form "quote-contact-request".
+  6. PRICE FEEDBACK (added Oct 2026): under the price, visitors can
+     tap "About right", "A bit high" or "Too high for me". Each tap
+     goes (anonymously) to the Netlify form "calculator-price-feedback"
+     with Stage = "Reaction", and to GA4 as "calculator_price_feedback".
+     If they pick a "high" option, two optional questions appear
+     (expected price + reasons). If they answer, a second entry is
+     sent with Stage = "Details" and the GA4 event
+     "calculator_feedback_detail". Match entries by Reference code.
 
   TO UPDATE THE MINIMUM PRICING TABLE LATER:
   Search for MINIMUM_TABLE further down in the <script> section.
@@ -308,6 +316,39 @@
         <p class="calc-result-note">This calculator is still being fine-tuned, so treat this as a starting guide — we'll confirm the exact price for free before any work begins.</p>
         <p class="calc-result-note"><strong>Please note:</strong> first cleans and one-off cleans are subject to a surcharge. This price reflects our regular ongoing clean rate.</p>
 
+        <!-- PRICE FEEDBACK: one-tap, anonymous. See notes at the top of the page. -->
+        <div class="calc-feedback" id="calc-feedback">
+          <p class="calc-feedback-q" id="calc-feedback-q">How does this price feel?</p>
+          <div class="calc-feedback-opts" role="group" aria-labelledby="calc-feedback-q">
+            <button type="button" class="calc-fb-btn" data-fb="About right">About right</button>
+            <button type="button" class="calc-fb-btn" data-fb="A bit high">A bit high</button>
+            <button type="button" class="calc-fb-btn" data-fb="Too high">Too high for me</button>
+          </div>
+
+          <!-- Only shown after "A bit high" or "Too high" -->
+          <div class="calc-feedback-more" id="calc-feedback-more" hidden>
+            <p class="calc-feedback-sub">Thanks for being honest. Two quick optional questions:</p>
+
+            <label class="calc-field-label" for="calc-fb-expected">What would you expect to pay per clean?</label>
+            <div class="calc-fb-price">
+              <span aria-hidden="true">£</span>
+              <input type="number" id="calc-fb-expected" min="1" max="500" step="1" inputmode="numeric" placeholder="e.g. 15">
+            </div>
+
+            <fieldset class="calc-fb-reasons">
+              <legend class="calc-field-label">What's holding you back?</legend>
+              <label><input type="checkbox" value="Cheaper elsewhere"> I've been quoted cheaper elsewhere</label>
+              <label><input type="checkbox" value="Just browsing"> Just comparing prices</label>
+              <label><input type="checkbox" value="Not needed yet"> I don't need it yet</label>
+              <label><input type="checkbox" value="Unsure what's included"> Not sure what's included</label>
+            </fieldset>
+
+            <button type="button" class="btn btn-outline-dark calc-fb-send" id="calc-fb-send">Send feedback</button>
+          </div>
+
+          <p class="calc-feedback-thanks" id="calc-feedback-thanks" role="status" hidden></p>
+        </div>
+
         <div class="calc-followup">
           <p class="calc-followup-title">Want us to follow up on this quote?</p>
           <p class="calc-followup-sub">Totally optional — only used to discuss this quote with you.</p>
@@ -349,7 +390,7 @@
         </div>
 
         <button type="button" class="calc-restart-btn" id="calc-restart-btn">Start over</button>
-        <p class="calc-privacy-note">We keep an anonymous record of quote selections (no personal details) to help us improve our pricing.</p>
+        <p class="calc-privacy-note">We keep an anonymous record of quote selections and price feedback (no personal details) to help us improve our pricing.</p>
       </div>
     </div>
 
@@ -367,6 +408,25 @@
       <input type="hidden" name="Breakdown">
       <input type="hidden" name="Total">
       <input type="hidden" name="MinimumApplied">
+      <input type="hidden" name="Page">
+    </form>
+
+    <!--
+      ANONYMOUS PRICE FEEDBACK — invisible to visitors.
+      Filled in by the script when someone taps a price reaction
+      (Stage = "Reaction") and again if they add details
+      (Stage = "Details"). No personal data is collected.
+    -->
+    <form name="calculator-price-feedback" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="calculator-price-feedback">
+      <input name="bot-field">
+      <input type="hidden" name="Reference">
+      <input type="hidden" name="Property">
+      <input type="hidden" name="Total">
+      <input type="hidden" name="Reaction">
+      <input type="hidden" name="ExpectedPrice">
+      <input type="hidden" name="Reasons">
+      <input type="hidden" name="Stage">
       <input type="hidden" name="Page">
     </form>
   </div>
@@ -485,6 +545,36 @@
   .calc-field-label{ display:block; font-size:0.8rem; font-weight:700; color:var(--black); margin:0 0 6px 4px; }
   .calc-postcode-input{ text-transform:uppercase; }
 
+  /* Price feedback */
+  .calc-feedback{ margin:22px auto 0; max-width:440px; }
+  .calc-feedback-q{ font-weight:700; color:var(--black); font-size:0.95rem; margin-bottom:10px; }
+  .calc-feedback-opts{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  .calc-fb-btn{
+    font-family:var(--body); font-size:0.88rem; font-weight:600; color:var(--black);
+    background:#fff; border:1.5px solid var(--line); border-radius:999px; padding:9px 16px; cursor:pointer;
+    transition:border-color .15s ease, background .15s ease, color .15s ease;
+  }
+  .calc-fb-btn:hover{ border-color:var(--green); background:var(--green-tint); }
+  .calc-fb-btn[aria-pressed="true"]{ border-color:var(--green-dark); background:var(--green-tint); color:var(--green-dark); }
+  .calc-fb-btn:disabled{ cursor:default; }
+  .calc-fb-btn:disabled:not([aria-pressed="true"]){ opacity:0.45; }
+  .calc-feedback-more{ margin-top:16px; padding:18px 20px; background:var(--offwhite); border-radius:12px; text-align:left; }
+  .calc-feedback-more[hidden], .calc-feedback-thanks[hidden]{ display:none; }
+  .calc-feedback-sub{ font-size:0.85rem; color:var(--grey); margin-bottom:14px; }
+  .calc-fb-price{ display:flex; align-items:center; gap:6px; margin-bottom:16px; }
+  .calc-fb-price span{ font-family:var(--display); font-weight:700; color:var(--black); }
+  .calc-fb-price input{
+    width:110px; padding:10px 14px; border-radius:999px; border:1.5px solid var(--line);
+    font-family:var(--body); font-size:0.95rem; background:#fff;
+  }
+  .calc-fb-price input:focus{ outline:none; border-color:var(--green); }
+  .calc-fb-reasons{ border:none; margin:0 0 16px; padding:0; }
+  .calc-fb-reasons legend{ padding:0; }
+  .calc-fb-reasons label{ display:flex; align-items:flex-start; gap:10px; font-size:0.86rem; color:var(--black); padding:5px 0; cursor:pointer; line-height:1.4; }
+  .calc-fb-reasons input{ margin-top:3px; flex:none; }
+  .calc-fb-send{ width:100%; justify-content:center; border-radius:999px; }
+  .calc-feedback-thanks{ font-size:0.85rem; margin-top:12px; color:var(--green-dark); font-weight:600; }
+
   .calc-book-btn{ margin-top:6px; }
   .calc-restart-btn{
     display:block; margin:16px auto 0; background:none; border:none; cursor:pointer;
@@ -565,6 +655,102 @@
     var PROPERTY_LABELS = { semi: 'Semi Detached', detached: 'Detached' };
 
     var currentReference = '';
+    var lastCalc = null;
+
+    // ---------- PRICE FEEDBACK (anonymous) ----------
+    var fbButtons = document.querySelectorAll('.calc-fb-btn');
+    var fbMore = document.getElementById('calc-feedback-more');
+    var fbThanks = document.getElementById('calc-feedback-thanks');
+    var fbExpected = document.getElementById('calc-fb-expected');
+    var fbSend = document.getElementById('calc-fb-send');
+    var fbReasonBoxes = document.querySelectorAll('.calc-fb-reasons input[type="checkbox"]');
+    var fbReaction = '';
+
+    function sendFeedbackToNetlify(stage, expected, reasons){
+      if (!lastCalc) return;
+      try {
+        var params = new URLSearchParams();
+        params.append('form-name', 'calculator-price-feedback');
+        params.append('bot-field', '');
+        params.append('Reference', currentReference);
+        params.append('Property', lastCalc.propertyLabel);
+        params.append('Total', '£' + lastCalc.total.toFixed(2));
+        params.append('Reaction', fbReaction);
+        params.append('ExpectedPrice', expected ? '£' + expected : '');
+        params.append('Reasons', reasons || '');
+        params.append('Stage', stage);
+        params.append('Page', window.location.pathname);
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: params.toString()
+        }).catch(function(){});
+      } catch (e) {}
+    }
+
+    function showFeedbackThanks(text){
+      fbThanks.textContent = text;
+      fbThanks.hidden = false;
+    }
+
+    fbButtons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if (fbReaction) return; // one reaction per quote
+        fbReaction = btn.getAttribute('data-fb');
+        fbButtons.forEach(function(b){
+          b.disabled = true;
+          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+        });
+
+        sendFeedbackToNetlify('Reaction', '', '');
+        if (typeof gtag === 'function' && lastCalc){
+          gtag('event', 'calculator_price_feedback', {
+            reaction: fbReaction,
+            quote_total: lastCalc.total,
+            property_type: lastCalc.propertyLabel,
+            quote_ref: currentReference
+          });
+        }
+
+        if (fbReaction === 'About right'){
+          showFeedbackThanks('Thanks! Happy to help whenever you’re ready.');
+        } else {
+          fbMore.hidden = false;
+          fbExpected.focus();
+        }
+      });
+    });
+
+    fbSend.addEventListener('click', function(){
+      var expected = parseInt(fbExpected.value, 10);
+      if (!(expected >= 1 && expected <= 500)) expected = '';
+      var reasons = [];
+      fbReasonBoxes.forEach(function(box){ if (box.checked) reasons.push(box.value); });
+
+      if (expected || reasons.length){
+        sendFeedbackToNetlify('Details', expected, reasons.join(', '));
+        if (typeof gtag === 'function' && lastCalc){
+          gtag('event', 'calculator_feedback_detail', {
+            reaction: fbReaction,
+            quote_total: lastCalc.total,
+            expected_price: expected || 0,
+            reasons: reasons.join(', ').substring(0, 100),
+            quote_ref: currentReference
+          });
+        }
+      }
+      fbMore.hidden = true;
+      showFeedbackThanks('Thanks, that really helps us get our pricing right.');
+    });
+
+    function resetFeedback(){
+      fbReaction = '';
+      fbButtons.forEach(function(b){ b.disabled = false; b.removeAttribute('aria-pressed'); });
+      fbMore.hidden = true;
+      fbThanks.hidden = true;
+      fbExpected.value = '';
+      fbReasonBoxes.forEach(function(box){ box.checked = false; });
+    }
 
     function refreshBedroomOptions(){
       var type = propertyTypeSelect.value;
@@ -685,6 +871,8 @@
     revealBtn.addEventListener('click', function(){
       var calc = calculateTotal();
       currentReference = generateReference();
+      lastCalc = calc;
+      resetFeedback();
 
       refDisplay.textContent = currentReference;
       propertyField.value = calc.propertyLabel;
@@ -805,6 +993,7 @@
         followupBtn.hidden = true;
         followupBtn.disabled = false;
         followupBtn.textContent = 'Send My Details';
+        resetFeedback();
       }, 300);
     });
   })();
