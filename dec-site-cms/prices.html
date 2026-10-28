@@ -200,6 +200,12 @@
      (expected price + reasons). If they answer, a second entry is
      sent with Stage = "Details" and the GA4 event
      "calculator_feedback_detail". Match entries by Reference code.
+  7. "LET'S SEE WHAT I CAN DO" (added Oct 2026): the "high" box also
+     shows what's included, the price per week and an 8-weekly tip,
+     plus an optional First name / Mobile / Postcode form. Tapping
+     "Ask Danny" sends those details to the Netlify form
+     "price-help-request" (with the quote and the price they'd like)
+     and the GA4 event "calculator_price_help_request".
 
   TO UPDATE THE MINIMUM PRICING TABLE LATER:
   Search for MINIMUM_TABLE further down in the <script> section.
@@ -327,9 +333,14 @@
 
           <!-- Only shown after "A bit high" or "Too high" -->
           <div class="calc-feedback-more" id="calc-feedback-more" hidden>
-            <p class="calc-feedback-sub">Thanks for being honest. Two quick optional questions:</p>
+            <p class="calc-feedback-sub"><strong>Thanks for being honest.</strong> Before you go, here&rsquo;s what&rsquo;s included &mdash; and I may be able to help.</p>
+            <ul class="calc-fb-value">
+              <li>That&rsquo;s about <strong id="calc-fb-weekly">£4.75 a week</strong> on a 4-weekly clean.</li>
+              <li>Frames, sills and doors included, plus a text the day before, full insurance and a 48-hour re-clean promise. Many cheaper quotes cover the glass only.</li>
+              <li><strong>Prefer every 8 weeks?</strong> Same clean, half the yearly cost.</li>
+            </ul>
 
-            <label class="calc-field-label" for="calc-fb-expected">What would you expect to pay per clean?</label>
+            <label class="calc-field-label" for="calc-fb-expected">What would you like to pay per clean?</label>
             <div class="calc-fb-price">
               <span aria-hidden="true">£</span>
               <input type="number" id="calc-fb-expected" min="1" max="500" step="1" inputmode="numeric" placeholder="e.g. 15">
@@ -343,7 +354,22 @@
               <label><input type="checkbox" value="Unsure what's included"> Not sure what's included</label>
             </fieldset>
 
-            <button type="button" class="btn btn-outline-dark calc-fb-send" id="calc-fb-send">Send feedback</button>
+            <!-- "Let's see what I can do": optional contact details, sent only if they tap Ask Danny -->
+            <div class="calc-fb-help">
+              <p class="calc-fb-help-title">Let&rsquo;s see what I can do</p>
+              <p class="calc-fb-help-sub">If I&rsquo;m already cleaning on your street, I can often do a better price. Leave your mobile and postcode and I&rsquo;ll text you back.</p>
+              <label class="calc-field-label" for="calc-fb-name">First name</label>
+              <input type="text" id="calc-fb-name" class="calc-fb-input" placeholder="Your first name" autocomplete="given-name">
+              <label class="calc-field-label" for="calc-fb-mobile">Mobile number</label>
+              <input type="tel" id="calc-fb-mobile" class="calc-fb-input" placeholder="07xxx xxxxxx" autocomplete="tel" inputmode="tel">
+              <label class="calc-field-label" for="calc-fb-postcode">Postcode</label>
+              <input type="text" id="calc-fb-postcode" class="calc-fb-input calc-postcode-input" placeholder="TF9 1AA" autocomplete="postal-code" autocapitalize="characters">
+              <p class="calc-fb-error" id="calc-fb-error" role="alert" hidden></p>
+              <button type="button" class="btn btn-green calc-fb-ask" id="calc-fb-ask">Ask Danny</button>
+              <p class="calc-fb-consent">By tapping &ldquo;Ask Danny&rdquo; you&rsquo;re happy for DEC to contact you about this quote by text or phone.</p>
+            </div>
+
+            <button type="button" class="calc-fb-send-link" id="calc-fb-send">No thanks, just send feedback</button>
           </div>
 
           <p class="calc-feedback-thanks" id="calc-feedback-thanks" role="status" hidden></p>
@@ -427,6 +453,28 @@
       <input type="hidden" name="ExpectedPrice">
       <input type="hidden" name="Reasons">
       <input type="hidden" name="Stage">
+      <input type="hidden" name="Page">
+    </form>
+
+    <!--
+      "LET'S SEE WHAT I CAN DO" REQUESTS — invisible to visitors.
+      Filled in by the script only when someone taps "Ask Danny"
+      in the price feedback box. Contains their name, mobile and
+      postcode, so it is NOT anonymous.
+    -->
+    <form name="price-help-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="price-help-request">
+      <input name="bot-field">
+      <input type="hidden" name="Reference">
+      <input type="hidden" name="Property">
+      <input type="hidden" name="Breakdown">
+      <input type="hidden" name="Total">
+      <input type="hidden" name="Reaction">
+      <input type="hidden" name="WouldLikeToPay">
+      <input type="hidden" name="Reasons">
+      <input type="hidden" name="Name">
+      <input type="hidden" name="Mobile">
+      <input type="hidden" name="Postcode">
       <input type="hidden" name="Page">
     </form>
   </div>
@@ -573,6 +621,23 @@
   .calc-fb-reasons label{ display:flex; align-items:flex-start; gap:10px; font-size:0.86rem; color:var(--black); padding:5px 0; cursor:pointer; line-height:1.4; }
   .calc-fb-reasons input{ margin-top:3px; flex:none; }
   .calc-fb-send{ width:100%; justify-content:center; border-radius:999px; }
+  .calc-fb-value{ list-style:none; margin:0 0 18px; padding:0; display:flex; flex-direction:column; gap:8px; }
+  .calc-fb-value li{ position:relative; padding-left:24px; font-size:0.86rem; line-height:1.45; color:var(--black); }
+  .calc-fb-value li::before{ content:""; position:absolute; left:2px; top:5px; width:12px; height:7px; border-left:2.5px solid var(--green-dark); border-bottom:2.5px solid var(--green-dark); transform:rotate(-45deg); }
+  .calc-fb-help{ margin:4px 0 14px; padding:18px; background:#fff; border:1.5px solid var(--green); border-radius:12px; }
+  .calc-fb-help-title{ font-family:var(--display); font-weight:700; font-size:1.05rem; color:var(--black); margin:0 0 4px; }
+  .calc-fb-help-sub{ font-size:0.85rem; color:var(--grey); line-height:1.45; margin:0 0 14px; }
+  .calc-fb-input{
+    width:100%; box-sizing:border-box; padding:12px 16px; border-radius:999px; border:1.5px solid var(--line);
+    font-family:var(--body); font-size:0.95rem; background:#fff; margin-bottom:12px;
+  }
+  .calc-fb-input:focus{ outline:none; border-color:var(--green); }
+  .calc-fb-ask{ width:100%; justify-content:center; border-radius:999px; }
+  .calc-fb-consent{ font-size:0.75rem; color:var(--grey); line-height:1.4; margin:8px 0 0; }
+  .calc-fb-error{ font-size:0.82rem; color:#B42318; font-weight:600; margin:-4px 0 10px; }
+  .calc-fb-error[hidden]{ display:none; }
+  .calc-fb-send-link{ display:block; width:100%; background:none; border:none; padding:10px; font-family:var(--body); font-size:0.85rem; color:var(--grey); text-decoration:underline; cursor:pointer; min-height:44px; }
+  .calc-fb-send-link:hover{ color:var(--black); }
   .calc-feedback-thanks{ font-size:0.85rem; margin-top:12px; color:var(--green-dark); font-weight:600; }
 
   .calc-book-btn{ margin-top:6px; }
@@ -665,6 +730,20 @@
     var fbSend = document.getElementById('calc-fb-send');
     var fbReasonBoxes = document.querySelectorAll('.calc-fb-reasons input[type="checkbox"]');
     var fbReaction = '';
+    var fbWeekly = document.getElementById('calc-fb-weekly');
+    var fbAsk = document.getElementById('calc-fb-ask');
+    var fbName = document.getElementById('calc-fb-name');
+    var fbMobile = document.getElementById('calc-fb-mobile');
+    var fbPostcode = document.getElementById('calc-fb-postcode');
+    var fbError = document.getElementById('calc-fb-error');
+
+    function getFeedbackAnswers(){
+      var expected = parseInt(fbExpected.value, 10);
+      if (!(expected >= 1 && expected <= 500)) expected = '';
+      var reasons = [];
+      fbReasonBoxes.forEach(function(box){ if (box.checked) reasons.push(box.value); });
+      return { expected: expected, reasons: reasons.join(', ') };
+    }
 
     function sendFeedbackToNetlify(stage, expected, reasons){
       if (!lastCalc) return;
@@ -715,6 +794,9 @@
         if (fbReaction === 'About right'){
           showFeedbackThanks('Thanks! Happy to help whenever you’re ready.');
         } else {
+          if (lastCalc && fbWeekly){
+            fbWeekly.textContent = '£' + (lastCalc.total / 4).toFixed(2) + ' a week';
+          }
           fbMore.hidden = false;
           fbExpected.focus();
         }
@@ -743,6 +825,54 @@
       showFeedbackThanks('Thanks, that really helps us get our pricing right.');
     });
 
+    fbAsk.addEventListener('click', function(){
+      var mobile = fbMobile.value.trim();
+      if (mobile.replace(/\D/g, '').length < 10){
+        fbError.textContent = 'Please add your mobile number so I can text you back.';
+        fbError.hidden = false;
+        fbMobile.focus();
+        return;
+      }
+      fbError.hidden = true;
+      var answers = getFeedbackAnswers();
+      var firstName = fbName.value.trim();
+
+      sendFeedbackToNetlify('Details', answers.expected, answers.reasons);
+      if (lastCalc){
+        try {
+          var params = new URLSearchParams();
+          params.append('form-name', 'price-help-request');
+          params.append('bot-field', '');
+          params.append('Reference', currentReference);
+          params.append('Property', lastCalc.propertyLabel);
+          params.append('Breakdown', lastCalc.breakdown || '');
+          params.append('Total', '£' + lastCalc.total.toFixed(2));
+          params.append('Reaction', fbReaction);
+          params.append('WouldLikeToPay', answers.expected ? '£' + answers.expected : 'Not given');
+          params.append('Reasons', answers.reasons);
+          params.append('Name', firstName);
+          params.append('Mobile', mobile);
+          params.append('Postcode', fbPostcode.value.trim().toUpperCase());
+          params.append('Page', window.location.pathname);
+          fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params.toString()
+          }).catch(function(){});
+        } catch (e) {}
+      }
+      if (typeof gtag === 'function' && lastCalc){
+        gtag('event', 'calculator_price_help_request', {
+          reaction: fbReaction,
+          quote_total: lastCalc.total,
+          expected_price: answers.expected || 0,
+          quote_ref: currentReference
+        });
+      }
+      fbMore.hidden = true;
+      showFeedbackThanks('Thanks' + (firstName ? ' ' + firstName : '') + '! I’ll text you back soon to see what I can do. – Danny');
+    });
+
     function resetFeedback(){
       fbReaction = '';
       fbButtons.forEach(function(b){ b.disabled = false; b.removeAttribute('aria-pressed'); });
@@ -750,6 +880,10 @@
       fbThanks.hidden = true;
       fbExpected.value = '';
       fbReasonBoxes.forEach(function(box){ box.checked = false; });
+      fbName.value = '';
+      fbMobile.value = '';
+      fbPostcode.value = '';
+      fbError.hidden = true;
     }
 
     function refreshBedroomOptions(){
