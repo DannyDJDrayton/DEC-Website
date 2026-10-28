@@ -758,8 +758,9 @@ Thank you Danny- I Can’t wait to have you back! 🧽 ✨”</p>
             <label class="calc-field-label" for="calc-fb-expected">What would you like to pay per clean?</label>
             <div class="calc-fb-price">
               <span aria-hidden="true">£</span>
-              <input type="number" id="calc-fb-expected" min="1" max="500" step="1" inputmode="numeric" placeholder="e.g. 15">
+              <input type="number" id="calc-fb-expected" min="1" max="500" step="1" inputmode="numeric" placeholder="e.g. 15" aria-describedby="calc-fb-price-error" required>
             </div>
+            <p class="calc-fb-error" id="calc-fb-price-error" role="alert" hidden></p>
 
             <fieldset class="calc-fb-reasons">
               <legend class="calc-field-label">What's holding you back?</legend>
@@ -784,7 +785,7 @@ Thank you Danny- I Can’t wait to have you back! 🧽 ✨”</p>
               <p class="calc-fb-consent">By tapping &ldquo;Ask Danny&rdquo; you&rsquo;re happy for DEC to contact you about this quote by text or phone.</p>
             </div>
 
-            <button type="button" class="calc-fb-send-link" id="calc-fb-send">No thanks, just send feedback</button>
+            <button type="button" class="btn btn-outline-dark calc-fb-send" id="calc-fb-send">No thanks, just send my feedback</button>
           </div>
 
           <p class="calc-feedback-thanks" id="calc-feedback-thanks" role="status" hidden></p>
@@ -1051,8 +1052,7 @@ Thank you Danny- I Can’t wait to have you back! 🧽 ✨”</p>
   .calc-fb-consent{ font-size:0.75rem; color:var(--grey); line-height:1.4; margin:8px 0 0; }
   .calc-fb-error{ font-size:0.82rem; color:#B42318; font-weight:600; margin:-4px 0 10px; }
   .calc-fb-error[hidden]{ display:none; }
-  .calc-fb-send-link{ display:block; width:100%; background:none; border:none; padding:10px; font-family:var(--body); font-size:0.85rem; color:var(--grey); text-decoration:underline; cursor:pointer; min-height:44px; }
-  .calc-fb-send-link:hover{ color:var(--black); }
+  .calc-fb-price input.is-invalid{ border-color:#B42318; }
   .calc-feedback-thanks{ font-size:0.85rem; margin-top:12px; color:var(--green-dark); font-weight:600; }
 
   .calc-book-btn{ margin-top:6px; }
@@ -1160,6 +1160,27 @@ Thank you Danny- I Can’t wait to have you back! 🧽 ✨”</p>
       return { expected: expected, reasons: reasons.join(', ') };
     }
 
+    var fbPriceError = document.getElementById('calc-fb-price-error');
+    function requirePrice(){
+      var v = parseInt(fbExpected.value, 10);
+      if (v >= 1 && v <= 500){
+        fbPriceError.hidden = true;
+        fbExpected.classList.remove('is-invalid');
+        return true;
+      }
+      fbPriceError.textContent = 'Please tell me what you’d like to pay per clean first.';
+      fbPriceError.hidden = false;
+      fbExpected.classList.add('is-invalid');
+      fbExpected.focus();
+      return false;
+    }
+    fbExpected.addEventListener('input', function(){
+      if (!fbPriceError.hidden && parseInt(fbExpected.value, 10) >= 1){
+        fbPriceError.hidden = true;
+        fbExpected.classList.remove('is-invalid');
+      }
+    });
+
     function sendFeedbackToNetlify(stage, expected, reasons){
       if (!lastCalc) return;
       try {
@@ -1219,6 +1240,7 @@ Thank you Danny- I Can’t wait to have you back! 🧽 ✨”</p>
     });
 
     fbSend.addEventListener('click', function(){
+      if (!requirePrice()) return;
       var expected = parseInt(fbExpected.value, 10);
       if (!(expected >= 1 && expected <= 500)) expected = '';
       var reasons = [];
@@ -1241,6 +1263,7 @@ Thank you Danny- I Can’t wait to have you back! 🧽 ✨”</p>
     });
 
     fbAsk.addEventListener('click', function(){
+      if (!requirePrice()) return;
       var mobile = fbMobile.value.trim();
       if (mobile.replace(/\D/g, '').length < 10){
         fbError.textContent = 'Please add your mobile number so I can text you back.';
@@ -1299,6 +1322,8 @@ Thank you Danny- I Can’t wait to have you back! 🧽 ✨”</p>
       fbMobile.value = '';
       fbPostcode.value = '';
       fbError.hidden = true;
+      fbPriceError.hidden = true;
+      fbExpected.classList.remove('is-invalid');
     }
 
     function refreshBedroomOptions(){
