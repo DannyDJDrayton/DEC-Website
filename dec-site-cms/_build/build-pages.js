@@ -18,7 +18,7 @@ const {
   esc, abs, markdown, HEAD_COMMON, HEADER, FOOTER
 } = require('./shared');
 
-const UPDATED = '2026-10-20';          // change when the page wording is edited
+const UPDATED = '2026-11-01';          // change when the page wording is edited
 const BUSINESS_ID = ORIGIN + '/#business';
 const PORTRAIT = '/content/uploads/web-img_5824.webp';
 
@@ -170,7 +170,7 @@ ${markdown(a.body)}
       <div class="svc-links">
         ${SERVICES.map(s => `<a href="/services/${s.slug}/"><strong>${esc(s.name)}</strong><span>${esc(s.lede)}</span></a>`).join('\n        ')}
       </div>
-      <p class="small">Gutter clearing and pressure washing are coming soon.</p>
+      <p class="small">Pressure washing is coming soon.</p>
     </section>
     ${reviewBlock(a.name, i)}
     ${meetDanny}
@@ -185,8 +185,96 @@ ${markdown(a.body)}
 ${tail()}`;
 }
 
+// ---------- booking form (services with "booking": "gutter") ----------
+const bookingButtons = (label) => `<div class="pg-ctas">
+      <a class="btn" href="#book">${label}</a>
+      <a class="btn line" href="https://wa.me/${WA}" target="_blank" rel="noopener">WhatsApp us</a>
+      <a class="btn line" href="tel:${TEL}">Call ${PHONE}</a>
+    </div>`;
+
+function gutterBookingForm() {
+  return `<section class="pg-section book" id="book" aria-labelledby="book-h">
+      <h2 id="book-h">Book your gutter clearing</h2>
+      <p>Tell us a bit about your house and we'll text you to confirm the price and a date. Nothing is booked until you've agreed the price.</p>
+      <form class="book-form" id="gutterBookForm" name="gutter-clearing-booking" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="gutter-clearing-booking">
+        <p class="hp"><label>Leave this field blank: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <div class="f-row">
+          <div class="f"><label for="gb-name">Name *</label><input id="gb-name" name="Name" type="text" required autocomplete="name"></div>
+          <div class="f"><label for="gb-mobile">Mobile *</label><input id="gb-mobile" name="Mobile" type="tel" required autocomplete="tel" inputmode="tel" placeholder="07xxx xxxxxx"></div>
+        </div>
+        <div class="f"><label for="gb-email">Email (optional)</label><input id="gb-email" name="Email" type="email" autocomplete="email"></div>
+        <div class="f-row">
+          <div class="f"><label for="gb-address">House number and street *</label><input id="gb-address" name="Address" type="text" required autocomplete="street-address"></div>
+          <div class="f"><label for="gb-postcode">Postcode *</label><input id="gb-postcode" name="Postcode" type="text" required autocomplete="postal-code" autocapitalize="characters" placeholder="TF9 1AA"></div>
+        </div>
+        <div class="f-row">
+          <div class="f"><label for="gb-type">Type of house *</label>
+            <select id="gb-type" name="Property type" required>
+              <option value="">Choose one</option>
+              <option>Bungalow</option>
+              <option>Terraced</option>
+              <option>Semi-detached</option>
+              <option>Detached</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="f"><label for="gb-when">When would you like it done?</label>
+            <select id="gb-when" name="Timing">
+              <option>As soon as possible</option>
+              <option>In the next couple of weeks</option>
+              <option>I'm flexible</option>
+            </select>
+          </div>
+        </div>
+        <fieldset class="f checks">
+          <legend>Anything else? (optional)</legend>
+          <label><input type="checkbox" name="Extras" value="Conservatory or extension gutters"> Conservatory or extension gutters too</label>
+          <label><input type="checkbox" name="Window clean" value="Yes"> Add a window clean on the same visit</label>
+        </fieldset>
+        <div class="f"><label for="gb-notes">Anything we should know?</label><textarea id="gb-notes" name="Notes" rows="3" placeholder="Side gate access, overflowing in one spot, lots of trees nearby..."></textarea></div>
+        <div class="f"><label for="gb-photo">Photo of the front of your house (optional)</label><input id="gb-photo" name="Photo" type="file" accept="image/*"><p class="hint">Helps us price it accurately without a visit.</p></div>
+        <button class="btn" type="submit" id="gutterBookBtn">Send booking request</button>
+        <p class="form-msg" id="gutterBookMsg" role="status" aria-live="polite"></p>
+        <p class="hint">We'll only use your details to arrange this job. See our <a href="/privacy.html">privacy notice</a>.</p>
+      </form>
+      <script>
+      (function(){
+        var f = document.getElementById('gutterBookForm');
+        if (!f || !window.fetch || !window.FormData) return;
+        f.addEventListener('submit', function(e){
+          e.preventDefault();
+          var btn = document.getElementById('gutterBookBtn'), msg = document.getElementById('gutterBookMsg');
+          btn.disabled = true; btn.textContent = 'Sending...'; msg.textContent = ''; msg.className = 'form-msg';
+          fetch('/', { method: 'POST', body: new FormData(f) }).then(function(r){
+            if (!r.ok) throw new Error();
+            f.querySelectorAll('.f, .f-row, fieldset, button, .hint').forEach(function(el){ el.hidden = true; el.style.display = 'none'; });
+            msg.className = 'form-msg ok';
+            msg.textContent = 'Thanks, that\\'s with us. Danny will text you within one working day to confirm your price and date.';
+            if (window.gtag) gtag('event', 'gutter_booking_submitted');
+          }).catch(function(){
+            btn.disabled = false; btn.textContent = 'Send booking request';
+            msg.className = 'form-msg err';
+            msg.textContent = 'Sorry, that didn\\'t send. Please text or WhatsApp ${PHONE} instead.';
+          });
+        });
+      })();
+      </script>
+    </section>`;
+}
+
+const bookingCta = `<aside class="cta">
+    <h2>Get your gutters cleared before the winter rain</h2>
+    <p>Send a booking request and we'll text you to confirm the price and a date. Nothing is booked until you've agreed the price.</p>
+    <div class="cta-btns">
+      <a class="btn" href="#book">Book gutter clearing</a>
+      <a class="btn ghost" href="https://wa.me/${WA}" target="_blank" rel="noopener">Message on WhatsApp</a>
+    </div>
+  </aside>`;
+
 // ---------- service page ----------
 function servicePage(s, i) {
+  const isGutter = s.booking === 'gutter';
   const url = `${ORIGIN}/services/${s.slug}/`;
   const related = (s.related_posts || []).map(sl => posts.find(p => p.slug === sl)).filter(Boolean);
   const schema = [
@@ -206,12 +294,13 @@ function servicePage(s, i) {
     <div class="eyebrow">${esc(s.name)} · Market Drayton &amp; villages</div>
     <h1>${esc(s.h1)}</h1>
     <p class="lede">${esc(s.lede)}</p>
-    ${ctaButtons()}
+    ${isGutter ? bookingButtons('Book gutter clearing') : ctaButtons()}
     ${trust}
     ${figure(s.image, s.image_alt)}
     <div class="body">
 ${markdown(s.body)}
     </div>
+    ${isGutter ? gutterBookingForm() : ''}
     <section class="pg-section">
       <h2>Where we offer ${esc(s.name.toLowerCase())}</h2>
       <ul class="chips">${AREAS.map(a => `<li><a href="/areas/${a.slug}/">${esc(a.name)}</a></li>`).join('')}</ul>
@@ -219,7 +308,7 @@ ${markdown(s.body)}
     ${reviewBlock('', i + 1)}
     ${faqBlock(s.faq)}
     ${related.length ? `<section class="pg-section"><h2>Helpful guides</h2><ul class="guide-list">${related.map(p => `<li><a href="/blog/${p.slug}/">${esc(p.title)}</a></li>`).join('')}</ul></section>` : ''}
-    ${finalCta('')}
+    ${isGutter ? bookingCta : finalCta('')}
     <nav class="pg-section nearby" aria-label="Other services">
       <h2>Other services</h2>
       <ul class="chips">${SERVICES.filter(o => o !== s).map(o => `<li><a href="/services/${o.slug}/">${esc(o.name)}</a></li>`).join('')}</ul>

@@ -34,6 +34,25 @@
       "related_posts": ["inside-window-cleaning-market-drayton"]
     },
     {
+      "slug": "gutter-clearing",
+      "name": "Gutter Clearing",
+      "booking": "gutter",
+      "h1": "Gutter Clearing in Market Drayton & Nearby Villages",
+      "title": "Gutter Clearing Market Drayton | No Ladders | DEC",
+      "description": "Gutter clearing in Market Drayton and nearby villages with a gutter vacuum, from the ground. No ladders, before and after camera footage. Book online.",
+      "lede": "Leaves, moss and sludge cleared out of your gutters with a professional gutter vacuum, done safely from the ground, with camera footage so you can see the result.",
+      "image": "/content/uploads/web-gutter-clearing.webp",
+      "image_alt": "A gutter vacuum head clearing leaves, moss and sludge from a black gutter",
+      "body": "## Why blocked gutters matter\n\nAutumn leaves, moss off the roof and windblown dirt all end up in your gutters. Once they're blocked, rainwater spills over the edge instead of running away. That soaks your walls, stains brickwork and render, and over time can lead to damp inside. Clearing them out once a year costs far less than putting that right.\n\n## How we clear your gutters\n\nWe use a professional gutter vacuum on a long carbon fibre pole. The head hooks over the gutter from the ground and sucks out the leaves, moss and sludge. There are no ladders leaning on your walls, windowsills or gutters.\n\n## Before and after camera footage\n\nA camera on the end of the pole lets us see inside the gutter while we work. You get before and after footage, so you can see your gutters are properly clear without climbing up to check.\n\n## What's included\n\n- Leaves, moss and debris cleared from the gutter runs we can reach from the ground\n- Before and after camera footage\n- Any mess that falls tidied up afterwards\n- Fully insured\n\n## Getting a price\n\nEvery house is different, so we confirm your price before booking you in. Fill in the booking form below, or text or WhatsApp a photo of the front of your house to 07367 298 499.",
+      "faq": [
+        { "q": "Do you use ladders?", "a": "No. The gutter vacuum works from the ground on a long carbon fibre pole, so nothing leans on your walls or gutters." },
+        { "q": "How often should gutters be cleared?", "a": "Once a year suits most homes, ideally after the leaves have dropped in late autumn. Houses near lots of trees may need it twice a year." },
+        { "q": "Do I need to be in?", "a": "No, as long as we can get to all sides of the house, including through any side gate. We'll send you the before and after footage afterwards." },
+        { "q": "Can you reach three-storey houses?", "a": "Most bungalows and two-storey houses are fine. For anything taller, send us a photo and we'll tell you honestly whether we can reach it." }
+      ],
+      "related_posts": []
+    },
+    {
       "slug": "conservatory-cleaning",
       "name": "Conservatory Cleaning",
       "h1": "Conservatory Cleaning in Market Drayton",
@@ -58,10 +77,10 @@
       "lede": "Grey, green or streaky fascias make a whole house look tired. A proper clean lifts the grime and brings the uPVC back to its original colour.",
       "image": "/content/uploads/web-black-windows-after.webp",
       "image_alt": "Clean dark uPVC frames after cleaning",
-      "body": "## What we clean\n\n- Fascia boards along the roofline\n- Soffits underneath\n- uPVC cladding and bargeboards\n- The outside face of gutters (gutter clearing is coming soon)\n\n## How it's done\n\nWe use our water-fed pole system to scrub the roofline from the ground, then rinse everything with pure water so it dries without streaks. Nobody needs to lean ladders on your gutters.\n\n## Getting a price\n\nEvery roofline is different, so we quote fascias and soffits individually. Text or WhatsApp a photo of the front of your house to 07367 298 499, or use the booking form and attach a photo.",
+      "body": "## What we clean\n\n- Fascia boards along the roofline\n- Soffits underneath\n- uPVC cladding and bargeboards\n- The outside face of gutters (we also clear the inside, see [gutter clearing](/services/gutter-clearing/))\n\n## How it's done\n\nWe use our water-fed pole system to scrub the roofline from the ground, then rinse everything with pure water so it dries without streaks. Nobody needs to lean ladders on your gutters.\n\n## Getting a price\n\nEvery roofline is different, so we quote fascias and soffits individually. Text or WhatsApp a photo of the front of your house to 07367 298 499, or use the booking form and attach a photo.",
       "faq": [
         { "q": "How long do clean fascias stay clean?", "a": "It depends on how much shade and how many trees are around your house. Many customers have them done once or twice a year." },
-        { "q": "Do you clear gutters?", "a": "Gutter clearing is coming soon. Get in touch and we'll let you know as soon as it's available." }
+        { "q": "Do you clear gutters?", "a": "Yes. We clear gutters with a gutter vacuum from the ground, with before and after camera footage. See our gutter clearing page to book." }
       ],
       "related_posts": []
     }
