@@ -57,7 +57,7 @@ function postPage(p, others) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${esc(p.title)} | DEC Blog</title>
+<title>${esc(p.seo_title && p.seo_title.trim() ? p.seo_title.trim() : p.title + ' | DEC Blog')}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${url}">
 <meta property="og:type" content="article">
