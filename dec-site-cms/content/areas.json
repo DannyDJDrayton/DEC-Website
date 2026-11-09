@@ -24,6 +24,37 @@
         {
           "q": "How much does window cleaning cost in Market Drayton?",
           "a": "Regular cleans start from £14 for a smaller semi-detached home. The exact price depends on the type of property and the number of bedrooms, and our online calculator shows yours in about 30 seconds. First cleans and one-off cleans carry a surcharge."
+        },
+        {
+          "q": "Do you clear gutters in Market Drayton?",
+          "a": "Yes. We vacuum leaves, moss and sludge out of gutters from the ground, and you get before and after camera footage so you can see the job is done. No ladders against your house."
+        },
+        {
+          "q": "Do you clean inside windows too?",
+          "a": "Yes. Inside window cleaning is available across Market Drayton. It is booked separately from the regular outside clean, so just ask when you get your price."
+        }
+      ],
+      "review_count": 4,
+      "photos": [
+        {
+          "before": "/content/uploads/web-md-black-windows-before.webp",
+          "after": "/content/uploads/web-md-black-windows-after.webp",
+          "alt": "Dark uPVC windows on a brick house, glass and frames cleaned"
+        },
+        {
+          "before": "/content/uploads/web-md-white-frame-before.webp",
+          "after": "/content/uploads/web-md-white-frame-after.webp",
+          "alt": "White uPVC window frame and sill brought back to white"
+        },
+        {
+          "before": "/content/uploads/web-md-terrace-before.webp",
+          "after": "/content/uploads/web-md-terrace-after.webp",
+          "alt": "Upstairs and downstairs windows on a terraced home, cleaned from the ground"
+        },
+        {
+          "before": "/content/uploads/web-md-porch-before.webp",
+          "after": "/content/uploads/web-md-porch-after.webp",
+          "alt": "Glazed porch cleaned with a water-fed pole"
         }
       ]
     },

@@ -86,12 +86,13 @@ const trust = `<ul class="trust">
       <li>Fully insured</li><li>Every review so far is 5 stars</li><li>Text the day before</li><li>Online portal &amp; payment</li>
     </ul>`;
 
-function reviewBlock(placeName, offset) {
+function reviewBlock(placeName, offset, count) {
   if (!reviews.length) return '';
   const local = reviews.filter(r => r.location && placeName && r.location.toLowerCase() === placeName.toLowerCase());
   const others = reviews.filter(r => !local.includes(r) && r.quote.length > 60);
-  const pool = local.length >= 2 ? local : local.concat(others.slice(offset % Math.max(1, others.length)).concat(others));
-  const pick = [...new Set(pool)].slice(0, 2);
+  const localBest = local.filter(r => r.quote.length > 60).concat(local.filter(r => r.quote.length <= 60));
+  const pool = localBest.length >= (count || 2) ? localBest : local.concat(others.slice(offset % Math.max(1, others.length)).concat(others));
+  const pick = [...new Set(pool)].slice(0, count || 2);
   return `<section class="pg-section">
     <h2>What customers say</h2>
     <div class="reviews">
@@ -102,6 +103,23 @@ function reviewBlock(placeName, offset) {
       </figure>`).join('\n      ')}
     </div>
     <p class="small"><a href="/#reviews">Read all our reviews</a></p>
+  </section>`;
+}
+
+// Optional before/after photos for an area page (areas.json "photos": [{before, after, alt}])
+function photoBlock(a) {
+  if (!a.photos || !a.photos.length) return '';
+  return `<section class="pg-section">
+    <h2>Recent jobs around ${esc(a.name)}</h2>
+    <div class="ba-grid">
+      ${a.photos.map(p => `<figure class="ba">
+        <div class="ba-pair">
+          <div><img src="${esc(p.before)}" alt="Before: ${esc(p.alt)}" width="600" height="800" loading="lazy" decoding="async"><span>Before</span></div>
+          <div><img src="${esc(p.after)}" alt="After: ${esc(p.alt)}" width="600" height="800" loading="lazy" decoding="async"><span>After</span></div>
+        </div>
+        <figcaption>${esc(p.alt)}</figcaption>
+      </figure>`).join('\n      ')}
+    </div>
   </section>`;
 }
 
@@ -172,7 +190,8 @@ ${markdown(a.body)}
       </div>
       <p class="small">Pressure washing is coming soon.</p>
     </section>
-    ${reviewBlock(a.name, i)}
+    ${photoBlock(a)}
+    ${reviewBlock(a.name, i, a.review_count)}
     ${meetDanny}
     ${faqBlock(a.faq)}
     ${finalCta(a.name)}

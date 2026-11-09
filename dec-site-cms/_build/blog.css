@@ -188,3 +188,12 @@ a.area-card:hover{border-color:var(--green); box-shadow:0 12px 28px rgba(20,23,2
 .form-msg{margin:0; font-weight:600;}
 .form-msg.ok{color:var(--green-dark); font-size:1.05rem;}
 .form-msg.err{color:#B3261E;}
+
+/* before/after pairs on area pages */
+.ba-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px;}
+.ba{margin:0;}
+.ba-pair{display:grid; grid-template-columns:1fr 1fr; gap:6px;}
+.ba-pair div{position:relative;}
+.ba-pair img{width:100%; height:auto; aspect-ratio:3/4; object-fit:cover; border-radius:10px; display:block; margin:0;}
+.ba-pair span{position:absolute; left:8px; bottom:8px; background:rgba(30,35,40,.82); color:#fff; font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:3px 8px; border-radius:6px;}
+.ba figcaption{font-size:.9rem; color:var(--grey,#6B6F76); margin-top:8px;}
