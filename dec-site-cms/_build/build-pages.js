@@ -144,7 +144,7 @@ function faqBlock(faq) {
 
 const finalCta = (place) => `<aside class="cta">
     <h2>See your price${place ? ' for ' + esc(place) : ''} in 30 seconds</h2>
-    <p>No email needed. Pick your house type and bedrooms and the price appears instantly. Then text, WhatsApp or send it over to book.</p>
+    <p>Window cleaning from £14. No email needed. Pick your house type and bedrooms and the price appears instantly. Then text, WhatsApp or send it over to book.</p>
     <div class="cta-btns">
       <a class="btn" href="/prices.html">Get My Price</a>
       <a class="btn ghost" href="https://wa.me/${WA}" target="_blank" rel="noopener">Message on WhatsApp</a>

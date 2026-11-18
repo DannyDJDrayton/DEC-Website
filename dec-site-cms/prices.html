@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Get an Instant Price | DEC Drayton Exterior Cleaning</title>
-<meta name="description" content="Work out an instant guide price for window and exterior cleaning in Market Drayton. Enter your property details and get a quote in seconds.">
+<meta name="description" content="Window cleaning in Market Drayton from £14. Work out an instant price for window and exterior cleaning, with no email needed.">
 <link rel="canonical" href="https://draytonclean.co.uk/prices.html">
 
 <meta property="og:type" content="website">
@@ -53,6 +53,22 @@
   .eyebrow{font-family:var(--mono); font-size:0.76rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--green-dark); font-weight:600; margin-bottom:12px;}
   section{padding:56px 0;}
   .section-head{max-width:600px; margin:0 auto 42px; text-align:center;}
+  /* Price guide, booking steps & FAQ (added Nov 2026) */
+  .dec-price-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; max-width:720px; margin:0 auto;}
+  .dec-price-table{width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  .dec-price-table caption{font-family:var(--display); font-weight:700; color:var(--black); text-align:left; padding:0 0 8px;}
+  .dec-price-table th,.dec-price-table td{padding:10px 16px; border-top:1px solid var(--line); text-align:left; font-weight:500;}
+  .dec-price-table td{text-align:right; font-weight:700; color:var(--black);}
+  .dec-price-note{text-align:center; max-width:640px; margin:20px auto 0; font-size:0.9rem; opacity:0.75;}
+  .dec-steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; counter-reset:step; list-style:none; padding:0; margin:0;}
+  .dec-steps li{background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:22px; counter-increment:step;}
+  .dec-steps li::before{content:counter(step); display:inline-flex; width:32px; height:32px; border-radius:50%; background:var(--green); color:#fff; font-weight:800; align-items:center; justify-content:center; margin-bottom:10px;}
+  .dec-steps h3{font-size:1.05rem; margin-bottom:6px;}
+  .dec-faq{max-width:760px; margin:0 auto;}
+  .dec-faq details{border-bottom:1px solid var(--line); padding:16px 0;}
+  .dec-faq summary{cursor:pointer; font-weight:700; color:var(--black); font-family:var(--display); font-size:1.05rem;}
+  .dec-faq details p{margin-top:10px;}
+
   .section-head h1,.section-head h2{font-size:clamp(1.7rem,3vw,2.2rem); font-weight:800;}
   .section-head p{margin-top:12px; opacity:0.75;}
   .btn{display:inline-flex; align-items:center; gap:8px; font-family:var(--body); font-weight:700; font-size:0.94rem; padding:13px 24px; border-radius:8px; border:2px solid transparent; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease;}
@@ -222,7 +238,7 @@
     <div class="section-head">
       <div class="eyebrow" style="text-align:center;">Instant Estimate</div>
       <h1>Get Your Price in 30 Seconds</h1>
-      <p>Tell us about your property and set your quantities — your price shows straight away, no email needed.</p>
+      <p>Regular window cleaning from £14. Tell us about your property and set your quantities — your price shows straight away, no email needed.</p>
     </div>
 
     <div class="calc-card">
@@ -1158,6 +1174,36 @@
     });
   })();
 </script>
+
+<!-- PLAIN-TEXT PRICE GUIDE (added Nov 2026): readable by Google and AI tools, which can't run the calculator.
+     Keep these numbers in step with MINIMUM_TABLE in the calculator script. -->
+<section id="price-guide" style="padding:56px 0;">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" style="text-align:center;">Price Guide</div>
+      <h2>Window Cleaning from £14</h2>
+      <p>Regular exterior window cleaning prices in Market Drayton and nearby villages. Frames, sills and doors are wiped as standard.</p>
+    </div>
+    <div class="dec-price-grid">
+      <table class="dec-price-table">
+        <caption>Semi-detached</caption>
+        <tr><th scope="row">1 bedroom</th><td>from £14</td></tr>
+        <tr><th scope="row">2 bedrooms</th><td>from £16</td></tr>
+        <tr><th scope="row">3 bedrooms</th><td>from £18</td></tr>
+        <tr><th scope="row">4 bedrooms</th><td>from £22</td></tr>
+      </table>
+      <table class="dec-price-table">
+        <caption>Detached</caption>
+        <tr><th scope="row">1 bedroom</th><td>from £15</td></tr>
+        <tr><th scope="row">2 bedrooms</th><td>from £17</td></tr>
+        <tr><th scope="row">3 bedrooms</th><td>from £19</td></tr>
+        <tr><th scope="row">4 bedrooms</th><td>from £23</td></tr>
+        <tr><th scope="row">5 bedrooms</th><td>from £26</td></tr>
+      </table>
+    </div>
+    <p class="dec-price-note">Conservatories from £5 extra. First and one-off cleans are priced individually. Use the calculator for your exact price, with no email needed.</p>
+  </div>
+</section>
 </main>
 
 <footer>

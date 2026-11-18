@@ -25,7 +25,7 @@ const buildPages = require('./build-pages');
 const postSlug = p => slugify(p.slug && p.slug.trim() ? p.slug : p.title);
 
 function card(p, small) {
-  const img = p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy" decoding="async" width="600" height="340">` : '';
+  const img = p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" decoding="async" width="600" height="340">` : '';
   return `<a class="post-card${small ? ' small' : ''}" href="/blog/${p._slug}/">${img}
   <div class="post-card-body"><div class="meta">${esc(niceDate(p.date))}${p.readtime ? ' · ' + esc(p.readtime) : ''}</div>
   <h${small ? 3 : 2}>${esc(p.title)}</h${small ? 3 : 2}>${small ? '' : `<p>${esc(p.excerpt || '')}</p>`}
